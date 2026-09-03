@@ -1,13 +1,18 @@
 {
-    "name": "tacuin",
-    "short_name": "tacuin",
+    "name": "Tacuin",
+    "short_name": "Tacuin",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#5F7D8A",
+    //"background_color": "#5F7D8A",
+    "background_color": "#FFFFFF",
     "theme_color": "#5F7D8A",
     "description": "Expense monitoring",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
+	"display": "standalone",
+	"scope": ".",
+	"theme_color": "#ffffff",
+	"description": "Personal expense monitoring",
     "icons": [
         {
             "src": "icons/Icon-192.png",
