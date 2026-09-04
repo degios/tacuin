@@ -19,9 +19,500 @@
 
   <title>Tacuin - Expense monitor</title>
   <link rel="manifest" href="manifest.json">
+
+  <link rel="stylesheet" type="text/css" href="./base.css">
 </head>
 <body>
   <h2>Tacuin, a persona expense monitor project.</h2>
+  <div id="tplTopbar" class="tplTopbar_ctrl" style="top: 0px;">
+    <header class="mdc-top-app-bar" id="tbar">
+  <div class="mdc-top-app-bar__row" id="tbarRow" style="height: 50px;">
+    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start" id="tbarLeft">
+      
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtHamb" aria-label="Open navigation menu" style="--mdc-ripple-fg-size: 28px; --mdc-ripple-fg-scale: 2.7815089640681627; --mdc-ripple-fg-translate-start: 1px, 12px; --mdc-ripple-fg-translate-end: 10px, 10px;">menu</button>
+      <div class="mdc-menu mdc-menu-surface" id="hamb_mdc">
+        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+          <li class="mdc-list-item" role="menuitem" id="hbtInfo" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">question_answer</span>
+            </span>
+            <span class="mdc-list-item__text">Informazioni</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtPassword" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">password</span>
+            </span>
+            <span class="mdc-list-item__text">Cambio password</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtConfazi" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">perm_data_setting</span>
+            </span>
+            <span class="mdc-list-item__text">Configurazione Azienda</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtConfute" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">engineering</span>
+            </span>
+            <span class="mdc-list-item__text">Configurazione Utenti</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtConfmod" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">tune</span>
+            </span>
+            <span class="mdc-list-item__text">Configurazione Moduli</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtGrpmod" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">list</span>
+            </span>
+            <span class="mdc-list-item__text">Configurazione Raggruppamenti</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtCPanel" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">settings_applications</span>
+            </span>
+            <span class="mdc-list-item__text">Pannello di controllo</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtConfig" style="" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">tune</span>
+            </span>
+            <span class="mdc-list-item__text">Configurazione</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtOutfor" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">print</span>
+            </span>
+            <span class="mdc-list-item__text">Formati di output</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtPStudio" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">widgets</span>
+            </span>
+            <span class="mdc-list-item__text">Portal Studio</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtUsrses" style="" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">grolup</span>
+            </span>
+            <span class="mdc-list-item__text">Utenti</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtDebug" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">healing</span>
+            </span>
+            <span class="mdc-list-item__text">Debug</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="hbtExit" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">power_settings_new</span>
+            </span>
+            <span class="mdc-list-item__text">Esci</span>
+          </li>
+        </ul>
+      </div>
+      
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtExit" aria-label="Open navigation menu" style="display: none;">power_settings_new</button>
+		  <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtAbort" aria-label="Open navigation menu" style="display: none;">backspace</button>
+		  <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtHome" aria-label="Open navigation menu" style="display: none;">home</button>
+  		<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtStop" aria-label="Open navigation menu" style="display: none;">clear</button>
+  		<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtBack" aria-label="Open navigation menu" style="display: none;">arrow_back</button>
+      <span class="mdc-top-app-bar__title" id="tbtTitle" style="display: grid;">Revolver</span>
+  		<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrClose" aria-label="Open navigation menu" style="display: none;">arrow_back</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrLQrcode" aria-label="Open navigation menu" style="display: none;">qr_code_scanner</button>
+      <textarea rows="1" cols="20" input="" id="tsrInput" type="search" class="mdc-search" style="display: none;" placeholder="Cerca"></textarea>
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrClear" aria-label="Open navigation menu" style="display: none;">clear</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrRQrcode" aria-label="Open navigation menu" style="display: none;">qr_code_scanner</button>
+    </section>
+    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" id="tbarRight">
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrOpen" aria-label="Open navigation menu" style="">search</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrParking" aria-label="Open navigation menu" style="display: none;">visibility</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrFavorite" aria-label="Open navigation menu" style="display: none;">star</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrFilter" aria-label="Open navigation menu" style="display: none;">filter_alt</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrStack" aria-label="Open navigation menu" style="display: none;">stack</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrAlarm" aria-label="Open navigation menu" style="display: none;">alarm_on</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrWarning" aria-label="Open navigation menu" style="display: none;">warning</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrWeekend" aria-label="Open navigation menu" style="display: none;">filter_five</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrHistory" aria-label="Open navigation menu" style="display: none;">history</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrAction1" aria-label="Open navigation menu" style="display: none;">code</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrAction2" aria-label="Open navigation menu" style="display: none;">code</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrAction3" aria-label="Open navigation menu" style="display: none;">code</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrAction4" aria-label="Open navigation menu" style="display: none;">code</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tsrAction5" aria-label="Open navigation menu" style="display: none;">code</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtVocalStart" aria-label="Open navigation menu" style="display: none;">mic</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtVocalStop" aria-label="Open navigation menu" style="display: none;">mic_off</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtNotest" aria-label="Open navigation menu" style="display: none;">notifications_active</button> 
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtSpeech" aria-label="Open navigation menu" style="display: none;">record_voice_over</button> 
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtFilter" aria-label="Open navigation menu" style="display: none;">filter_alt</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtNotify" aria-label="Open navigation menu" style="display: none;">notifications_active</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtAudit" aria-label="Open navigation menu" style="">qr_code_scanner</button>
+      
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtApps" aria-label="Open navigation menu" style="display: none;">apps</button>
+      <div class="mdc-menu mdc-menu-surface" id="apps_mdc">
+        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+          <li class="mdc-list-item" role="menuitem" id="abtRevolution" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <!--<span class="material-symbols-outlined"><img src="../images/rv_ahr.png" width="38" height="24"></span>-->
+              <span class="material-symbols-outlined">apps</span>
+            </span>
+            <span class="mdc-list-item__text">Revolution</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="abtEnterprise" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <!--<span class="material-symbols-outlined"><img src="../images/rv_ahe.png" width="41" height="24"></span>-->
+              <span class="material-symbols-outlined">apps</span>
+            </span>
+            <span class="mdc-list-item__text">Enterprise</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="abtInfinity" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <!--<span class="material-symbols-outlined"><img src="../images/rv_infinity.png" width="24" height="24"></span>-->
+              <span class="material-symbols-outlined">apps</span>
+            </span>
+            <span class="mdc-list-item__text">Infinity</span>
+          </li>
+        </ul>
+      </div>
+      
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtStampa" aria-label="Open navigation menu" style="display: none;">print</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtCancella" aria-label="Open navigation menu" style="display: none;">delete</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtSalva" aria-label="Open navigation menu" style="display: none;">save</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtImage" aria-label="Open navigation menu" style="display: none;">image</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtRespingi" aria-label="Open navigation menu" style="display: none;">block</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtApprova" aria-label="Open navigation menu" style="display: none;">done</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtConferma" aria-label="Open navigation menu" style="display: none;">done</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtConfall" aria-label="Open navigation menu" style="display: none;">done_all</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtPreview" aria-label="Open navigation menu" style="display: none;">preview</button>
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtPrev" aria-label="Open navigation menu" style="display: none;">navigate_before</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtNext" aria-label="Open navigation menu" style="display: none;">navigate_next</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtSettings" aria-label="Open navigation menu" style="display: none;">settings</button>
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtLetti" aria-label="Open navigation menu" style="display: none;">unpublished</button>
+			<button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtNonLetti" aria-label="Open navigation menu" style="display: none;">check_circle</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtNuovo" aria-label="Open navigation menu" style="display: none;">add</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtPhoto" aria-label="Open navigation menu" style="display: none;">photo_camera</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtPDF" aria-label="Open navigation menu" style="display: none;">picture_as_pdf</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtRestart" aria-label="Open navigation menu" style="display: none;">restart_alt</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtLog" aria-label="Open navigation menu" style="display: none;">change_history</button>
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtUpdate" aria-label="Open navigation menu" style="display: none;">system_update_alt</button>
+      
+      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button mdc-ripple-upgraded" id="tbtVert" aria-label="Open navigation menu" style="--mdc-ripple-fg-size: 28px; --mdc-ripple-fg-scale: 2.7815089640681627; --mdc-ripple-fg-translate-start: 10px, 14px; --mdc-ripple-fg-translate-end: 10px, 10px;">more_vert</button>
+      <div class="mdc-menu mdc-menu-surface" id="vert_mdc" style="transform-origin: right top; right: 48px; top: 48px; max-height: 912px;">
+        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+          <li class="mdc-list-item" role="menuitem" id="vbtGuida" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">help_outline</span> </span> <span class="mdc-list-item__text">Guida</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtAggiorna" style="" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">refresh</span>
+            </span>
+            <span class="mdc-list-item__text">Aggiorna</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtConfigurazione" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">tune</span>
+            </span>
+            <span class="mdc-list-item__text">Configurazione</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtAutostart_off" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">play_arrow</span>
+            </span>
+            <span class="mdc-list-item__text">Avvio automatico</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtAutostart_on" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">stop</span>
+            </span>
+            <span class="mdc-list-item__text">Avvio automatico</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtNotifiche" style="" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">notifications_active</span>
+            </span>
+            <span class="mdc-list-item__text">Notifiche</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtQrcode" style="" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">qr_code_2</span>
+            </span>
+            <span class="mdc-list-item__text">QR Code</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtVocal" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">mic</span>
+            </span>
+            <span class="mdc-list-item__text">Vocal</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtVocal" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">mic</span>
+            </span>
+            <span class="mdc-list-item__text">Vocal</span>
+          </li>
+          
+          <!-- AZIONI CONFIGURABILI -->
+          <li class="mdc-list-item" role="menuitem" id="vbtVertic1" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">code_blocks</span>
+            </span>
+            <span class="mdc-list-item__text">Azione 1</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtVertic2" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">code_blocks</span>
+            </span>
+            <span class="mdc-list-item__text">Azione 2</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtVertic3" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">code_blocks</span>
+            </span>
+            <span class="mdc-list-item__text">Azione 3</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtVertic4" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">code_blocks</span>
+            </span>
+            <span class="mdc-list-item__text">Azione 4</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtVertic5" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">code_blocks</span>
+            </span>
+            <span class="mdc-list-item__text">Azione 5</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtVertic6" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">code_blocks</span>
+            </span>
+            <span class="mdc-list-item__text">Azione 6</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtVertic7" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">code_blocks</span>
+            </span>
+            <span class="mdc-list-item__text">Azione 7</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtVertic8" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">code_blocks</span>
+            </span>
+            <span class="mdc-list-item__text">Azione 8</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtVertic9" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">code_blocks</span>
+            </span>
+            <span class="mdc-list-item__text">Azione 9</span>
+          </li>
+          
+          <!-- AZIONI RIGA DOCUMENTI -->
+          <li class="mdc-list-item" role="menuitem" id="vbtGesart" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">functions</span>
+            </span>
+            <span class="mdc-list-item__text">Gestione articolo</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtImpuba" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">functions</span>
+            </span>
+            <span class="mdc-list-item__text">Importa ubicazione articolo</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtGeslog" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">functions</span>
+            </span>
+            <span class="mdc-list-item__text">Gestione unità logistica</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtNrconf" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">functions</span>
+            </span>
+            <span class="mdc-list-item__text">Numero confezioni</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtPzcon" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">functions</span>
+            </span>
+            <span class="mdc-list-item__text">Pezzi per confezione</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtCambum" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">functions</span>
+            </span>
+            <span class="mdc-list-item__text">Cambia U.M.</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtQtaum1" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">functions</span>
+            </span>
+            <span class="mdc-list-item__text">Quantità 1^ U.M.</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtNewlotto" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">settings_suggest</span>
+            </span>
+            <span class="mdc-list-item__text">Nuovo lotto</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtGeslotto" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">functions</span>
+            </span>
+            <span class="mdc-list-item__text">Gestione lotto</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtAtplotto" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">photo_camera</span>
+            </span>
+            <span class="mdc-list-item__text">Allega foto lotto</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtNewunita" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">settings_suggest</span>
+            </span>
+            <span class="mdc-list-item__text">Nuova unità logistica</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtImpunita" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">settings_suggest</span>
+            </span>
+            <span class="mdc-list-item__text">Importa unità logistica</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtImpsaldi" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">settings_suggest</span>
+            </span>
+            <span class="mdc-list-item__text">Importa saldi</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtShortcut" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">keyboard_keys</span>
+            </span>
+            <span class="mdc-list-item__text">Scorciatoie</span>
+          </li>
+          
+          <!-- AZIONI AMMINISTRATORI -->
+          <li class="mdc-list-divider" role="separator" id="vbtDividev" style="display: block;"></li>
+          <li class="mdc-list-item" role="menuitem" id="vbtCPanel" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">settings_applications</span>
+            </span>
+            <span class="mdc-list-item__text">Pannello di controllo</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtDBAdmin" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">database</span>
+            </span>
+            <span class="mdc-list-item__text">Amministrazione</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtRestart" style="display: none;" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">restart_alt</span>
+            </span>
+            <span class="mdc-list-item__text">Riavvio contesto</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtPStudio" style="" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">widgets</span>
+            </span>
+            <span class="mdc-list-item__text">Portal Studio</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtCounters" style="" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">equalizer</span>
+            </span>
+            <span class="mdc-list-item__text">Contatori</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtDebug" style="" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">healing</span>
+            </span>
+            <span class="mdc-list-item__text">Debug</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtCalendar" style="" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">calendar_month</span>
+            </span>
+            <span class="mdc-list-item__text">Calendar</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtColors" style="" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">palette</span>
+            </span>
+            <span class="mdc-list-item__text">Colori</span>
+          </li>
+          <li class="mdc-list-item" role="menuitem" id="vbtIcons" style="" tabindex="-1">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
+              <span class="material-symbols-outlined">image</span>
+            </span>
+            <span class="mdc-list-item__text">Icone</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</header>
+  </div>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
