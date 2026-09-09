@@ -105,14 +105,15 @@ window.ACLib=new(function(){
         fileEle.setAttribute("src", pFile);
         fileEle.setAttribute("type", "text/javascript");
         fileEle.setAttribute("async", pAsync);
-        oDocument.body.appendChild(fileEle);
+        oDocument.head.appendChild(fileEle);
         break;
       case 'css':
         fileEle = oDocument.createElement("link");
         fileEle.href = pFile;
         fileEle.type = 'text/css';
         fileEle.rel = 'stylesheet';
-        oDocument.getElementsByTagName('head')[0].append(fileEle);
+        //oDocument.getElementsByTagName('head')[0].append(fileEle);
+        oDocument.head.appendChild(fileEle)
         break;
       case 'wav':
       case 'mp3':
@@ -123,7 +124,7 @@ window.ACLib=new(function(){
         fileEle.setAttribute("src", pFile);
         fileEle.setAttribute("type", "module");
         fileEle.setAttribute("async", pAsync);
-        oDocument.body.appendChild(fileEle);
+        oDocument.head.appendChild(fileEle);
         break;
     }
 

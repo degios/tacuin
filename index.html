@@ -22,14 +22,12 @@
   <link rel="icon" type="image/png" href="favicon.png"/>
   <link rel='shortcut icon' href='favicon.ico' />
 
-  <link rel="stylesheet" href="styles/ACLib.css">
-  <link rel="stylesheet" href="styles/material.css">
-
   <link rel="manifest" href="manifest.json">
   <meta name="viewport" content="width=device-width">
   <meta name="theme-color" content="#DF0274"/>
 
   <title>Tacuin - Expense monitor</title>
+  <script src="scripts/ACLib.js"></script>
 </head>
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
@@ -39,22 +37,13 @@
     var serviceWorkerVersion = '2467473633';
     var scriptLoaded = false;    
     function loadACLib() {
+      console.log('load')
       if (scriptLoaded) {
         return;
       }
       console.log('loadACLib');
       scriptLoaded = true;
-      let fileEle = null;
-      let fileName = 'scripts/ACLib.js';
-      fileEle = document.createElement("script");
-      fileEle.setAttribute("src", fileName);
-      fileEle.setAttribute("type", "text/javascript");
-      fileEle.setAttribute("async", true);
-      document.body.appendChild(fileEle);
-      fileEle.addEventListener("load", () => ACLib.init());
-      fileEle.addEventListener("error", (ev) => {
-        console.log("Error on loading file " + fileName.split('\\').pop().split('/').pop(), ev);
-      });
+      ACLib.init();
     }
     
     //console.log(window.location);
