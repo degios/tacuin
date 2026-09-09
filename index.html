@@ -14,45 +14,52 @@
   <meta name="apple-mobile-web-app-title" content="tacuin">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="./favicon.png"/>
+<!--<link rel='manifest' id="manifest" href='../manifest.json' />
+<link rel="apple-touch-icon" href="../images/revolver192_maskable.png">
+<script src='../rv_sw.js' />-->
 
-  <link rel="stylesheet" href="./base.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel='shortcut icon' href='favicon.ico' />
+
+  <link rel="stylesheet" href="styles/ACLib.css">
+  <link rel="stylesheet" href="styles/material.css">
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="viewport" content="width=device-width">
+  <meta name="theme-color" content="#DF0274"/>
 
   <title>Tacuin - Expense monitor</title>
-  <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <script>
-    window.index_Static=function(){
-      let header = document.createElement("h2");
-      header.innerHTML="Tacuin, a personal expense monitor project";
-      document.body.appendChild(header);
-    }
-  </script>
-  </script>
-  <div id="tplTopbar" class="tplTopbar_ctrl" style="top: 0px;">PROVA</div>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>
     var serviceWorkerVersion = '2467473633';
     var scriptLoaded = false;    
-    function loadMainDartJs() {
+    function loadACLib() {
       if (scriptLoaded) {
         return;
       }
-      console.log('loadMainDartJs');
-      /*
+      console.log('loadACLib');
       scriptLoaded = true;
-      var scriptTag = document.createElement('script');
-      scriptTag.src = 'main.dart.js';
-      scriptTag.type = 'application/javascript';
-      document.body.append(scriptTag);
-      */
+      let fileEle = null;
+      let fileName = 'scripts/ACLib.js';
+      fileEle = document.createElement("script");
+      fileEle.setAttribute("src", fileName);
+      fileEle.setAttribute("type", "text/javascript");
+      fileEle.setAttribute("async", true);
+      document.body.appendChild(fileEle);
+      fileEle.addEventListener("load", () => ACLib.init());
+      fileEle.addEventListener("error", (ev) => {
+        console.log("Error on loading file " + fileName.split('\\').pop().split('/').pop(), ev);
+      });
     }
-
-    if ('serviceWorker' in navigator) {
+    
+    //console.log(window.location);
+    if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
+      console.log('load service worker...');
       // Service workers are supported. Use them.
       window.addEventListener('load', function () {
         // Wait for registration to finish before dropping the <script> tag.
@@ -65,7 +72,7 @@
               serviceWorker.addEventListener('statechange', () => {
                 if (serviceWorker.state == 'activated') {
                   console.log('Installed new service worker.');
-                  loadMainDartJs();
+                  loadACLib();
                 }
               });
             }
@@ -82,7 +89,7 @@
             } else {
               // Existing service worker is still good.
               console.log('Loading app from service worker.');
-              loadMainDartJs();
+              loadACLib();
             }
           });
 
@@ -93,17 +100,15 @@
             console.warn(
               'Failed to load app from service worker. Falling back to plain <script> tag.',
             );
-            loadMainDartJs();
+            loadACLib();
           }
         }, 4000);
       });
     } else {
+      console.log('Service workers not supported');
       // Service workers not supported. Just drop the <script> tag.
-      loadMainDartJs();
+      loadACLib();
     }
-  </script>
-  <script>
-    window.index_Static.call();
   </script>
 </body>
 </html>
