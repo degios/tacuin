@@ -54,9 +54,9 @@ body {
 
 :root {
   --mdc-typography-font-family: -apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Fira Sans,Ubuntu,Oxygen,Oxygen Sans,Cantarell,Droid Sans,Apple Color Emoji,Segoe UI Emoji,Segoe UI Emoji,Segoe UI Symbol,Lucida Grande,Helvetica,Arial,sans-serif;
-  --mdc-theme-primary: #df0274;
-  --mdc-theme-secondary: #df0274;
-  --mdc-theme-error: #df0274;
+  --mdc-theme-primary: #13A29A;
+  --mdc-theme-secondary: #13A29A;
+  --mdc-theme-error: #13A29A;
   --mdc-switch-selected-handle-color: rgba(0, 0, 0, 0.87);
   --mdc-switch-selected-hover-state-layer-color: rgba(0, 0, 0, 0.87);
   /**/
@@ -77,20 +77,20 @@ body {
   --mdc-switch-selected-focus-state-layer-color: #ddd;
   --mdc-switch-selected-pressed-state-layer-color: #ddd;
   /* AD NEW STYLES */
-  --mdc-theme-top-app-bar-background: #df0274;
+  --mdc-theme-top-app-bar-background: #13A29A;
   --mdc-theme-top-app-bar-color: white;
   --mdc-theme-top-app-bar-border-bottom: 0px;
   --mdc-theme-top-app-bar-box-shadow: 0px;
   --mdc-theme-search-border-color: #ffffff;
   --mdc-theme-search-background: #ffffff;
   --mdc-theme-search-color: rgba(0, 0, 0, 0.87);
-  --mdc-theme-tab-color: #df0274;
+  --mdc-theme-tab-color: #13A29A;
   --mdc-theme-menu-background: #ffffff;
   --mdc-theme-menu-color: rgba(0, 0, 0, 0.87);
   --mdc-theme-bottom-app-bar-background: #ffffff;
-  --mdc-theme-bottom-app-bar-color: #df0274;
+  --mdc-theme-bottom-app-bar-color: #13A29A;
   --mdc-theme-fab-background: #ffffff;
-  --mdc-theme-fab-color: #df0274;
+  --mdc-theme-fab-color: #13A29A;
   --mdc-theme-zoom-background: #ffffff;
   --mdc-theme-zoom-border-color: #ffffff;
   --mdc-theme-card-background: #ffffff;
@@ -105,11 +105,11 @@ body {
   --mdc-theme-text-field-border-color: rgba(0, 0, 0, 0.38);
   --mdc-theme-text-field-label-color: rgba(0, 0, 0, 0.6);
   --mdc-theme-text-field-icon-color: rgba(0, 0, 0, 0.54);
-  --mdc-theme-text-field-focused-border-color: #df0274;
+  --mdc-theme-text-field-focused-border-color: #13A29A;
   --mdc-theme-scrollbar-color: lightgrey white;
   
   --mdc-today-bg-color: rgba(255, 220, 40, .15);
-  --mdc-event-bg-color: #df0274;
+  --mdc-event-bg-color: #13A29A;
   --mdc-event-text-color: #fff;
 }
 
@@ -224,16 +224,16 @@ th.rv_gridjs-th-fixed {
   color: var(--mdc-theme-text-field-label-color, rgba(0, 0, 0, 0.6));
 }
 .mdc-text-field--focused .mdc-notched-outline__leading {
-  border-color: #df0274 !important;
-  border-color: var(--mdc-theme-text-field-focused-border-color, #df0274) !important;
+  border-color: #13A29A !important;
+  border-color: var(--mdc-theme-text-field-focused-border-color, #13A29A) !important;
 }
 .mdc-text-field--focused .mdc-notched-outline__notch {
-  border-color: #df0274 !important;
-  border-color: var(--mdc-theme-text-field-focused-border-color, #df0274) !important;
+  border-color: #13A29A !important;
+  border-color: var(--mdc-theme-text-field-focused-border-color, #13A29A) !important;
 }
 .mdc-text-field--focused .mdc-notched-outline__trailing {
-  border-color: #df0274 !important;
-  border-color: var(--mdc-theme-text-field-focused-border-color, #df0274) !important;
+  border-color: #13A29A !important;
+  border-color: var(--mdc-theme-text-field-focused-border-color, #13A29A) !important;
 }
 
 .mdc-form-field {
@@ -274,17 +274,17 @@ th.rv_gridjs-th-fixed {
   min-width: 0px;
 }
 .mdc-tab--active .mdc-tab__icon {
-  color: #df0274;
-  color: var(--mdc-theme-tab-color, #df0274);
+  color: #13A29A;
+  color: var(--mdc-theme-tab-color, #13A29A);
 }
 .mdc-tab--active .mdc-tab__text-label{
-  color: #df0274;
-  color: var(--mdc-theme-tab-color, #df0274);
+  color: #13A29A;
+  color: var(--mdc-theme-tab-color, #13A29A);
 }
 .mdc-tab-indicator .mdc-tab-indicator__content--underline {
-  color: #df0274;
-  color: var(--mdc-theme-tab-color, #df0274);
-  border-color: var(--mdc-theme-tab-color, #df0274);
+  color: #13A29A;
+  color: var(--mdc-theme-tab-color, #13A29A);
+  border-color: var(--mdc-theme-tab-color, #13A29A);
 }
 
 .mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above, .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
@@ -295,12 +295,12 @@ th.rv_gridjs-th-fixed {
 }
 
 .mdc-icon-button.mdc-ripple-upgraded {
-  color: #df0274;
-  color: var(--mdc-theme-bottom-app-bar-color, #df0274);
+  color: #13A29A;
+  color: var(--mdc-theme-bottom-app-bar-color, #13A29A);
 }
 .mdc-fab .mdc-fab__icon {
-  color: #df0274;
-  color: var(--mdc-theme-fab-color, #df0274);
+  color: #13A29A;
+  color: var(--mdc-theme-fab-color, #13A29A);
 }
 
 .cardWithImageZoom .grid_card_container.cardWithImage {
@@ -634,8 +634,8 @@ th.rv_gridjs-th-fixed {
   overflow-wrap: anywhere;
 }
 .grid_cell img{
-  background: #df0274;
-  background: var(--mdc-theme-primary, #df0274);
+  background: #13A29A;
+  background: var(--mdc-theme-primary, #13A29A);
   border-radius: 4px;
   border-radius: var(--mdc-shape-small, 4px);
 }
@@ -720,9 +720,9 @@ th.rv_gridjs-th-fixed {
 
 /* AD Tob app bar - inizio */
 .mdc-top-app-bar {
-  background-color: #df0274;
+  background-color: #13A29A;
   /* @alternate */
-  background-color: var(--mdc-theme-top-app-bar-background, var(--mdc-theme-primary, #df0274));
+  background-color: var(--mdc-theme-top-app-bar-background, var(--mdc-theme-primary, #13A29A));
   color: #fff;
   color: var(--mdc-theme-top-app-bar-color, var(--mdc-theme-on-primary, #fff));
   border-bottom: 0px;
@@ -986,8 +986,8 @@ position: fixed;
   content: '';
   border: 14px solid #F3F3F3;
   border-radius: 50%;
-  border-top: 14px solid #DF0274;
-  border-top: 14px solid var(--mdc-theme-primary, #df0274);
+  border-top: 14px solid #13A29A;
+  border-top: 14px solid var(--mdc-theme-primary, #13A29A);
   width: 80px;
   height: 80px;
   animation: spin 1500ms linear infinite, 300ms delayview;
@@ -1002,8 +1002,8 @@ position: fixed;
   content: '';
   border: 14px solid #F3F3F3;
   border-radius: 50%;
-  border-top: 14px solid #DF0274;
-  border-top: 14px solid var(--mdc-theme-primary, #df0274);
+  border-top: 14px solid #13A29A;
+  border-top: 14px solid var(--mdc-theme-primary, #13A29A);
   width: 40px;
   height: 40px;
   animation: spin2 800ms linear infinite, 300ms delayview;
@@ -2052,8 +2052,8 @@ dialog#myDialog .button-secondary:active {
 .mdc-bottom-app-bar {
   background-color: #ffffff;
   background-color: var(--mdc-theme-bottom-app-bar-background, #ffffff);
-  color: #df0274;
-  color: var(--mdc-theme-primary, #df0274);
+  color: #13A29A;
+  color: var(--mdc-theme-primary, #13A29A);
   display: flex;
   position: fixed;
   flex-direction: column;
@@ -2061,8 +2061,8 @@ dialog#myDialog .button-secondary:active {
   box-sizing: border-box;
   width: 100%;
   z-index: 4;
-  border-top: 2px solid #df0274;
-  border-top: 2px solid var(--mdc-theme-bottom-app-bar-color, #df0274);
+  border-top: 2px solid #13A29A;
+  border-top: 2px solid var(--mdc-theme-bottom-app-bar-color, #13A29A);
 }
 /* AD 27/03/2024 Aggiunta gestione allineamento forzato in basso al centro - main */
 .mdc-fab.mdc-fab-bottom-center {
@@ -2074,14 +2074,14 @@ transform: translateX(-50%);
 position: fixed;
 background-color: #ffffff !important;
 background-color: var(--mdc-theme-fab-background, #ffffff) !important;
-color: #df0274 !important;
-color: var(--mdc-theme-primary, #df0274) !important;
+color: #13A29A !important;
+color: var(--mdc-theme-primary, #13A29A) !important;
 }
 /* AD 27/03/2024 Aggiunta gestione allineamento forzato in basso al centro - main */
 .mdc-fab.mdc-fab-bottom-center.mdc-fbb {
   box-shadow: none;
-  border: solid 2px #df0274;
-  border: solid 2px var(--mdc-theme-fab-color, #df0274);
+  border: solid 2px #13A29A;
+  border: solid 2px var(--mdc-theme-fab-color, #13A29A);
 }
 
 .padding_0_16_0_0 div{
@@ -2101,8 +2101,8 @@ color: var(--mdc-theme-primary, #df0274) !important;
 	font-weight: 500;
 }
 .padding_0_16_0_0 img{
-	background: #df0274;
-    background: var(--mdc-theme-primary, #df0274);
+	background: #13A29A;
+    background: var(--mdc-theme-primary, #13A29A);
   border-radius: 4px;
   border-radius: var(--mdc-shape-small, 4px);
 }
@@ -2416,8 +2416,8 @@ input[type=number] {
   color: var(--mdc-theme-icon-color, rgba(0, 0, 0, 0.87)) !important;
 }
 .SPPortalZoom .SPPortalZoomBaseMenuRight.global_container.visible {
-  background: #df0274 !important;
-  background: var(--mdc-theme-primary, #df0274) !important;
+  background: #13A29A !important;
+  background: var(--mdc-theme-primary, #13A29A) !important;
   border-radius: 4px;
   border-radius: var(--mdc-shape-small, 4px);
 }

@@ -1,3 +1,8 @@
+// Create icon set 192-512 ecc.
+// https://freewebtoapk.com/app-icon-resizer
+// Create maskable icon
+// https://progressier.com/maskable-icons-editor
+
 window.ACLib=new(function(){
 
 //---Start initialize
