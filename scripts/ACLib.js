@@ -1,7 +1,9 @@
 // Create icon set 192-512 ecc.
 // https://freewebtoapk.com/app-icon-resizer
-// Create maskable icon
+// Create maskable icon (bad, incorrect size)
 // https://progressier.com/maskable-icons-editor
+// Create maskable icon (not all but correct size)
+// https://favicon.now/maskable-icon-generator
 // Create transparent icon for favicon
 // https://www.photoroom.com/it/tools/transparent-background
 
@@ -52,7 +54,7 @@ window.ACLib=new(function(){
     fltBtnHTML += '<!-- CENTER -->';
     fltBtnHTML += '<button class="mdc-fab mdc-fab-bottom-center mdc-fbb" id="fbbCSpunta" aria-label="Favorite" style="display: block;">';
     fltBtnHTML += '  <div class="mdc-fab__ripple"></div>';
-    fltBtnHTML += '  <span class="mdc-fab__icon material-symbols-outlined">list_alt</span>';
+    fltBtnHTML += '  <span class="mdc-fab__icon material-symbols-outlined">qr_code_scanner</span>';
     fltBtnHTML += '</button>';
     fltBtnDiv.innerHTML = fltBtnHTML;
 
