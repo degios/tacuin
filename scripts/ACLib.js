@@ -245,7 +245,6 @@ window.ACLib=new(function(){
     return ne;
   };
 
-  this.isMobile
   this.getUID=function(nLen){
     var res = '';
     for (var i=0; i<nLen; i++) {
