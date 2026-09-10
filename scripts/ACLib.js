@@ -9,14 +9,38 @@
 
 window.ACLib=new(function(){
 
+  this.isChrome = false;
+  this.isFirefox = false;
+  this.isSafari = false;
+  this.isEdge = false;
+  this.isMobile = false;
+  this.isWideScreen = false;
+  this.voiceSpeech = false;
+  this.voiceValues = "";
+  this.voiceLabels = "";
+
 //---Start initialize
   this.init=function(){
     this.loadFile('styles/material.css',true, 
       () => this.loadFile('scripts/material.min.js',true,
         () => this.loadFile('styles/ACLib.css', true,
-          () => this.load())));
+          () => this._browserType()
+                    ._screenOrientationListener()
+                    ._loadSpeech()
+                    ._load())));
+    /*
+    this.sqlGlobalVar.Query();
+    this.sqlUtente.Query();
+    this.getBrowserType();
+    this.loadUserSettings();
+    this.loadSpeech();
+    this.loadInfo(); // Caricamento asincrono
+    this.loadlastUpdate(); // Caricamento asincrono
+    this._shortcutListener(this);
+    this._screenOrientationListener();
+    */
   }
-  this.load=function(){
+  this._load=function(){
     let mainDiv = this.CE("div",window.document.body);
     //this.CT("Tacuin, a personal expense monitor project", this.CE("h2",mainDiv));
 
@@ -58,9 +82,9 @@ window.ACLib=new(function(){
     fltBtnHTML += '</button>';
     fltBtnDiv.innerHTML = fltBtnHTML;
 
-    this.loadMaterial();
+    this._loadMaterial();
   }
-  this.loadMaterial=function(){
+  this._loadMaterial=function(){
     let oDocument = window.document;
     // animazioni material design
     let mdcTextFields = [].map.call(oDocument.querySelectorAll(".mdc-text-field"), function(el){
@@ -75,6 +99,75 @@ window.ACLib=new(function(){
     let mdcSliders = [].map.call(oDocument.querySelectorAll(".mdc-slider"), function(el){
       return new mdc.slider.MDCSlider(el);
     });
+    return this;
+  }
+  this._browserType=function(){
+    let userAgentString =  navigator.userAgent;
+    if (userAgentString){
+      // Detect Chrome
+      let chromeAgent = userAgentString.indexOf("Chrome") > -1;
+      // Detect Firefox 
+      let firefoxAgent = userAgentString.indexOf("Firefox") > -1; 
+      // Detect Safari
+      let safariAgent = userAgentString.indexOf("Safari") > -1;
+      // Detect Edge
+      let edgeAgent = userAgentString.indexOf("Edg") > -1;
+      
+      // Discard Safari since it also matches Chrome
+      if ((chromeAgent) && (safariAgent)) safariAgent = false; 
+      // Discard Chrome since it also matches Edge
+      if ((chromeAgent) && (edgeAgent)) chromeAgent = false; 
+      
+      this.isChrome = chromeAgent;
+      this.isFirefox = firefoxAgent;
+      this.isSafari = safariAgent;
+      this.isEdge = edgeAgent;
+
+      this.isMobile = /Android|Mobi|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgentString)
+    }
+    return this;
+  }
+  this._screenProperties=function(){
+    this.isWideScreen = !this.isMobile || screen.width > 640;
+    return this;
+  }
+  this._screenOrientationListener=function(){
+    this._screenProperties();
+    screen.orientation.addEventListener("change", (event) => {
+      this._screenProperties();
+      //if (Object.hasOwn(this,"_getPortletReceiver") && Object.hasOwn(this._getPortletReceiver(),"_getPortletReceiver")){
+        console.log('orientation changed ' + screen.width);
+      //  if (this._getPortletReceiver()._getPortletReceiver() != null &&
+      //      this._getPortletReceiver()._getPortletReceiver() != undefined &&
+      //      this._getPortletReceiver()._getPortletReceiver().portletname != undefined && 
+      //      !this._getPortletReceiver()._getPortletReceiver().rvLoading()){
+      //    let portletReceiver = this._getPortletReceiver()._getPortletReceiver();
+      //    if (Object.hasOwn(portletReceiver,"this_rvOrientationChanged"))
+      //      portletReceiver.this_rvOrientationChanged();
+      //  }
+      //}
+    });
+    return this;
+  }
+  this._loadSpeech=function(){
+    this.voiceSpeech = false;
+    this.voiceValues = "";
+    this.voiceLabels = "";
+    if (window.speechSynthesis != undefined)
+      window.speechSynthesis.onvoiceschanged = () => {
+        this.voiceSpeech = false;
+        this.voiceValues = "";
+        this.voiceLabels = "";
+
+        let voices = speechSynthesis.getVoices().filter(function(voice) { return voice.name.toLowerCase().includes('italian'); });
+        if (voices && voices.length > 0){
+          voices.forEach(function(voice) {
+            ACLib.voiceValues += (ACLib.voiceValues.trim() == '' ? '' : ',') + voice.name;
+            ACLib.voiceLabels += (ACLib.voiceLabels.trim() == '' ? '' : ',') + voice.name;
+          });
+          this.voiceSpeech = true;
+        }
+      };
     return this;
   }
 //---End initialize
@@ -95,6 +188,7 @@ window.ACLib=new(function(){
     return ne;
   };
 
+  this.isMobile
   this.getUID=function(nLen){
     var res = '';
     for (var i=0; i<nLen; i++) {

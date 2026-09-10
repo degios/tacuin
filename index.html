@@ -38,11 +38,9 @@
     var serviceWorkerVersion = '2467473633';
     var scriptLoaded = false;    
     function loadACLib() {
-      console.log('load')
       if (scriptLoaded) {
         return;
       }
-      console.log('loadACLib');
       scriptLoaded = true;
       ACLib.init();
     }
