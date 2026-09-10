@@ -2,6 +2,8 @@
 // https://freewebtoapk.com/app-icon-resizer
 // Create maskable icon
 // https://progressier.com/maskable-icons-editor
+// Create transparent icon for favicon
+// https://www.photoroom.com/it/tools/transparent-background
 
 window.ACLib=new(function(){
 
