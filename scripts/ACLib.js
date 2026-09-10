@@ -27,6 +27,7 @@ window.ACLib=new(function(){
           () => this._browserType()
                     ._screenOrientationListener()
                     ._loadSpeech()
+                    ._shortcutListener()
                     ._load())));
     /*
     this.sqlGlobalVar.Query();
@@ -168,6 +169,61 @@ window.ACLib=new(function(){
           this.voiceSpeech = true;
         }
       };
+    return this;
+  }
+  this._shortcutListener=function(){
+    if (!this.isMobile){
+      window.document.addEventListener("keydown", function (evt) {
+        let keyMap = new Map().set("9","keyTab")				//  Tab
+                              .set("33","keyPageUp")		//  Page up
+                              .set("34","keyPageDown")	//  Page down
+                              .set("112","keyHelp")			//  F1	help
+                              .set("113","keyPrint")		//	F2	stampa
+                              .set("114","keyModify")		//	F3	modifica
+                              .set("115","keyNew")			//	F4	nuovo
+                              .set("116","keyDelete")		//	F5	cancella
+                              .set("117","keyClear")		//	F6	cancella testo ricercato / filtri
+                              .set("118","keyPrev")			//	F7	indietro
+                              .set("119","keyNext")			//	F8	avanti
+                              .set("120","keyList")			//  F9  lista
+                              .set("121","keySave")			//	F10	salva
+                              .set("122","keyRefresh")	//	F11	aggiorna
+                              .set("123","keyFilter");	//	F12	filtro
+        let ctrlMap = new Map().set("8","keyCBack")		  // 	Backspace
+                              .set("112","keyCInfo");	// 	Informazioni
+                              //.set("27","keyCEsc");	//  Esc - NON FUNZIONA
+        
+        let keyStr = keyMap.get(evt.keyCode.toString());
+        let ctrlStr = ctrlMap.get(evt.keyCode.toString());
+        //console.log(evt.keyCode);
+        let fired = false;
+        if ((evt.ctrlKey && !evt.shiftKey && ctrlStr != undefined) || (!evt.ctrlKey && !evt.shiftKey && keyStr != undefined)){
+          keyStr = (evt.ctrlKey ? ctrlStr : keyStr);
+          console.log('shortcut: ' + keyStr);
+/*
+          //console.log(pContext.portletname);
+          if ((pContext.rv ?? pContext)._loader(pContext.rv ?? pContext)) // Blocco shortcut se loader aperto
+            fired = true;
+          else if (Object.hasOwn((pContext.rv ?? pContext),"_getPortletReceiver") && Object.hasOwn((pContext.rv ?? pContext)._getPortletReceiver(),"_getPortletReceiver")){
+            if ((pContext.rv ?? pContext)._getPortletReceiver()._getPortletReceiver() != null &&
+                (pContext.rv ?? pContext)._getPortletReceiver()._getPortletReceiver() != undefined &&
+                (pContext.rv ?? pContext)._getPortletReceiver()._getPortletReceiver().portletname != undefined && 
+                !(pContext.rv ?? pContext)._getPortletReceiver()._getPortletReceiver().rvLoading()){
+              //console.log((pContext.rv ?? pContext)._getPortletReceiver()._getPortletReceiver().portletname + ' -> dispatch ' + keyStr);
+              //console.log((pContext.rv ?? pContext).mdcAction("bsrOpen"));
+              fired = (pContext.rv ?? pContext)._getPortletReceiver()._getPortletReceiver().rv._childAction((pContext.rv ?? pContext)._getPortletReceiver()._getPortletReceiver(),keyStr);
+              if (!fired && keyStr == 'keyFilter' && (pContext.rv ?? pContext).mdcAction("bsrOpen"))
+                (pContext.rv ?? pContext).Ctrl.ownerDocument.getElementById("bsrOpen").click();
+              else if (!fired && keyStr == 'keyClear' && (pContext.rv ?? pContext).mdcAction("bsrOpen"))
+                (pContext.rv ?? pContext).Ctrl.ownerDocument.getElementById("tsrClear").click();
+            }
+          }
+*/
+          if (fired || !["keyTab"].includes(keyStr))
+            evt.preventDefault(); // Blocco evento standard
+        }
+      });
+    }
     return this;
   }
 //---End initialize
