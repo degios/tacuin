@@ -1,56 +1,61 @@
 body {
-    margin:0px
+  margin:0px
 }
 
 .tplTopbar_ctrl {
-    box-sizing: border-box;
-    z-index: 1000;
-    position: absolute;
-    display: inline-block;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    width: auto;
-    height: auto;
-    min-height: 50px;
+  box-sizing: border-box;
+  z-index: 1000;
+  position: absolute;
+  display: inline-block;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  width: auto;
+  height: auto;
+  min-height: 50px;
 }
 
 .tplBottomBar_ctrl {
-    box-sizing: border-box;
-    z-index: 1000;
-    position: absolute;
-    display: inline-block;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    width: auto;
-    height: auto;
-    min-height: 48px;
+  box-sizing: border-box;
+  z-index: 1000;
+  position: absolute;
+  display: inline-block;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: auto;
+  height: auto;
+  min-height: 48px;
 }
 
 .fltBtn_ctrl {
-    box-sizing: border-box;
-    z-index: 1010;
-    position: absolute;
-    display: inline-block;
-    top: -41px;
-    left: 0px;
-    left: 0.0%;
-    right: 275px;
-    right: 91.666664%;
-    width: auto;
-    height: auto;
-    min-height: 25px;
+  box-sizing: border-box;
+  z-index: 1010;
+  position: absolute;
+  display: inline-block;
+  top: -41px;
+  left: 0px;
+  left: 0.0%;
+  right: 275px;
+  right: 91.666664%;
+  width: auto;
+  height: auto;
+  min-height: 25px;
 }
 
 /* TOB E BOTTOM BAR - inizio */
 .mdc-top-app-bar > .mdc-top-app-bar__row {
-    height: 50px !important;
+  height: 50px !important;
 }
 .mdc-bottom-app-bar > .mdc-top-app-bar__row {
-    height: 47px !important;
+  height: 47px !important;
 }
 /* TOB E BOTTOM BAR - inizio */
+
+/* L'icona risulta leggermente disassata in alto */
+.mdc-fab.mdc-fab-bottom-center > .mdc-fab__icon {
+  padding-top: 2px;
+}
 
 :root {
   --mdc-typography-font-family: -apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Fira Sans,Ubuntu,Oxygen,Oxygen Sans,Cantarell,Droid Sans,Apple Color Emoji,Segoe UI Emoji,Segoe UI Emoji,Segoe UI Symbol,Lucida Grande,Helvetica,Arial,sans-serif;
