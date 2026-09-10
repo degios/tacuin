@@ -126,6 +126,7 @@ window.ACLib=new(function(){
 
       this.isMobile = /Android|Mobi|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgentString)
     }
+    console.log('isMobile: ' + this.isMobile)
     return this;
   }
   this._screenProperties=function(){
