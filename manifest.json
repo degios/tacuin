@@ -5,13 +5,10 @@
     "display": "standalone",
     "background_color": "#FFFFFF",
     "theme_color": "#5F7D8A",
-    "description": "Expense monitoring",
+    "description": "Personal expense monitoring",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
-	"display": "standalone",
 	"scope": ".",
-	"theme_color": "#ffffff",
-	"description": "Personal expense monitoring",
     "icons": [
         {
             "src": "icons/icon-48x48.png",
