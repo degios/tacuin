@@ -23,76 +23,7 @@ window.MXLib=function(pServiceWorkerVersion){
   this.voiceLabels = "";
 
 //---Start initialize
-  this._initialize=function(pWaitServiceWorker){
-    console.log('MXLib: starting engine...');
-    if (!this.swLoaded) MXLib = this;
-    if (this.swLoaded)
-      console.log('MXLib: engine is already running!');
-    else if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
-      console.log('MXLib: load service worker...');
-      // Service workers are supported. Use them.
-      window.addEventListener('load', function () {
-        console.log('MXLib: window loaded');
-        // Wait for registration to finish before dropping the <script> tag.
-        // Otherwise, the browser will load the script multiple times,
-        // potentially different versions.
-        var serviceWorkerUrl = 'sw.js?v=' + MXLib.swVersion;
-        navigator.serviceWorker.register(serviceWorkerUrl)
-          .then((reg) => {
-            console.log('MXLib: SW registered!', reg);
-//---DISATTIVATO: non funziona l'update e scatta sempre il timeout
-/*            
-            function waitForActivation(serviceWorker) {
-              serviceWorker.addEventListener('statechange', () => {
-                if (serviceWorker.state == 'activated') {
-                  console.log('MXLib: installed new service worker');
-                  MXLib._load();
-                }
-              });
-            }
-            console.log('MXLib: version ' + reg.active.scriptURL)
-            console.log('MXLIb: version requested ' + MXLib.swVersion)
-            if (!reg.active && (reg.installing || reg.waiting)) {
-              // No active web worker and we have installed or are installing
-              // one for the first time. Simply wait for it to activate.
-              waitForActivation(reg.installing || reg.waiting);
-            } else if (!reg.active.scriptURL.endsWith(MXLib.swVersion)) {
-              // When the app updates the serviceWorkerVersion changes, so we
-              // need to ask the service worker to update.
-              console.log('MXLib: new service worker available');
-              console.log(reg)
-              reg.update();
-              //waitForActivation(reg.installing);
-              waitForActivation(reg.installing || reg.waiting);
-            } else {
-              // Existing service worker is still good.
-              console.log('MXLib: loading app from service worker');
-              MXLib._load();
-            }
-*/
-          })
-        .catch((err) => {
-            console.log('MXLib: SW error!', reg);
-          });
-
-//---DISATTIVATO: non funziona l'update e scatta sempre il timeout
-        if (true) MXLib._load();
-        else setTimeout(() => {
-          if (!MXLib.swLoaded) {
-            console.log('MXLib: failed to load app from service worker. Falling back to plain <script> tag');
-            MXLib._load();
-          }
-        }, 4000);
-      });
-    } 
-    else {
-      console.log('MXLib: service workers not supported');
-      // Service workers not supported. Just drop the <script> tag.
-      this._load();
-    }
-  };
-  this._load=function(){
-    console.log('MXLib: load ' + this.swLoaded);
+  this._init=function(){
     if (!this.swLoaded) {
       this.swLoaded = true;
       this.loadFile('styles/material.css',true, 
@@ -102,7 +33,7 @@ window.MXLib=function(pServiceWorkerVersion){
                       ._screenOrientationListener()
                       ._loadSpeech()
                       ._shortcutListener()
-                      ._design())));
+                      ._load())));
     /*
       this.sqlGlobalVar.Query();
       this.sqlUtente.Query();
@@ -117,7 +48,7 @@ window.MXLib=function(pServiceWorkerVersion){
     }
     return this;
   };
-  this._design=function(){
+  this._load=function(){
     let mainDiv = this.CE("div",window.document.body);
     //this.CT("Tacuin, a personal expense monitor project", this.CE("h2",mainDiv));
 
@@ -376,7 +307,71 @@ window.MXLib=function(pServiceWorkerVersion){
   };
 //---End function
 
-
 //---Instanciate MaDeX engine
-  this._initialize();
+  console.log('MXLib: starting engine...');
+  if (!this.swLoaded) MXLib = this;
+  if (this.swLoaded)
+    console.log('MXLib: engine is already running!');
+  else if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
+    console.log('MXLib: load service worker...');
+    // Service workers are supported. Use them.
+    window.addEventListener('load', function () {
+      console.log('MXLib: window loaded');
+      // Wait for registration to finish before dropping the <script> tag.
+      // Otherwise, the browser will load the script multiple times,
+      // potentially different versions.
+      var serviceWorkerUrl = 'sw.js?v=' + MXLib.swVersion;
+      navigator.serviceWorker.register(serviceWorkerUrl)
+        .then((reg) => {
+          console.log('MXLib: SW registered!', reg);
+//---DISATTIVATO: non funziona l'update e scatta sempre il timeout
+/*            
+          function waitForActivation(serviceWorker) {
+            serviceWorker.addEventListener('statechange', () => {
+              if (serviceWorker.state == 'activated') {
+                console.log('MXLib: installed new service worker');
+                MXLib._init();
+              }
+            });
+          }
+          console.log('MXLib: version ' + reg.active.scriptURL)
+          console.log('MXLIb: version requested ' + MXLib.swVersion)
+          if (!reg.active && (reg.installing || reg.waiting)) {
+            // No active web worker and we have installed or are installing
+            // one for the first time. Simply wait for it to activate.
+            waitForActivation(reg.installing || reg.waiting);
+          } else if (!reg.active.scriptURL.endsWith(MXLib.swVersion)) {
+            // When the app updates the serviceWorkerVersion changes, so we
+            // need to ask the service worker to update.
+            console.log('MXLib: new service worker available');
+            console.log(reg)
+            reg.update();
+            //waitForActivation(reg.installing);
+            waitForActivation(reg.installing || reg.waiting);
+          } else {
+            // Existing service worker is still good.
+            console.log('MXLib: loading app from service worker');
+            MXLib._init();
+          }
+*/
+        })
+      .catch((err) => {
+          console.log('MXLib: SW error!', reg);
+        });
+
+//---DISATTIVATO: non funziona l'update e scatta sempre il timeout
+      if (true) MXLib._init();
+      else setTimeout(() => {
+        if (!MXLib.swLoaded) {
+          console.log('MXLib: failed to load app from service worker. Falling back to plain <script> tag');
+          MXLib._init();
+        }
+      }, 4000);
+    });
+  } 
+  else {
+    console.log('MXLib: service workers not supported');
+    // Service workers not supported. Just drop the <script> tag.
+    MXLib._init();
+  }
 };
