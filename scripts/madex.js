@@ -7,7 +7,10 @@
 // Create transparent icon for favicon
 // https://www.photoroom.com/it/tools/transparent-background
 
-window.ACLib=new(function(){
+window.MXLib=function(pServiceWorkerVersion){
+
+  this.swVersion = (pServiceWorkerVersion ?? '20260909T000000').trim();
+  this.swLoaded = false;
 
   this.isChrome = false;
   this.isFirefox = false;
@@ -20,28 +23,90 @@ window.ACLib=new(function(){
   this.voiceLabels = "";
 
 //---Start initialize
-  this.init=function(){
-    this.loadFile('styles/material.css',true, 
-      () => this.loadFile('scripts/material.min.js',true,
-        () => this.loadFile('styles/ACLib.css', true,
-          () => this._browserType()
-                    ._screenOrientationListener()
-                    ._loadSpeech()
-                    ._shortcutListener()
-                    ._load())));
-    /*
-    this.sqlGlobalVar.Query();
-    this.sqlUtente.Query();
-    this.getBrowserType();
-    this.loadUserSettings();
-    this.loadSpeech();
-    this.loadInfo(); // Caricamento asincrono
-    this.loadlastUpdate(); // Caricamento asincrono
-    this._shortcutListener(this);
-    this._screenOrientationListener();
-    */
-  }
+  this._initialize=function(){
+    console.log('MXLib: starting engine...');
+    if (!this.swLoaded) MXLib = this;
+    if (this.swLoaded)
+      console.log('MXLib: engine is already running!');
+    else if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
+      console.log('load service worker...');
+      // Service workers are supported. Use them.
+      window.addEventListener('load', function () {
+        // Wait for registration to finish before dropping the <script> tag.
+        // Otherwise, the browser will load the script multiple times,
+        // potentially different versions.
+        var serviceWorkerUrl = '../sw.js?v=' + this.swVersion;
+        navigator.serviceWorker.register(serviceWorkerUrl)
+          .then((reg) => {
+            function waitForActivation(serviceWorker) {
+              serviceWorker.addEventListener('statechange', () => {
+                if (serviceWorker.state == 'activated') {
+                  console.log('Installed new service worker.');
+                  this._load();
+                }
+              });
+            }
+            if (!reg.active && (reg.installing || reg.waiting)) {
+              // No active web worker and we have installed or are installing
+              // one for the first time. Simply wait for it to activate.
+              waitForActivation(reg.installing || reg.waiting);
+            } else if (!reg.active.scriptURL.endsWith(this.swVersion)) {
+              // When the app updates the serviceWorkerVersion changes, so we
+              // need to ask the service worker to update.
+              console.log('New service worker available.');
+              reg.update();
+              waitForActivation(reg.installing);
+            } else {
+              // Existing service worker is still good.
+              console.log('Loading app from service worker.');
+              this._load();
+            }
+          });
+
+        // If service worker doesn't succeed in a reasonable amount of time,
+        // fallback to plaint <script> tag.
+        setTimeout(() => {
+          if (!this.swLoaded) {
+            console.warn(
+              'Failed to load app from service worker. Falling back to plain <script> tag.',
+            );
+            this._load();
+          }
+        }, 4000);
+      });
+    } 
+    else {
+      console.log('Service workers not supported');
+      // Service workers not supported. Just drop the <script> tag.
+      this._load();
+    }
+  };
   this._load=function(){
+    if (!this.swLoaded) {
+      this.swLoaded = true;
+      this.loadFile('styles/material.css',true, 
+        () => this.loadFile('scripts/material.min.js',true,
+          () => this.loadFile('styles/madex.css', true,
+            () => this._browserType()
+                      ._screenOrientationListener()
+                      ._loadSpeech()
+                      ._shortcutListener()
+                      ._design())));
+    /*
+      this.sqlGlobalVar.Query();
+      this.sqlUtente.Query();
+      this.getBrowserType();
+      this.loadUserSettings();
+      this.loadSpeech();
+      this.loadInfo(); // Caricamento asincrono
+      this.loadlastUpdate(); // Caricamento asincrono
+      this._shortcutListener(this);
+      this._screenOrientationListener();
+    */
+    }
+    return this;
+  };
+  this._design=function(){
     let mainDiv = this.CE("div",window.document.body);
     //this.CT("Tacuin, a personal expense monitor project", this.CE("h2",mainDiv));
 
@@ -84,7 +149,7 @@ window.ACLib=new(function(){
     fltBtnDiv.innerHTML = fltBtnHTML;
 
     this._loadMaterial();
-  }
+  };
   this._loadMaterial=function(){
     let oDocument = window.document;
     // animazioni material design
@@ -101,7 +166,7 @@ window.ACLib=new(function(){
       return new mdc.slider.MDCSlider(el);
     });
     return this;
-  }
+  };
   this._browserType=function(){
     let userAgentString =  navigator.userAgent;
     if (userAgentString){
@@ -126,13 +191,12 @@ window.ACLib=new(function(){
 
       this.isMobile = /Android|Mobi|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgentString)
     }
-    console.log('isMobile: ' + this.isMobile)
     return this;
-  }
+  };
   this._screenProperties=function(){
     this.isWideScreen = !this.isMobile || screen.width > 640;
     return this;
-  }
+  };
   this._screenOrientationListener=function(){
     this._screenProperties();
     screen.orientation.addEventListener("change", (event) => {
@@ -150,7 +214,7 @@ window.ACLib=new(function(){
       //}
     });
     return this;
-  }
+  };
   this._loadSpeech=function(){
     this.voiceSpeech = false;
     this.voiceValues = "";
@@ -164,14 +228,14 @@ window.ACLib=new(function(){
         let voices = speechSynthesis.getVoices().filter(function(voice) { return voice.name.toLowerCase().includes('italian'); });
         if (voices && voices.length > 0){
           voices.forEach(function(voice) {
-            ACLib.voiceValues += (ACLib.voiceValues.trim() == '' ? '' : ',') + voice.name;
-            ACLib.voiceLabels += (ACLib.voiceLabels.trim() == '' ? '' : ',') + voice.name;
+            MXLib.voiceValues += (MXLib.voiceValues.trim() == '' ? '' : ',') + voice.name;
+            MXLib.voiceLabels += (MXLib.voiceLabels.trim() == '' ? '' : ',') + voice.name;
           });
           this.voiceSpeech = true;
         }
       };
     return this;
-  }
+  };
   this._shortcutListener=function(){
     if (!this.isMobile){
       window.document.addEventListener("keydown", function (evt) {
@@ -226,7 +290,7 @@ window.ACLib=new(function(){
       });
     }
     return this;
-  }
+  };
 //---End initialize
 
 
@@ -298,6 +362,10 @@ window.ACLib=new(function(){
       });
     }
     return this;
-  }
+  };
 //---End function
-});
+
+
+//---Instanciate MaDeX engine
+  this._initialize();
+};

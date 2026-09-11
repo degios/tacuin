@@ -13,10 +13,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="tacuin">
 
-<!--<link rel='manifest' id="manifest" href='../manifest.json' />
-<link rel="apple-touch-icon" href="../images/revolver192_maskable.png">
-<script src='../rv_sw.js' />-->
-
   <link rel="icon" sizes="16x16" href="icons/icon-16x16-transparent.png">
   <link rel="icon" sizes="32x32" href="icons/icon-32x32-transparent.png">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180-transparent.png">
@@ -27,76 +23,12 @@
   <meta name="viewport" content="width=device-width">
   <meta name="theme-color" content="#DF0274"/>
 
-  <title>Tacuin - Expense monitor</title>
-  <script src="scripts/ACLib.js"></script>
+  <title>Personal expense monitor</title>
+  <script src="scripts/madex.js"></script>
 </head>
 <body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>
-    var serviceWorkerVersion = '2467473633';
-    var scriptLoaded = false;    
-    function loadACLib() {
-      if (scriptLoaded) {
-        return;
-      }
-      scriptLoaded = true;
-      ACLib.init();
-    }
-    
-    //console.log(window.location);
-    if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
-      console.log('load service worker...');
-      // Service workers are supported. Use them.
-      window.addEventListener('load', function () {
-        // Wait for registration to finish before dropping the <script> tag.
-        // Otherwise, the browser will load the script multiple times,
-        // potentially different versions.
-        var serviceWorkerUrl = 'sw.js?v=' + serviceWorkerVersion;
-        navigator.serviceWorker.register(serviceWorkerUrl)
-          .then((reg) => {
-            function waitForActivation(serviceWorker) {
-              serviceWorker.addEventListener('statechange', () => {
-                if (serviceWorker.state == 'activated') {
-                  console.log('Installed new service worker.');
-                  loadACLib();
-                }
-              });
-            }
-            if (!reg.active && (reg.installing || reg.waiting)) {
-              // No active web worker and we have installed or are installing
-              // one for the first time. Simply wait for it to activate.
-              waitForActivation(reg.installing || reg.waiting);
-            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
-              // When the app updates the serviceWorkerVersion changes, so we
-              // need to ask the service worker to update.
-              console.log('New service worker available.');
-              reg.update();
-              waitForActivation(reg.installing);
-            } else {
-              // Existing service worker is still good.
-              console.log('Loading app from service worker.');
-              loadACLib();
-            }
-          });
-
-        // If service worker doesn't succeed in a reasonable amount of time,
-        // fallback to plaint <script> tag.
-        setTimeout(() => {
-          if (!scriptLoaded) {
-            console.warn(
-              'Failed to load app from service worker. Falling back to plain <script> tag.',
-            );
-            loadACLib();
-          }
-        }, 4000);
-      });
-    } else {
-      console.log('Service workers not supported');
-      // Service workers not supported. Just drop the <script> tag.
-      loadACLib();
-    }
+    new MXLib('20260911T000000');
   </script>
 </body>
 </html>
