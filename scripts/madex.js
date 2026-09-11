@@ -70,7 +70,7 @@ window.MXLib=function(pServiceWorkerVersion){
         // If service worker doesn't succeed in a reasonable amount of time,
         // fallback to plaint <script> tag.
         setTimeout(() => {
-          if (!this.swLoaded) {
+          if (!MXLib.swLoaded) {
             console.log('MXLib: failed to load app from service worker. Falling back to plain <script> tag');
             MXLib._load();
           }
@@ -84,6 +84,7 @@ window.MXLib=function(pServiceWorkerVersion){
     }
   };
   this._load=function(){
+    console.log('MXLib: load ' + this.swLoaded);
     if (!this.swLoaded) {
       this.swLoaded = true;
       this.loadFile('styles/material.css',true, 
