@@ -83,11 +83,13 @@ window.MXLib=function(pServiceWorkerVersion){
 
     let fltBtnDiv = this.CE('div',mainDiv,'fltBtn_ctrl');
     let fltBtnHTML = '';
+    /*
     fltBtnHTML += '<!-- CENTER -->';
     fltBtnHTML += '<button class="mdc-fab mdc-fab-bottom-center mdc-fbb" id="fbbCSpunta" aria-label="Favorite" style="display: block;">';
     fltBtnHTML += '  <div class="mdc-fab__ripple"></div>';
     fltBtnHTML += '  <span class="mdc-fab__icon material-symbols-outlined">qr_code_scanner</span>';
     fltBtnHTML += '</button>';
+    */
     fltBtnDiv.innerHTML = fltBtnHTML;
 
     let hmbDrwDiv = this.CE('div',mainDiv,'hmbDrw_ctrl');
@@ -99,6 +101,7 @@ window.MXLib=function(pServiceWorkerVersion){
     hmbDrwHTML += '  </div>';
     hmbDrwHTML += '  <div class="mdc-drawer__content">';
     hmbDrwHTML += '    <nav class="mdc-list">';
+    /*
     hmbDrwHTML += '      <hr class="mdc-list-divider">';
     hmbDrwHTML += '      <div id="hmdInfo">';
     hmbDrwHTML += '        <a class="mdc-list-item">';
@@ -108,6 +111,7 @@ window.MXLib=function(pServiceWorkerVersion){
     hmbDrwHTML += '        </a>';
     hmbDrwHTML += '      </div>';
     hmbDrwHTML += '    </nav>';
+    */
     hmbDrwHTML += '  </div>';
     hmbDrwHTML += '<div class="mdc-drawer__footer">';
     hmbDrwHTML += '<hr class="mdc-list-divider">';
