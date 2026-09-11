@@ -57,10 +57,10 @@ window.MXLib=function(pServiceWorkerVersion){
     topBarHTML += '<header class="mdc-top-app-bar" id="tbar">';
     topBarHTML += '  <div class="mdc-top-app-bar__row" id="tbarRow">';
     topBarHTML += '    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start" id="tbarLeft">';
-    topBarHTML += '      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" id="tbtHamb" aria-label="Open navigation menu" style="display: block;">menu</button>';
+    //topBarHTML += '      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" id="tbtHamb" aria-label="Open navigation menu" style="display: block;">menu</button>';
     topBarHTML += '    </section>';
     topBarHTML += '    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" id="tbarRight">';
-		topBarHTML += '      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" id="tsrOpen" aria-label="Open navigation menu" style="display: block;">search</button> ';
+		//topBarHTML += '      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" id="tsrOpen" aria-label="Open navigation menu" style="display: block;">search</button> ';
     topBarHTML += '    </section>';
     topBarHTML += '  </div>';
     topBarHTML += '</header>';
@@ -72,10 +72,10 @@ window.MXLib=function(pServiceWorkerVersion){
     botBarHTML += '<header class="mdc-bottom-app-bar" id="bbar">';
     botBarHTML += '  <div class="mdc-top-app-bar__row" id="bbarRow">';
     botBarHTML += '    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start" id="bbarLeft">';
-    botBarHTML += '      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" id="bbtHamb" aria-label="Open navigation menu" style="display: block;">menu</button>';
+    //botBarHTML += '      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" id="bbtHamb" aria-label="Open navigation menu" style="display: block;">menu</button>';
     botBarHTML += '    </section>';
     botBarHTML += '    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" id="bbarRight">';
-    botBarHTML += '      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" id="bbtStampa" aria-label="Open navigation menu" style="display: block;">print</button>';
+    //botBarHTML += '      <button class="material-symbols-outlined mdc-top-app-bar__navigation-icon mdc-icon-button" id="bbtStampa" aria-label="Open navigation menu" style="display: block;">print</button>';
     botBarHTML += '    </section>';
     botBarHTML += '    </div>';
     botBarHTML += '</header>';
@@ -90,24 +90,40 @@ window.MXLib=function(pServiceWorkerVersion){
     fltBtnHTML += '</button>';
     fltBtnDiv.innerHTML = fltBtnHTML;
 
-    this._loadMaterial();
-  };
-  this._loadMaterial=function(){
-    let oDocument = window.document;
-    // animazioni material design
-    let mdcTextFields = [].map.call(oDocument.querySelectorAll(".mdc-text-field"), function(el){
-      return new mdc.textField.MDCTextField(el);
-    });
-    let mdcIconButtons = [].map.call(oDocument.querySelectorAll(".mdc-icon-button"), function(el){
-      return new mdc.ripple.MDCRipple(el);
-    });
-    let mdcSwitches = [].map.call(oDocument.querySelectorAll(".mdc-switch"), function(el){
-      return new mdc.switchControl.MDCSwitch(el);
-    });
-    let mdcSliders = [].map.call(oDocument.querySelectorAll(".mdc-slider"), function(el){
-      return new mdc.slider.MDCSlider(el);
-    });
-    return this;
+    let hmbDrwDiv = this.CE('div',mainDiv,'hmbDrw_ctrl');
+    let hmbDrwHTML = '';
+    hmbDrwHTML += '<aside id="hmdDrawer" class="mdc-drawer mdc-drawer--modal">';
+    hmbDrwHTML += '  <div class="mdc-drawer__header">';
+    hmbDrwHTML += '    <h3 id="hmdTitle" class="mdc-drawer__title">Revolver</h3>';
+    hmbDrwHTML += '    <h6 id="hmdSubtitle" class="mdc-drawer__subtitle">"Nothing Like Before"</h6>';
+    hmbDrwHTML += '  </div>';
+    hmbDrwHTML += '  <div class="mdc-drawer__content">';
+    hmbDrwHTML += '    <nav class="mdc-list">';
+    hmbDrwHTML += '      <hr class="mdc-list-divider">';
+    hmbDrwHTML += '      <div id="hmdInfo">';
+    hmbDrwHTML += '        <a class="mdc-list-item">';
+    hmbDrwHTML += '          <span class="mdc-list-item__ripple"></span>';
+    hmbDrwHTML += '          <i class="material-symbols-outlined mdc-list-item__graphic" aria-hidden="true">info</i>';
+    hmbDrwHTML += '          <span class="mdc-list-item__text">Informazioni</span>';
+    hmbDrwHTML += '        </a>';
+    hmbDrwHTML += '      </div>';
+    hmbDrwHTML += '    </nav>';
+    hmbDrwHTML += '  </div>';
+    hmbDrwHTML += '<div class="mdc-drawer__footer">';
+    hmbDrwHTML += '<hr class="mdc-list-divider">';
+    hmbDrwHTML += '<h6 id="hmdCopyright" class="mdc-drawer__copyright">&copy;</h6>';
+    hmbDrwHTML += '</div>';
+    hmbDrwHTML += '</aside>';
+    hmbDrwHTML += '<div class="mdc-drawer-scrim"></div>';
+    hmbDrwDiv.innerHTML = hmbDrwHTML;
+
+    /*
+    homeDraw = new mdc.drawer.MDCDrawer.attachTo(document.getElementById("hmdDrawer"));
+    document.getElementById("hmdTitle").innerText = 'Utente';
+    document.getElementById("hmdSubtitle").innerText = 'Azienda';
+    document.getElementById("hmdCopyright").innerHTML = '&copy; 2025 All rights reserved';
+    //homeDraw.open = true;
+    */
   };
   this._browserType=function(){
     let userAgentString =  navigator.userAgent;

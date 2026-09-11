@@ -714,6 +714,7 @@ th.rv_gridjs-th-fixed {
 .mdc-drawer {
   background-color: #ffffff;
   background-color: var(--mdc-theme-menu-background, #ffffff);
+  z-index: 2000; /* Superiore ai 1000 di tob/bottom bar */
 }
 /*
 .mdc-drawer .mdc-list-divider {
@@ -722,6 +723,9 @@ th.rv_gridjs-th-fixed {
   border-bottom-color: var(--mdc-theme-divider,rgba(0, 0, 0, 0.12));
 }
 */
+.mdc-drawer-scrim {
+  z-index: 1500; /* Superiore ai 1000 di tob/bottom bar e minore dei 2000 del drawer*/
+}
 
 /* AD Tob app bar - inizio */
 .mdc-top-app-bar {
