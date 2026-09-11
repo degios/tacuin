@@ -39,6 +39,8 @@ window.MXLib=function(pServiceWorkerVersion){
         var serviceWorkerUrl = 'sw.js?v=' + MXLib.swVersion;
         navigator.serviceWorker.register(serviceWorkerUrl)
           .then((reg) => {
+            console.log('MXLib: SW registered!', reg);
+/*            
             function waitForActivation(serviceWorker) {
               serviceWorker.addEventListener('statechange', () => {
                 if (serviceWorker.state == 'activated') {
@@ -66,11 +68,14 @@ window.MXLib=function(pServiceWorkerVersion){
               console.log('MXLib: loading app from service worker');
               MXLib._load();
             }
+*/
+          })
+        .catch((err) => {
+            console.log('MXLib: SW error!', reg);
           });
 
-        // If service worker doesn't succeed in a reasonable amount of time,
-        // fallback to plaint <script> tag.
-        setTimeout(() => {
+        if (true) MXLib._load();
+        else setTimeout(() => {
           if (!MXLib.swLoaded) {
             console.log('MXLib: failed to load app from service worker. Falling back to plain <script> tag');
             MXLib._load();
