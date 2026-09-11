@@ -9,7 +9,7 @@ body {
 .tplTopbar_ctrl {
   box-sizing: border-box;
   z-index: 1000;
-  display: block;
+  display: none; /* block */
   /*position: absolute;
   display: inline-block;
   top: 0px;
@@ -23,7 +23,7 @@ body {
 .tplTabBar_ctrl {
     box-sizing: border-box;
     z-index: 1000;
-    display: block;
+    display: none; /* block */
     /*position: absolute;
     display: inline-block;*/
     /* top: 0px; */
@@ -38,7 +38,7 @@ body {
 .tplContent_ctrl {
   box-sizing: border-box;
   z-index: 1000;
-  display: block;
+  display: none; /* block */
   /*position: absolute;
   display: inline-block;
   top: 0px;
@@ -52,7 +52,7 @@ body {
   box-sizing: border-box;
   z-index: 1000;
   position: absolute;
-  display: inline-block;
+  display: none; /* inline-block */
   left: 0px;
   right: 0px;
   bottom: 0px;

@@ -73,12 +73,13 @@ window.MXLib=function(pServiceWorkerVersion){
     tabBarHTML += '    <div class="mdc-tab-scroller__scroll-area mdc-tab-scroller__scroll-area--scroll">';
     tabBarHTML += '      <div class="mdc-tab-scroller__scroll-content">';
     for (let i=1; i < 10; i++){
-      tabBarHTML += '        <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="false" tabindex="0" id="tab' + i + '" style="display: block;">';
+      tabBarHTML += '        <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="false" tabindex="0" id="tab' + i + '">';
       tabBarHTML += '          <span class="mdc-tab__content">';
       tabBarHTML += '            <span class="mdc-tab__icon material-symbols-outlined" aria-hidden="true" id="tab' + i + 'Ico">code</span>';
       tabBarHTML += '            <span class="mdc-tab__text-label" id="tab' + i + 'Label">Prova</span>';
       tabBarHTML += '          </span>';
-      tabBarHTML += '          <span class="mdc-tab-indicator' + (i==1 ? ' mdc-tab-indicator--active' : '') + '" id="tab' + i + 'Ind">';
+      //tabBarHTML += '          <span class="mdc-tab-indicator' + (i==1 ? ' mdc-tab-indicator--active' : '') + '" id="tab' + i + 'Ind">';
+      tabBarHTML += '          <span class="mdc-tab-" id="tab' + i + 'Ind">';
       tabBarHTML += '            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>';
       tabBarHTML += '          </span>';
       tabBarHTML += '          <span class="mdc-tab__ripple"></span>';
