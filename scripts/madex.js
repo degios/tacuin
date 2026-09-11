@@ -23,15 +23,16 @@ window.MXLib=function(pServiceWorkerVersion){
   this.voiceLabels = "";
 
 //---Start initialize
-  this._initialize=function(){
+  this._initialize=function(pWaitServiceWorker){
     console.log('MXLib: starting engine...');
     if (!this.swLoaded) MXLib = this;
     if (this.swLoaded)
       console.log('MXLib: engine is already running!');
     else if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
-      console.log('load service worker...');
+      console.log('MXLib: load service worker...');
       // Service workers are supported. Use them.
       window.addEventListener('load', function () {
+        console.log('MXLib: window loaded');
         // Wait for registration to finish before dropping the <script> tag.
         // Otherwise, the browser will load the script multiple times,
         // potentially different versions.
@@ -41,7 +42,7 @@ window.MXLib=function(pServiceWorkerVersion){
             function waitForActivation(serviceWorker) {
               serviceWorker.addEventListener('statechange', () => {
                 if (serviceWorker.state == 'activated') {
-                  console.log('Installed new service worker.');
+                  console.log('MXLib: installed new service worker');
                   MXLib._load();
                 }
               });
@@ -53,13 +54,13 @@ window.MXLib=function(pServiceWorkerVersion){
             } else if (!reg.active.scriptURL.endsWith(MXLib.swVersion)) {
               // When the app updates the serviceWorkerVersion changes, so we
               // need to ask the service worker to update.
-              console.log('New service worker available.');
+              console.log('MXLib: new service worker available');
               reg.update();
               //waitForActivation(reg.installing);
               waitForActivation(reg.installing || reg.waiting);
             } else {
               // Existing service worker is still good.
-              console.log('Loading app from service worker.');
+              console.log('MXLib: loading app from service worker');
               MXLib._load();
             }
           });
@@ -68,16 +69,14 @@ window.MXLib=function(pServiceWorkerVersion){
         // fallback to plaint <script> tag.
         setTimeout(() => {
           if (!this.swLoaded) {
-            console.warn(
-              'Failed to load app from service worker. Falling back to plain <script> tag.',
-            );
+            console.log('MXLib: failed to load app from service worker. Falling back to plain <script> tag');
             MXLib._load();
           }
         }, 4000);
       });
     } 
     else {
-      console.log('Service workers not supported');
+      console.log('MXLib: service workers not supported');
       // Service workers not supported. Just drop the <script> tag.
       this._load();
     }
@@ -203,7 +202,7 @@ window.MXLib=function(pServiceWorkerVersion){
     screen.orientation.addEventListener("change", (event) => {
       this._screenProperties();
       //if (Object.hasOwn(this,"_getPortletReceiver") && Object.hasOwn(this._getPortletReceiver(),"_getPortletReceiver")){
-        console.log('orientation changed ' + screen.width);
+        console.log('MXLib: orientation changed ' + screen.width);
       //  if (this._getPortletReceiver()._getPortletReceiver() != null &&
       //      this._getPortletReceiver()._getPortletReceiver() != undefined &&
       //      this._getPortletReceiver()._getPortletReceiver().portletname != undefined && 
@@ -265,7 +264,7 @@ window.MXLib=function(pServiceWorkerVersion){
         let fired = false;
         if ((evt.ctrlKey && !evt.shiftKey && ctrlStr != undefined) || (!evt.ctrlKey && !evt.shiftKey && keyStr != undefined)){
           keyStr = (evt.ctrlKey ? ctrlStr : keyStr);
-          console.log('shortcut: ' + keyStr);
+          console.log('MXLib: shortcut: ' + keyStr);
 /*
           //console.log(pContext.portletname);
           if ((pContext.rv ?? pContext)._loader(pContext.rv ?? pContext)) // Blocco shortcut se loader aperto
