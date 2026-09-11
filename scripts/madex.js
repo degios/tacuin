@@ -35,7 +35,7 @@ window.MXLib=function(pServiceWorkerVersion){
         // Wait for registration to finish before dropping the <script> tag.
         // Otherwise, the browser will load the script multiple times,
         // potentially different versions.
-        var serviceWorkerUrl = '../sw.js?v=' + this.swVersion;
+        var serviceWorkerUrl = 'sw.js?v=' + this.swVersion;
         navigator.serviceWorker.register(serviceWorkerUrl)
           .then((reg) => {
             function waitForActivation(serviceWorker) {
