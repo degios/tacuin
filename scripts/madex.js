@@ -54,6 +54,7 @@ window.MXLib=function(pServiceWorkerVersion){
               // When the app updates the serviceWorkerVersion changes, so we
               // need to ask the service worker to update.
               console.log('New service worker available.');
+              console.log(reg)
               reg.update();
               waitForActivation(reg.installing);
             } else {
