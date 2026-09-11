@@ -40,6 +40,7 @@ window.MXLib=function(pServiceWorkerVersion){
         navigator.serviceWorker.register(serviceWorkerUrl)
           .then((reg) => {
             console.log('MXLib: SW registered!', reg);
+//---DISATTIVATO: non funziona l'update e scatta sempre il timeout
 /*            
             function waitForActivation(serviceWorker) {
               serviceWorker.addEventListener('statechange', () => {
@@ -74,6 +75,7 @@ window.MXLib=function(pServiceWorkerVersion){
             console.log('MXLib: SW error!', reg);
           });
 
+//---DISATTIVATO: non funziona l'update e scatta sempre il timeout
         if (true) MXLib._load();
         else setTimeout(() => {
           if (!MXLib.swLoaded) {
