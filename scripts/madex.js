@@ -49,10 +49,10 @@ window.MXLib=function(pServiceWorkerVersion){
     return this;
   };
   this._load=function(){
-    let mainDiv = this.CE("div",window.document.body);
+    let mainDiv = this.CE("div",window.document.body,"tplMain");
     //this.CT("Tacuin, a personal expense monitor project", this.CE("h2",mainDiv));
 
-    let topBarDiv = this.CE("div",mainDiv,'tplTopbar_ctrl');
+    let topBarDiv = this.CE("div",mainDiv,"tplTopBar","tplTopBar_ctrl");
     let topBarHTML = '';
     topBarHTML += '<header class="mdc-top-app-bar" id="tbar">';
     topBarHTML += '  <div class="mdc-top-app-bar__row" id="tbarRow">';
@@ -66,7 +66,7 @@ window.MXLib=function(pServiceWorkerVersion){
     topBarHTML += '</header>';
     topBarDiv.innerHTML = topBarHTML;
 
-    let tabBarDiv = this.CE("div",mainDiv,'tplTabBar_ctrl');
+    let tabBarDiv = this.CE("div",mainDiv,"tplTabBar","tplTabBar_ctrl");
     let tabBarHTML = '';
     tabBarHTML += '<div class="mdc-tab-bar" role="tablist">';
     tabBarHTML += '  <div class="mdc-tab-scroller">';
@@ -91,13 +91,13 @@ window.MXLib=function(pServiceWorkerVersion){
     tabBarHTML += '</div>';
     tabBarDiv.innerHTML = tabBarHTML;
 
-    let contentDiv = this.CE('div',mainDiv,'tplContent_ctrl');
+    let contentDiv = this.CE('div',mainDiv,"tplContent","tplContent_ctrl");
     let contentHTML = '';
     contentHTML += '<h2>Titolo</h2>';
     contentHTML += '<h3>Sottotitolo</h3>';
     contentDiv.innerHTML = contentHTML;
 
-    let botBarDiv = this.CE('div',mainDiv,'tplBottomBar_ctrl');
+    let botBarDiv = this.CE('div',mainDiv,"tplBottomBar","tplBottomBar_ctrl");
     let botBarHTML = '';
     botBarHTML += '';
     botBarHTML += '<header class="mdc-bottom-app-bar" id="bbar">';
@@ -112,7 +112,7 @@ window.MXLib=function(pServiceWorkerVersion){
     botBarHTML += '</header>';
     botBarDiv.innerHTML = botBarHTML;
 
-    let fltBtnDiv = this.CE('div',mainDiv,'fltBtn_ctrl');
+    let fltBtnDiv = this.CE('div',mainDiv,"fltBtn","fltBtn_ctrl");
     let fltBtnHTML = '';
     /*
     fltBtnHTML += '<!-- CENTER -->';
@@ -123,7 +123,7 @@ window.MXLib=function(pServiceWorkerVersion){
     */
     fltBtnDiv.innerHTML = fltBtnHTML;
 
-    let hmbDrwDiv = this.CE('div',mainDiv,'hmbDrw_ctrl');
+    let hmbDrwDiv = this.CE('div',mainDiv,"hmbDrw","hmbDrw_ctrl");
     let hmbDrwHTML = '';
     hmbDrwHTML += '<aside id="hmdDrawer" class="mdc-drawer mdc-drawer--modal">';
     hmbDrwHTML += '  <div class="mdc-drawer__header">';
@@ -288,24 +288,23 @@ window.MXLib=function(pServiceWorkerVersion){
 
 
 //---Start function
-  this.CE = function(el, target, className){
-    let ne = document.createElement(el);
-    if (className)
-      ne.className = className;
-    if(target)
-        target.appendChild(ne);
+  this.CE = function(pElement, pTarget, pId, pClass){
+    let ne = document.createElement(pElement);
+    if (pId) ne.id = pId;
+    if (pClass) ne.className = pClass;
+    if(pTarget) pTarget.appendChild(ne);
     return ne;
   };
-  this.CT=function(content, target){
-    let ne = document.createTextNode(content);
-    target.appendChild(ne);
+  this.CT=function(pContent, pTarget){
+    let ne = document.createTextNode(pContent);
+    pTarget.appendChild(ne);
     return ne;
   };
 
-  this.getUID=function(nLen){
-    var res = '';
-    for (var i=0; i<nLen; i++) {
-      var nAscii = parseInt(Math.random()*26+97);
+  this.getUID=function(pLen){
+    let res = '';
+    for (var i=0; i<pLen; i++) {
+      let nAscii = parseInt(Math.random()*26+97);
       res = res + String.fromCharCode(nAscii);
     }
     return (res);

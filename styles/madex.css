@@ -6,7 +6,7 @@ body {
   min-height: 100%;
 }
 
-.tplTopbar_ctrl {
+.tplTopBar_ctrl {
   box-sizing: border-box;
   z-index: 1000;
   display: none; /* block */
