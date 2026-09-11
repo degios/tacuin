@@ -47,7 +47,7 @@ window.MXLib=function(pServiceWorkerVersion){
                 }
               });
             }
-            console.log(''MXLib: version ' + reg.active.scriptURL)
+            console.log('MXLib: version ' + reg.active.scriptURL)
             console.log('MXLIb: version requested ' + MXLib.swVersion)
             if (!reg.active && (reg.installing || reg.waiting)) {
               // No active web worker and we have installed or are installing
