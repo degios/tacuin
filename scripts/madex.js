@@ -7,6 +7,47 @@
 // Create transparent icon for favicon
 // https://www.photoroom.com/it/tools/transparent-background
 
+// Dimensione font in rem
+// 0.125rem = 2px
+// --------------- inizio - range utilizzabile su titolo
+// 0.750rem = 12px
+// 0.875rem = 14px
+// 1.000rem = 16px
+// 1.125rem = 18px
+// 1.250rem = 20px
+// 1.375rem = 22px
+// 1.500rem = 24px
+// 1.625rem = 26px
+// 1.750rem = 28px
+// --------------- fine - range utilizzabile su titolo
+// 1.875rem = 30px
+// 2.000rem = 32px
+// 2.125rem = 34px
+
+// Immagini PNG: elemento disegnato bianco ed eliminazione dello sfondo (trasparenza) bacchetta magica con soglia 150
+
+// Ricerca acronimi (3 lettere)
+// https://www.acronymfinder.com/
+// https://www.w3schools.com/charsets/ref_utf_symbols.asp
+// https://www.w3schools.com/charsets/ref_utf_dingbats.asp
+
+// Colori CSS HTML (dodgerblue, forestgreen...)
+// https://www.w3schools.com/cssref/css_colors.php
+
+// Material Symbols Outlined
+// https://fonts.google.com/icons
+
+// Material Design 3.0
+// https://cdnjs.com/libraries/material-components-web/3.0.0
+// https://cdnjs.cloudflare.com/ajax/libs/material-components-web/3.0.0/material-components-web.js
+// https://cdnjs.cloudflare.com/ajax/libs/material-components-web/3.0.0/material-components-web.js.map
+// https://cdnjs.cloudflare.com/ajax/libs/material-components-web/3.0.0/material-components-web.css
+// https://cdnjs.cloudflare.com/ajax/libs/material-components-web/3.0.0/material-components-web.css.map
+// https://cdnjs.cloudflare.com/ajax/libs/material-components-web/3.0.0/material-components-web.min.js
+// https://cdnjs.cloudflare.com/ajax/libs/material-components-web/3.0.0/material-components-web.min.js.map
+// https://cdnjs.cloudflare.com/ajax/libs/material-components-web/3.0.0/material-components-web.min.css
+// https://cdnjs.cloudflare.com/ajax/libs/material-components-web/3.0.0/material-components-web.min.css.map
+
 window.MXLib=function(pServiceWorkerVersion){
 
   this.swVersion = (pServiceWorkerVersion ?? '20260909T000000').trim();
