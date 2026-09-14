@@ -676,6 +676,15 @@ window.MXLib=function(pServiceWorkerVersion){
     if (this_context.geoCallback !== null && this_context.geoCallback != undefined && typeof this_context.geoCallback == 'function')
       this_context.geoCallback(this_context.geoContext,jsonGeo);
   };
+  this.darkMode=function(){
+    //Check theme for mobile
+    //https://dev.to/shaedrizwan/set-your-web-app-to-dark-light-mode-based-on-user-system-settings-5fa6
+    //console.log(window.matchMedia("(prefers-color-scheme:dark)").matches);
+    //darkMode = (window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches);
+    
+    // Windows 11 è coerente con il tema mentre Windows 10 ha comunque le notifiche su sfondo nero: non posso gestire perciò il cambio corretto colore (es. icona di notifica)
+    return (window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches);
+  };
 
   this.notifyMessage=function(pTitle,pBody){
     try{
@@ -688,8 +697,8 @@ window.MXLib=function(pServiceWorkerVersion){
             let notificationData = {
                   body: (typeof pBody == 'string' && pBody.trim() != '' ? pBody.trim() : "Ci sono nuove notifiche"),
                   tag: "madexNotifier_" + this.getDateTimeString("M"), // es. MISSIONI, QUALITA... stessa delle categorie delle notifiche
-                  icon: (this._darkMode() ? "../images/rv_notify_dark.ico" : "../images/rv_notify_light.ico"),
-                  badge: "../images/rv_notify_badge.png",
+                  icon: (this.darkMode() ? "icons/notify_dark.ico" : "icons/notify_light.ico"),
+                  badge: "icons/notify_badge.png",
                   //,data: { url: "url_to_call" }
                   //,actions: [{action: "open_url", title: "Visualizzza"}]
             };
