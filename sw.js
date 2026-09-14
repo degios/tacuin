@@ -2,20 +2,20 @@ try{
 	// Evento install
 	self.addEventListener('install', event => {
 	 // Codice da eseguire su installazione
-	 console.log("Service Worker Installato");
+	 console.log("SW - Service Worker Installato");
 	});
 } catch (err){
-	console.log("*** addEventListener[install] Service Worket error: " + err);
+	console.log("*** SW - addEventListener[install] Service Worket error: " + err);
 }
 
 try{
 	// Evento activate 
 	self.addEventListener('activate', event => {
 	 // Codice da eseguire su attivazione 
-	 console.log("Service Worker Attivo");
+	 console.log("SW - Service Worker Attivo");
 	});
 } catch (err){
-	console.log("*** addEventListener[activate] Service Worket error: " + err);
+	console.log("*** SW - addEventListener[activate] Service Worket error: " + err);
 }
 
 try{
@@ -31,17 +31,17 @@ try{
 		}
 	});
 } catch (err){
-	console.log("addEventListener[fetch] Service Worket error: " + err);
+	console.log("*** SW - addEventListener[fetch] Service Worket error: " + err);
 }
 
 try{
 	self.addEventListener('notificationclick', (event) => {
 		if (!event.action) {
 			// Was a normal notification click
-			console.log('Notification Click.');
+			console.log('SW - Notification Click.');
 		}
 		else {
-			console.log(`Unknown action clicked: '${event.action}'`);
+			console.log(`SW - Unknown action clicked: '${event.action}'`);
 		}
 		
 		const clickedNotification = event.notification;
@@ -70,7 +70,7 @@ try{
 		);	
 	});
 } catch (err){
-	console.log("*** addEventListener[notificationclick] Service Worket error: " + err);
+	console.log("*** SW - addEventListener[notificationclick] Service Worket error: " + err);
 }
 
 try{
@@ -89,5 +89,5 @@ try{
 		}
 	});
 } catch (err){
-	console.log("*** addEventListener[sync] Service Worket error: " + err);
+	console.log("*** SW - addEventListener[sync] Service Worket error: " + err);
 }
