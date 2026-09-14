@@ -698,7 +698,7 @@ window.MXLib=function(pServiceWorkerVersion){
             let notificationData = {
                   body: (typeof pBody == 'string' && pBody.trim() != '' ? pBody.trim() : "Ci sono nuove notifiche"),
                   tag: "madexNotifier_" + this.getDateTimeString("M"), // es. MISSIONI, QUALITA... stessa delle categorie delle notifiche
-                  icon: (this.darkMode() ? "icons/notify_dark.ico" : "icons/notify_light.ico"),
+                  icon: (this.darkMode() ? "icons/notify_dark.png" : "icons/notify_light.png"),
                   badge: "icons/notify_badge.png",
                   //,data: { url: "url_to_call" }
                   //,actions: [{action: "open_url", title: "Visualizzza"}]
