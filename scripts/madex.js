@@ -22,18 +22,32 @@ window.MXLib=function(pServiceWorkerVersion){
   this.voiceValues = "";
   this.voiceLabels = "";
 
+  this.userSounds = "S";
+  this.soundMap = new Map().set("confirm",["sounds/popup.wav",[200, 100, 200]])
+                           .set("notify",["sounds/popup.wav",[200, 100, 200]])
+                           .set("error",["sounds/off.wav",[500]])
+                           .set("info",["",[500]])
+                           .set("success",["sounds/on.wav",[200]])
+                           .set("autosel",["sounds/on.wav",[200]])
+                           .set("warning",["sounds/drop.wav",[200, 100, 200]]);
+  this.userVibrate = "S";
+  this.mute = false;
+
 //---Start initialize
   this._init=function(){
     if (!this.swLoaded) {
       this.swLoaded = true;
       this.loadFile('styles/madex_material.css',true, 
         () => this.loadFile('scripts/madex_material.min.js',true,
-          () => this.loadFile('styles/madex.css', true,
-            () => this._browserType()
-                      ._screenOrientationListener()
-                      ._loadSpeech()
-                      ._shortcutListener()
-                      ._load())));
+          () => this.loadFile('styles/madex_snackbar.css',true, 
+            () => this.loadFile('scripts/madex_snackbar.js',true, 
+              () => this.loadFile('styles/madex.css', true,
+                () => this._browserType()
+                          ._screenOrientationListener()
+                          ._loadSpeech()
+                          ._loadSound()
+                          ._shortcutListener()
+                          ._load())))));
     /*
       this.sqlGlobalVar.Query();
       this.sqlUtente.Query();
@@ -159,6 +173,8 @@ window.MXLib=function(pServiceWorkerVersion){
     document.getElementById("hmdCopyright").innerHTML = '&copy; 2025 All rights reserved';
     //homeDraw.open = true;
     */
+
+    this.snackBar("Notification - Permission was not granted.",'error','!','');
   };
   this._browserType=function(){
     let userAgentString =  navigator.userAgent;
@@ -227,6 +243,12 @@ window.MXLib=function(pServiceWorkerVersion){
           this.voiceSpeech = true;
         }
       };
+    return this;
+  };
+  this._loadSound=function(){
+    this.soundMap.forEach((pVal, pKey) => {
+	    this.loadFile(pVal[0]);
+    });
     return this;
   };
   this._shortcutListener=function(){
@@ -352,6 +374,50 @@ window.MXLib=function(pServiceWorkerVersion){
         console.log("Error on loading file " + pFile.split('\\').pop().split('/').pop(), ev);
       });
     }
+    return this;
+  };
+  this.playSound=function (pSound){
+    let oReturn = this;
+    if (pSound == undefined)
+      oReturn = (!thismute && this.userSounds.trim() == 'S' && typeof pSound == 'string' && pSound.trim() != '');
+    else if (typeof pSound == 'boolean')
+      this.mute = pSound;
+    else if(!this.mute && this.userSounds.trim() == 'S' && typeof pSound == 'string' && pSound.trim() != ''){
+      let soundEle = (this.soundMap.get(pSound.trim().toLowerCase()) ?? ["",[]]);
+      let vibrate = soundEle[1];
+      pSound = soundEle[0];
+      if (pSound.trim() != ''){
+        if (this.userVibrate.trim() == 'S')
+          window.navigator.vibrate(vibrate);
+        else new Audio(pSound.startsWith('../') || pSound.startsWith('./') || pSound.startsWith('/') ? pSound : '../sounds/' + pSound).play();
+      }
+    }
+    return oReturn;
+  };
+  //Snackbar
+  //https://www.michaelmickelson.com/js-snackbar/
+  //status: success,error,warning,info
+  //icon  : exclamation,question,add or any charater
+  //position
+  //Value	Position
+  //"tl"	Top-Left
+  //"tc" or "tm"	Top-Center
+  //"tr"	Top-Right
+  //"bl"	Bottom-Left
+  //"bc" or "bm"	Bottom-Center
+  //"br"	Bottom-Right
+  this.snackBar=function(pMessage, pStatus, pIcon, pPosition, pTimeout){
+    if (pMessage !== null && pMessage != undefined && pMessage.trim() != '')
+      this.playSound(pStatus);
+      SnackBar({
+          message: pMessage.trim(),
+          status: ((pStatus ?? '').trim() == '' ? 'info' : pStatus),
+          icon: (pIcon ?? '').trim(),
+          position: ((pPosition ?? '').trim() == '' ? 'tr' : pPosition),
+          timeout: (pTimeout ?? 4000), // ms
+          //dismissible: false,
+          container: window.document.body
+      });
     return this;
   };
 //---End function
