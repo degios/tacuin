@@ -77,6 +77,7 @@ window.MXLib=function(pServiceWorkerVersion){
   this.userDeboto = 1000;
 
   this.userVocal = true;
+  this.userVoice = "";
   this.speechRecognition = null;
 
   this.geoContext = null;
@@ -719,6 +720,48 @@ window.MXLib=function(pServiceWorkerVersion){
     }
     return this;
   };  
+
+  this.speech=function(pText){
+    let oReturn = this;
+    if (pText == undefined)
+      oReturn = this.voiceSpeech;
+    else if (this.voiceSpeech && typeof pText == 'string' && pText.trim() != ''){
+      let msg = new window.SpeechSynthesisUtterance();
+      msg.text = pText;
+      msg.lang = 'it-IT';
+
+      let voices = [];
+      if (this.userVoice.trim() != '')
+        voices = speechSynthesis.getVoices().filter((voice) => { return voice.name.toLowerCase().includes(this.userVoice.trim().toLowerCase()); });
+      if (voices.length == 0)
+        voices = speechSynthesis.getVoices().filter((voice) => { return voice.name.toLowerCase().includes('google italiano'); });
+      if (voices.length == 0)
+        voices = speechSynthesis.getVoices().filter((voice) => { return (voice.name.toLowerCase().includes('natural') && voice.name.toLowerCase().includes('italian')); });
+      if (voices.length == 0)
+        voices = speechSynthesis.getVoices().filter((voice) => { return voice.name.toLowerCase().includes('italian'); });
+      if (voices.length == 0)
+        voices = speechSynthesis.getVoices();
+      //console.log(voices);
+      msg.voice = voices[0];
+
+      //var voices = window.speechSynthesis.getVoices();
+      //console.log(voices);
+      //msg.voice = voices[10]; // Note: some voices don't support altering params
+      //msg.voiceURI = 'native';
+      //msg.volume = 1; // 0 to 1
+      //msg.rate = 1; // 0.1 to 10
+      //msg.pitch = 2; //0 to 2
+      //msg.text = 'ciao alberto, come posso aiutarti?';
+      //msg.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Whisper'; })[0];
+
+      msg.onend = function(e) {
+        //console.log('Finished in ' + event.elapsedTime + ' seconds.');
+      };
+
+      speechSynthesis.speak(msg);
+    }
+    return oReturn;
+  };
 //---End function
 
 //---Instanciate MaDeX engine
