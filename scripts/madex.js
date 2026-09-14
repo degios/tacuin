@@ -79,6 +79,9 @@ window.MXLib=function(pServiceWorkerVersion){
   this.userVocal = true;
   this.speechRecognition = null;
 
+  this.geoContext = null;
+  this.geoCallback = null;
+
 //---Start initialize
   this._init=function(){
     if (!this.swLoaded) {
@@ -592,9 +595,9 @@ window.MXLib=function(pServiceWorkerVersion){
     if (pDate !== null && pDate != undefined){
       if (typeof pDate == 'number')
         pDate = new Date(pDate);
-      strTime  = this._padLNumber(pDate.getHours());
-      strTime += ":" + this._padLNumber(pDate.getMinutes());
-      if (pSeconds) strTime += ":" + ((typeof pSeconds == 'string' && pSeconds.trim().toLowerCase() == 'm') ? this._padLNumber(pDate.getMilliseconds(),3): this._padLNumber(pDate.getSeconds()) );
+      strTime  = this.padLNumber(pDate.getHours());
+      strTime += ":" + this.padLNumber(pDate.getMinutes());
+      if (pSeconds) strTime += ":" + ((typeof pSeconds == 'string' && pSeconds.trim().toLowerCase() == 'm') ? this.padLNumber(pDate.getMilliseconds(),3): this.padLNumber(pDate.getSeconds()) );
     }
     return strTime;
   };
@@ -607,9 +610,9 @@ window.MXLib=function(pServiceWorkerVersion){
     if (pDate !== null && pDate != undefined){
       if (typeof pDate == 'number')
         pDate = new Date(pDate);
-      strDate  = this._getDateString(pDate);
+      strDate  = this.getDateString(pDate);
       strDate += " ";
-      strDate += this._getTimeString(pDate,pSeconds);
+      strDate += this.getTimeString(pDate,pSeconds);
     }
     return strDate;
   };
@@ -649,7 +652,7 @@ window.MXLib=function(pServiceWorkerVersion){
     if (navigator.geolocation){
       this.geoContext = pContext;
       this.geoCallback = pCallback;
-      navigator.geolocation.getCurrentPosition(this._getCurrentPosition);
+      navigator.geolocation.getCurrentPosition(this.getCurrentPosition);
     }
     else console.log('Geolocation is not supported by this browser');
     return this;
