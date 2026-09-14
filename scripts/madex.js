@@ -174,7 +174,7 @@ window.MXLib=function(pServiceWorkerVersion){
     //homeDraw.open = true;
     */
 
-    this.snackBar("Notification - Permission was not granted.",'error','!','');
+    //this.snackBar("Notification - Permission was not granted.",'error','!','');
   };
   this._browserType=function(){
     let userAgentString =  navigator.userAgent;
