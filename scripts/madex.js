@@ -93,6 +93,7 @@ window.MXLib=function(pServiceWorkerVersion){
                           ._loadSpeech()
                           ._loadSound()
                           ._shortcutListener()
+                          ._messageListener()
                           ._load())))));
     /*
       this.sqlGlobalVar.Query();
@@ -257,7 +258,7 @@ window.MXLib=function(pServiceWorkerVersion){
     screen.orientation.addEventListener("change", (event) => {
       this._screenProperties();
       //if (Object.hasOwn(this,"_getPortletReceiver") && Object.hasOwn(this._getPortletReceiver(),"_getPortletReceiver")){
-        console.log('MXLib: orientation changed ' + screen.width);
+        console.log('MaDeX: orientation changed ' + screen.width);
       //  if (this._getPortletReceiver()._getPortletReceiver() != null &&
       //      this._getPortletReceiver()._getPortletReceiver() != undefined &&
       //      this._getPortletReceiver()._getPortletReceiver().portletname != undefined && 
@@ -325,7 +326,7 @@ window.MXLib=function(pServiceWorkerVersion){
         let fired = false;
         if ((evt.ctrlKey && !evt.shiftKey && ctrlStr != undefined) || (!evt.ctrlKey && !evt.shiftKey && keyStr != undefined)){
           keyStr = (evt.ctrlKey ? ctrlStr : keyStr);
-          console.log('MXLib: shortcut: ' + keyStr);
+          console.log('MaDeX: shortcut: ' + keyStr);
 /*
           //console.log(pContext.portletname);
           if ((pContext.rv ?? pContext)._loader(pContext.rv ?? pContext)) // Blocco shortcut se loader aperto
@@ -347,6 +348,19 @@ window.MXLib=function(pServiceWorkerVersion){
 */
           if (fired || !["keyTab"].includes(keyStr))
             evt.preventDefault(); // Blocco evento standard
+        }
+      });
+    }
+    return this;
+  };
+  this._messageListener=function(){
+    if('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        console.log('MaDeX: message from service worker');
+        console.log('MaDeX: action ' + event.data.action);
+        if (event.data.action == 'windowOpenForeground'){
+          //windowOpenForeground(event.data.url.replace("rv_sys_notifiche","rvzsys_notifiche") + "?callby=" + this.formid, "_top", "");
+          alert('Apertura notifiche da Service Worker non ancora implementata!');
         }
       });
     }
@@ -382,28 +396,28 @@ window.MXLib=function(pServiceWorkerVersion){
           testovocale = testovocale + stringa;
         }
         setTimeout(() => {
-          console.log('Comando vocale: ' + testovocale);
+          console.log('MaDeX: comando vocale ' + testovocale);
           MXLib.fireVocal(testovocale);
         }, MXLib.userDeboto.Value());
       }
 
       this.speechRecognition.onspeechstart = function() {
-        console.log("Riconoscimento vocale iniziato.");
+        console.log("MaDeX: Riconoscimento vocale iniziato.");
       }
 
       this.speechRecognition.onspeechend = function() {
-        console.log("Riconoscimento vocale terminato.");
+        console.log("MaDeX: riconoscimento vocale terminato.");
         MXLib.speechRecognition.stop();
       }
 
       this.speechRecognition.onnomatch = function(event) {
-        console.log("Non trovo nessuna corrispondenza in riconoscimento vocale.");
+        console.log("MaXeX: non trovo nessuna corrispondenza in riconoscimento vocale.");
         //this_context.clear_vocal();
         MXLib.speechRecognition.stop();
       }
 
       this.speechRecognition.onerror = function(event) {
-        console.log('Errore di riconoscimento vocale: ' + event.error);
+        console.log('MaDeX: errore di riconoscimento vocale: ' + event.error);
         //this_context.clear_vocal();
         MXLib.speechRecognition.stop();
       }
@@ -411,7 +425,7 @@ window.MXLib=function(pServiceWorkerVersion){
     return this;
   };
   this._fireVocal=function(pText){
-    console.log('MXLib: fire vocal: ' + pText);
+    console.log('MaDeX: fire vocal: ' + pText);
     //this.iframeMain.action_dispatch("srcSpeecRecognition",pText);
   };
 //---End initialize
@@ -549,37 +563,71 @@ window.MXLib=function(pServiceWorkerVersion){
   this.hasVocal=function(){
     return (this.userVocal && this.isChrome && this.speechRecognition !== null && this.speechRecognition != undefined);
   };
+
+  this.notifyMessage=function(pTitle,pBody){
+    try{
+      if('serviceWorker' in navigator) {
+        Notification.requestPermission(permission => {
+          if (permission === 'granted'){
+            //console.log("Notification - Permission GRANTED!");
+            //tag: servono tag diversi altrimenti sostituisce il contenuto della notifica precedente senza segnalarla
+            var title = (typeof pTitle == 'string' && pTitle.trim() != '' ? pTitle.trim() : "MaDeX notifier");
+            let notificationData = {
+                  body: (typeof pBody == 'string' && pBody.trim() != '' ? pBody.trim() : "Ci sono nuove notifiche"),
+                  tag: "madexNotifier_" + this._getDateTimeString("M"), // es. MISSIONI, QUALITA... stessa delle categorie delle notifiche
+                  icon: (this._darkMode() ? "../images/rv_notify_dark.ico" : "../images/rv_notify_light.ico"),
+                  badge: "../images/rv_notify_badge.png",
+                  //,data: { url: "url_to_call" }
+                  //,actions: [{action: "open_url", title: "Visualizzza"}]
+            };
+            //https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification
+            navigator.serviceWorker.ready.then( function( registration ){
+              registration.showNotification( title, notificationData );
+            } );
+          }
+          else{
+            console.log("MaDeX: Notification - Permission was not granted.");
+            this.snackBar("Notification - Permission was not granted.",'error','!','');
+          }
+        });
+      }
+    } catch (err){
+      console.log("MaDeX: Errore in invio notifica: " + err);
+      this.snackBar("Errore in invio notifica",'error','!','');
+    }
+    return this;
+  };
 //---End function
 
 //---Instanciate MaDeX engine
-  console.log('MXLib: starting engine...');
+  console.log('MXLMaDeXib: starting engine...');
   if (!this.swLoaded) MXLib = this;
   if (this.swLoaded)
-    console.log('MXLib: engine is already running!');
+    console.log('MaDeX: engine is already running!');
   else if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
-    console.log('MXLib: load service worker...');
+    console.log('MaDeX: load service worker...');
     // Service workers are supported. Use them.
     window.addEventListener('load', function () {
-      console.log('MXLib: window loaded');
+      console.log('MaDeX: window loaded');
       // Wait for registration to finish before dropping the <script> tag.
       // Otherwise, the browser will load the script multiple times,
       // potentially different versions.
       var serviceWorkerUrl = 'sw.js?v=' + MXLib.swVersion;
       navigator.serviceWorker.register(serviceWorkerUrl)
         .then((reg) => {
-          console.log('MXLib: SW registered!', reg);
+          console.log('MaDeX: SW registered!', reg);
 //---DISATTIVATO: non funziona l'update e scatta sempre il timeout
 /*            
           function waitForActivation(serviceWorker) {
             serviceWorker.addEventListener('statechange', () => {
               if (serviceWorker.state == 'activated') {
-                console.log('MXLib: installed new service worker');
+                console.log('MaDeX: installed new service worker');
                 MXLib._init();
               }
             });
           }
-          console.log('MXLib: version ' + reg.active.scriptURL)
-          console.log('MXLIb: version requested ' + MXLib.swVersion)
+          console.log('MaDeX: version ' + reg.active.scriptURL)
+          console.log('MaDeX: version requested ' + MXLib.swVersion)
           if (!reg.active && (reg.installing || reg.waiting)) {
             // No active web worker and we have installed or are installing
             // one for the first time. Simply wait for it to activate.
@@ -587,34 +635,34 @@ window.MXLib=function(pServiceWorkerVersion){
           } else if (!reg.active.scriptURL.endsWith(MXLib.swVersion)) {
             // When the app updates the serviceWorkerVersion changes, so we
             // need to ask the service worker to update.
-            console.log('MXLib: new service worker available');
+            console.log('MaDeX: new service worker available');
             console.log(reg)
             reg.update();
             //waitForActivation(reg.installing);
             waitForActivation(reg.installing || reg.waiting);
           } else {
             // Existing service worker is still good.
-            console.log('MXLib: loading app from service worker');
+            console.log('MaDeX: loading app from service worker');
             MXLib._init();
           }
 */
         })
       .catch((err) => {
-          console.log('MXLib: SW error!', reg);
+          console.log('MaDeX: SW error!', reg);
         });
 
 //---DISATTIVATO: non funziona l'update e scatta sempre il timeout
       if (true) MXLib._init();
       else setTimeout(() => {
         if (!MXLib.swLoaded) {
-          console.log('MXLib: failed to load app from service worker. Falling back to plain <script> tag');
+          console.log('MaDeX: failed to load app from service worker. Falling back to plain <script> tag');
           MXLib._init();
         }
       }, 4000);
     });
   } 
   else {
-    console.log('MXLib: service workers not supported');
+    console.log('MaDeX: service workers not supported');
     // Service workers not supported. Just drop the <script> tag.
     MXLib._init();
   }
