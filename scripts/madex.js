@@ -564,6 +564,116 @@ window.MXLib=function(pServiceWorkerVersion){
     return (this.userVocal && this.isChrome && this.speechRecognition !== null && this.speechRecognition != undefined);
   };
 
+  // Utilities
+  this.addDaysToDate=function(pDate,pDays){
+    if(typeof pDate == 'number'){
+      pDays = pDate;
+      pDate = new Date();
+    }
+    return new Date(pDate.setDate(pDate.getDate() + (parseInt(pDays) || 0)));
+  };
+  this.getDateString=function(pDate){
+    var strDate = '';
+    if (typeof pDate == 'boolean')
+      pDate = new Date();
+    if (pDate !== null && pDate != undefined){
+      strDate += pDate.getFullYear().toString();
+      strDate += '-' + this.padLNumber(pDate.getMonth()+1);
+      strDate += '-' + this.padLNumber(pDate.getDate());
+    }
+    return strDate;
+  };
+  this.getTimeString=function(pDate,pSeconds){
+    var strTime = '';
+    if (typeof pDate == 'boolean' || typeof pDate == 'string'){
+      pSeconds = pDate;
+      pDate = new Date();
+    }
+    if (pDate !== null && pDate != undefined){
+      if (typeof pDate == 'number')
+        pDate = new Date(pDate);
+      strTime  = this._padLNumber(pDate.getHours());
+      strTime += ":" + this._padLNumber(pDate.getMinutes());
+      if (pSeconds) strTime += ":" + ((typeof pSeconds == 'string' && pSeconds.trim().toLowerCase() == 'm') ? this._padLNumber(pDate.getMilliseconds(),3): this._padLNumber(pDate.getSeconds()) );
+    }
+    return strTime;
+  };
+  this.getDateTimeString=function(pDate,pSeconds){
+    var strDate = '';
+    if (typeof pDate == 'boolean' || typeof pDate == 'string'){
+      pSeconds = pDate;
+      pDate = new Date();
+    }
+    if (pDate !== null && pDate != undefined){
+      if (typeof pDate == 'number')
+        pDate = new Date(pDate);
+      strDate  = this._getDateString(pDate);
+      strDate += " ";
+      strDate += this._getTimeString(pDate,pSeconds);
+    }
+    return strDate;
+  };
+  this.padLNumber=function(pNumber,pLength) {
+    let norm = Math.floor(Math.abs(pNumber));
+    let filler = "0";
+    pLength = (pLength === null || pLength == undefined || typeof pLength != 'number' || pLength < 1 ? 2 : Math.floor(Math.abs(pLength)));
+    norm = filler.repeat(pLength) + norm;
+    return norm.substr(pLength * -1);
+  };
+  this.removeHTMLTags=function(pHTMLString){
+    // Create a new DOMParser instance
+    const parser = new DOMParser();
+    // Parse the HTML string
+    const doc = parser.parseFromString(pHTMLString, 'text/html');
+    // Extract text content
+    const textContent = doc.body.textContent || "";
+    // Trim whitespace
+    return textContent.trim();
+  };
+  this.capitalize=function(pString){
+    return (pString !== null && pString != undefined ? pString.trim().charAt(0).toUpperCase() + pString.trim().toLowerCase().slice(1) : '');
+  };
+  this.formatSizeUnits=function(pBytes){
+    if      (pBytes >= 1073741824) { pBytes = (pBytes / 1073741824).toFixed(2) + " GB"; }
+    else if (pBytes >= 1048576)    { pBytes = (pBytes / 1048576).toFixed(2) + " MB"; }
+    else if (pBytes >= 1024)       { pBytes = (pBytes / 1024).toFixed(2) + " KB"; }
+    else if (pBytes > 1)           { pBytes = pBytes + " bytes"; }
+    else if (pBytes == 1)          { pBytes = pBytes + " byte"; }
+    else                           { pBytes = "0 bytes"; }
+    return pBytes;
+  };
+  this.getBlankBase64Image=function(){
+    return 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+  };
+  this.getCurrentGeoPosition=function(pContext,pCallback,pJson){
+    if (navigator.geolocation){
+      this.geoContext = pContext;
+      this.geoCallback = pCallback;
+      navigator.geolocation.getCurrentPosition(this._getCurrentPosition);
+    }
+    else console.log('Geolocation is not supported by this browser');
+    return this;
+  };
+  this.getCurrentPosition=function(pPosition){
+    let urlGeo = "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + pPosition.coords.latitude + "&lon=" + pPosition.coords.longitude + "&zoom=18&addressdetails=1";
+    this_context.selGetURL.Value(urlGeo);
+    let dataGeo = this_context.spGetURL.Link();
+    let jsonGeo = JSON.parse(dataGeo);
+    //console.log(jsonGeo);
+
+    // Aggiungo un nuovo elemento al json
+    jsonGeo.location = '';
+    if (jsonGeo.address.village != null)
+      jsonGeo.location = jsonGeo.address.village;
+    if (jsonGeo.address.town != null)
+      jsonGeo.location = jsonGeo.address.town;
+    if (jsonGeo.address.city != null)
+      jsonGeo.location = jsonGeo.address.city;
+    
+    if (this_context.geoCallback !== null && this_context.geoCallback != undefined && typeof this_context.geoCallback == 'function')
+      this_context.geoCallback(this_context.geoContext,jsonGeo);
+  };
+
   this.notifyMessage=function(pTitle,pBody){
     try{
       if('serviceWorker' in navigator) {
@@ -574,7 +684,7 @@ window.MXLib=function(pServiceWorkerVersion){
             var title = (typeof pTitle == 'string' && pTitle.trim() != '' ? pTitle.trim() : "MaDeX notifier");
             let notificationData = {
                   body: (typeof pBody == 'string' && pBody.trim() != '' ? pBody.trim() : "Ci sono nuove notifiche"),
-                  tag: "madexNotifier_" + this._getDateTimeString("M"), // es. MISSIONI, QUALITA... stessa delle categorie delle notifiche
+                  tag: "madexNotifier_" + this.getDateTimeString("M"), // es. MISSIONI, QUALITA... stessa delle categorie delle notifiche
                   icon: (this._darkMode() ? "../images/rv_notify_dark.ico" : "../images/rv_notify_light.ico"),
                   badge: "../images/rv_notify_badge.png",
                   //,data: { url: "url_to_call" }
@@ -596,7 +706,7 @@ window.MXLib=function(pServiceWorkerVersion){
       this.snackBar("Errore in invio notifica",'error','!','');
     }
     return this;
-  };
+  };  
 //---End function
 
 //---Instanciate MaDeX engine
