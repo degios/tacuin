@@ -22,7 +22,7 @@ window.MXLib=function(pServiceWorkerVersion){
   this.voiceValues = "";
   this.voiceLabels = "";
 
-  this.userSounds = "S";
+  this.userSounds = true;
   this.soundMap = new Map().set("confirm",["sounds/popup.wav",[200, 100, 200]])
                            .set("notify",["sounds/popup.wav",[200, 100, 200]])
                            .set("error",["sounds/off.wav",[500]])
@@ -30,8 +30,13 @@ window.MXLib=function(pServiceWorkerVersion){
                            .set("success",["sounds/on.wav",[200]])
                            .set("autosel",["sounds/on.wav",[200]])
                            .set("warning",["sounds/drop.wav",[200, 100, 200]]);
-  this.userVibrate = "S";
+  this.userVibrate = true;
   this.mute = false;
+
+  this.userDeboto = 1000;
+
+  this.userVocal = true;
+  this.speechRecognition = null;
 
 //---Start initialize
   this._init=function(){
@@ -306,6 +311,68 @@ window.MXLib=function(pServiceWorkerVersion){
     }
     return this;
   };
+  this_loadVocal=function(){
+    this.stopVocal();
+    this.speechRecognition = null;
+    if (this.userVocal && this.isChrome){
+      
+      var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+      var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList;
+      var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+      
+      this.speechRecognition = new SpeechRecognition();
+      this.speechRecognition.continuous = false;
+      this.speechRecognition.lang = 'it-IT';
+      this.speechRecognition.interimResults = false;
+      this.speechRecognition.maxAlternatives = 1;
+
+      this.speechRecognition.onresult = function(event) {
+        // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
+        // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
+        // It has a getter so it can be accessed like an array
+        // The first [0] returns the SpeechRecognitionResult at the last position.
+        // Each SpeechRecognitionResult object contains SpeechRecognitionAlternative objects that contain individual results.
+        // These also have getters so they can be accessed like arrays.
+        // The second [0] returns the SpeechRecognitionAlternative at position 0.
+        // We then return the transcript property of the SpeechRecognitionAlternative object
+        var testovocale = '';
+        for (let i = 0; i < event.results.length; i++) {
+          var stringa = event.results[i][0].transcript;
+          testovocale = testovocale + stringa;
+        }
+        setTimeout(() => {
+          console.log('Comando vocale: ' + testovocale);
+          MXLib.fireVocal(testovocale);
+        }, MXLib.userDeboto.Value());
+      }
+
+      this.speechRecognition.onspeechstart = function() {
+        console.log("Riconoscimento vocale iniziato.");
+      }
+
+      this.speechRecognition.onspeechend = function() {
+        console.log("Riconoscimento vocale terminato.");
+        MXLib.speechRecognition.stop();
+      }
+
+      this.speechRecognition.onnomatch = function(event) {
+        console.log("Non trovo nessuna corrispondenza in riconoscimento vocale.");
+        //this_context.clear_vocal();
+        MXLib.speechRecognition.stop();
+      }
+
+      this.speechRecognition.onerror = function(event) {
+        console.log('Errore di riconoscimento vocale: ' + event.error);
+        //this_context.clear_vocal();
+        MXLib.speechRecognition.stop();
+      }
+    }
+    return this;
+  };
+  this._fireVocal=function(pText){
+    console.log('MXLib: fire vocal: ' + pText);
+    //this.iframeMain.action_dispatch("srcSpeecRecognition",pText);
+  };
 //---End initialize
 
 //---Start function
@@ -376,24 +443,26 @@ window.MXLib=function(pServiceWorkerVersion){
     }
     return this;
   };
+
   this.playSound=function (pSound){
     let oReturn = this;
     if (pSound == undefined)
-      oReturn = (!thismute && this.userSounds.trim() == 'S' && typeof pSound == 'string' && pSound.trim() != '');
+      oReturn = (!this.mute && this.userSounds && typeof pSound == 'string' && pSound.trim() != '');
     else if (typeof pSound == 'boolean')
       this.mute = pSound;
-    else if(!this.mute && this.userSounds.trim() == 'S' && typeof pSound == 'string' && pSound.trim() != ''){
+    else if(!this.mute && this.userSounds && typeof pSound == 'string' && pSound.trim() != ''){
       let soundEle = (this.soundMap.get(pSound.trim().toLowerCase()) ?? ["",[]]);
       let vibrate = soundEle[1];
       pSound = soundEle[0];
       if (pSound.trim() != ''){
-        if (this.userVibrate.trim() == 'S')
+        if (this.userVibrate)
           window.navigator.vibrate(vibrate);
         else new Audio(pSound.startsWith('../') || pSound.startsWith('./') || pSound.startsWith('/') ? pSound : '../sounds/' + pSound).play();
       }
     }
     return oReturn;
   };
+
   //Snackbar
   //https://www.michaelmickelson.com/js-snackbar/
   //status: success,error,warning,info
@@ -419,6 +488,25 @@ window.MXLib=function(pServiceWorkerVersion){
           container: window.document.body
       });
     return this;
+  };
+
+  this.startVocal=function(){
+    if (this.speechRecognition !== null && this.speechRecognition != undefined)
+      this.speechRecognition.start();
+    return this;
+  };
+  this.abortVocal=function(){
+    if (this.speechRecognition !== null && this.speechRecognition != undefined)
+      this.speechRecognition.abort();
+    return this;
+  };
+  this.stopVocal=function(){
+    if (this.speechRecognition !== null && this.speechRecognition != undefined)
+      this.speechRecognition.stop();
+    return this;
+  };
+  this.hasVocal=function(){
+    return (this.userVocal && this.isChrome && this.speechRecognition !== null && this.speechRecognition != undefined);
   };
 //---End function
 
