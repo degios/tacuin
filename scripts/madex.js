@@ -26,8 +26,8 @@ window.MXLib=function(pServiceWorkerVersion){
   this._init=function(){
     if (!this.swLoaded) {
       this.swLoaded = true;
-      this.loadFile('styles/material.css',true, 
-        () => this.loadFile('scripts/material.min.js',true,
+      this.loadFile('styles/madex_material.css',true, 
+        () => this.loadFile('scripts/madex_material.min.js',true,
           () => this.loadFile('styles/madex.css', true,
             () => this._browserType()
                       ._screenOrientationListener()
@@ -230,7 +230,7 @@ window.MXLib=function(pServiceWorkerVersion){
     return this;
   };
   this._shortcutListener=function(){
-    if (!this.isMobile){
+    if (!this.isMobile || true){ // Attive anche per mobile (es. tablet con tastiera)
       window.document.addEventListener("keydown", function (evt) {
         let keyMap = new Map().set("9","keyTab")				//  Tab
                               .set("33","keyPageUp")		//  Page up
@@ -285,7 +285,6 @@ window.MXLib=function(pServiceWorkerVersion){
     return this;
   };
 //---End initialize
-
 
 //---Start function
   this.CE = function(pElement, pTarget, pId, pClass){
