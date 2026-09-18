@@ -48,6 +48,9 @@
 // https://cdnjs.cloudflare.com/ajax/libs/material-components-web/3.0.0/material-components-web.min.css
 // https://cdnjs.cloudflare.com/ajax/libs/material-components-web/3.0.0/material-components-web.min.css.map
 
+// HTML Living standard
+// https://html.spec.whatwg.org/multipage/
+
 window.MXLib=function(pServiceWorkerVersion){
 
   this.swVersion = (pServiceWorkerVersion ?? '20260909T000000').trim();
@@ -88,9 +91,9 @@ window.MXLib=function(pServiceWorkerVersion){
     if (!this.swLoaded) {
       this.swLoaded = true;
       this.loadFile('styles/madex_material.css',true, 
-        () => this.loadFile('scripts/madex_material.min.js',true,
+        () => this.loadFile('madex/madex_material.min.js',true,
           () => this.loadFile('styles/madex_snackbar.css',true, 
-            () => this.loadFile('scripts/madex_snackbar.js',true, 
+            () => this.loadFile('madex/madex_snackbar.js',true, 
               () => this.loadFile('styles/madex.css', true,
                 () => this._browserType()
                           ._screenOrientationListener()
