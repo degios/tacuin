@@ -1,13 +1,13 @@
 let geoCallback = null;
 
-export function CE(pElement, pTarget, pId, pClass){
+export function createElement(pElement, pTarget, pId, pClass){
     let ne = document.createElement(pElement);
     if (pId) ne.id = pId;
     if (pClass) ne.className = pClass;
     if(pTarget) pTarget.appendChild(ne);
     return ne;
 }
-export function CT(pContent, pTarget){
+export function createTextNode(pContent, pTarget){
     let ne = document.createTextNode(pContent);
     pTarget.appendChild(ne);
     return ne;

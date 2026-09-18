@@ -1,13 +1,14 @@
 import * as utils from './madex_utils.js';
-Object.assign(globalThis, utils);
+import { browser } from './madex_browser.js';
 
 const madex = (function(){
+    //console.log(browser)
     return {
-        CE : CE,
-        CT : CT,
-        getUID : getUID,
-        capitalize: capitalize,
-        getCurrentGeoPosition: getCurrentGeoPosition
+        createElement : utils.createElement,
+        createTextNode : utils.createTextNode,
+        getUID : utils.getUID,
+        capitalize: utils.capitalize,
+        getCurrentGeoPosition: utils.getCurrentGeoPosition
     };
 })();
 

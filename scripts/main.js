@@ -1,6 +1,6 @@
 console.log('Main: load');
 
-import { madex } from '../madex/madex.js';
+import { madex as mx } from '../madex/madex.js';
 import { child } from './child.js';
 
 window.main = (function(){
@@ -8,14 +8,14 @@ window.main = (function(){
     let childs = [];
 
     function _init(){
-        mainDiv = madex.CE("div",window.document.body,"tplMain");
-        let addElement = madex.CE("A",mainDiv);
+        mainDiv = mx.createElement("div",window.document.body,"tplMain");
+        let addElement = mx.createElement("A",mainDiv);
         addElement.href = 'javascript:window.main.addChild();';
-        madex.CT("Accoda child", addElement);
+        mx.createTextNode("Accoda child", addElement);
 
-        let delElement = madex.CE("A",mainDiv);
+        let delElement = mx.createElement("A",mainDiv);
         delElement.href = 'javascript:window.main.delChild();';
-        madex.CT("Rimuovi ultimo child", delElement);
+        mx.createTextNode("Rimuovi ultimo child", delElement);
     }
 
     function addChild(){
@@ -40,8 +40,8 @@ window.main = (function(){
         delChild,
         cntChild,
         getCurrentGeoPosition,
-        madexUID : madex.getUID,
-        madexCE : madex.CE,
-        madexCT : madex.CT
+        mxUID : mx.getUID,
+        mxCreateElement : mx.createElement,
+        mxCreateTextNode : mx.createTextNode
     }
 })();
