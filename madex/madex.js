@@ -146,6 +146,8 @@ const madex = (function(){
         if (pCallback !== null && pCallback != undefined && typeof pCallback == 'function')
         pCallback.call();
     }
+
+    // Manage childs
     function pushChild(pChild){
         if (childs.length > 0) childs[childs.length-1].getCtrl().style.display="none";
         pChild.create(contentDiv);
@@ -244,9 +246,7 @@ const madex = (function(){
         getChild,
         createElement : utils.createElement,
         createTextNode : utils.createTextNode,
-        getUID : utils.getUID,
-        capitalize: utils.capitalize,
-        getCurrentGeoPosition: utils.getCurrentGeoPosition
+        getUID : utils.getUID
     };
 })();
 
