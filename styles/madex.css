@@ -1,9 +1,11 @@
 html {
   height: 100%;
+  overscroll-behavior-y: none; /* Disables pull-to-refresh and bounce effects vertically */
 }
 body {
   margin:0px;
   min-height: 100%;
+  overscroll-behavior-y: none; /* Disables pull-to-refresh and bounce effects vertically */
 }
 
 .tplTopBar_ctrl {
