@@ -6,6 +6,7 @@ const child = function(pParentId){
     function create(pContentCtrl){
         ctrlid = madex.getUID(5);
         ctrl = madex.createElement("div",pContentCtrl,ctrlid + "_tplChild");
+        ctrl.style.position = "absolute";
         madex.createTextNode("[" + madex.cntChild() + "] New child with id " + ctrlid, madex.createElement("H2",ctrl));
 
         let ctrlHTML = '<hr>';
