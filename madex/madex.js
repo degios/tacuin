@@ -2,6 +2,7 @@ import * as utils from './madex_utils.js';
 import { browser } from './madex_browser.js';
 
 const madex = (function(){
+    let created = false;
     let swVersion = '20260909T000000';
     let swLoaded = false;
 
@@ -143,8 +144,10 @@ const madex = (function(){
         */
 
         //this.snackBar("Notification - Permission was not granted.",'error','!','');
+
+        window.madex = madex;
         if (pCallback !== null && pCallback != undefined && typeof pCallback == 'function')
-        pCallback.call();
+            pCallback.call();
     }
 
     // Manage childs
@@ -170,70 +173,73 @@ const madex = (function(){
     function create(pCallback){
         //---Instanciate MaDeX engine
         console.log('MaDeX: starting engine...');
-        //if (!swLoaded) MXLib = this;
-        if (swLoaded)
-            console.log('MaDeX: engine is already running!');
-        else if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
-            console.log('MaDeX: load service worker...');
-            // Service workers are supported. Use them.
-            window.addEventListener('load', function () {
-                console.log('MaDeX: window loaded');
-                // Wait for registration to finish before dropping the <script> tag.
-                // Otherwise, the browser will load the script multiple times,
-                // potentially different versions.
-                var serviceWorkerUrl = 'sw.js?v=' + swVersion;
-                navigator.serviceWorker.register(serviceWorkerUrl)
-                    .then((reg) => {
-                        console.log('MaDeX: SW registered!', reg);
-                        //---DISATTIVATO: non funziona l'update e scatta sempre il timeout
-                        /*            
-                        function waitForActivation(serviceWorker) {
-                        serviceWorker.addEventListener('statechange', () => {
-                        if (serviceWorker.state == 'activated') {
-                        console.log('MaDeX: installed new service worker');
-                        MXLib._init();
-                        }
-                        });
-                        }
-                        console.log('MaDeX: version ' + reg.active.scriptURL)
-                        console.log('MaDeX: version requested ' + MXLib.swVersion)
-                        if (!reg.active && (reg.installing || reg.waiting)) {
-                        // No active web worker and we have installed or are installing
-                        // one for the first time. Simply wait for it to activate.
-                        waitForActivation(reg.installing || reg.waiting);
-                        } else if (!reg.active.scriptURL.endsWith(MXLib.swVersion)) {
-                        // When the app updates the serviceWorkerVersion changes, so we
-                        // need to ask the service worker to update.
-                        console.log('MaDeX: new service worker available');
-                        console.log(reg)
-                        reg.update();
-                        //waitForActivation(reg.installing);
-                        waitForActivation(reg.installing || reg.waiting);
-                        } else {
-                        // Existing service worker is still good.
-                        console.log('MaDeX: loading app from service worker');
-                        MXLib._init();
-                        }
-                        */
-                    })
-                    .catch((err) => {
-                        console.log('MaDeX: SW error!', err);
-                    });
-
-                //---DISATTIVATO: non funziona l'update e scatta sempre il timeout
-                if (true) _init(pCallback);
-                else setTimeout(() => {
-                    if (!swLoaded) {
-                        console.log('MaDeX: failed to load app from service worker. Falling back to plain <script> tag');
-                        _init(pCallback);
-                    }
-                }, 4000);
-            });
-        } 
+        if (created) console.log("MaDeX: engine is already created!")
         else {
-            console.log('MaDeX: service workers not supported');
-            // Service workers not supported. Just drop the <script> tag.
-            _init(pCallback);
+            created = true;
+            if (swLoaded)
+                console.log('MaDeX: engine is already running!');
+            else if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
+                console.log('MaDeX: load service worker...');
+                // Service workers are supported. Use them.
+                window.addEventListener('load', function () {
+                    console.log('MaDeX: window loaded');
+                    // Wait for registration to finish before dropping the <script> tag.
+                    // Otherwise, the browser will load the script multiple times,
+                    // potentially different versions.
+                    var serviceWorkerUrl = 'sw.js?v=' + swVersion;
+                    navigator.serviceWorker.register(serviceWorkerUrl)
+                        .then((reg) => {
+                            console.log('MaDeX: SW registered!', reg);
+                            //---DISATTIVATO: non funziona l'update e scatta sempre il timeout
+                            /*            
+                            function waitForActivation(serviceWorker) {
+                            serviceWorker.addEventListener('statechange', () => {
+                            if (serviceWorker.state == 'activated') {
+                            console.log('MaDeX: installed new service worker');
+                            MXLib._init();
+                            }
+                            });
+                            }
+                            console.log('MaDeX: version ' + reg.active.scriptURL)
+                            console.log('MaDeX: version requested ' + MXLib.swVersion)
+                            if (!reg.active && (reg.installing || reg.waiting)) {
+                            // No active web worker and we have installed or are installing
+                            // one for the first time. Simply wait for it to activate.
+                            waitForActivation(reg.installing || reg.waiting);
+                            } else if (!reg.active.scriptURL.endsWith(MXLib.swVersion)) {
+                            // When the app updates the serviceWorkerVersion changes, so we
+                            // need to ask the service worker to update.
+                            console.log('MaDeX: new service worker available');
+                            console.log(reg)
+                            reg.update();
+                            //waitForActivation(reg.installing);
+                            waitForActivation(reg.installing || reg.waiting);
+                            } else {
+                            // Existing service worker is still good.
+                            console.log('MaDeX: loading app from service worker');
+                            MXLib._init();
+                            }
+                            */
+                        })
+                        .catch((err) => {
+                            console.log('MaDeX: SW error!', err);
+                        });
+
+                    //---DISATTIVATO: non funziona l'update e scatta sempre il timeout
+                    if (true) _init(pCallback);
+                    else setTimeout(() => {
+                        if (!swLoaded) {
+                            console.log('MaDeX: failed to load app from service worker. Falling back to plain <script> tag');
+                            _init(pCallback);
+                        }
+                    }, 4000);
+                });
+            } 
+            else {
+                console.log('MaDeX: service workers not supported');
+                // Service workers not supported. Just drop the <script> tag.
+                _init(pCallback);
+            }
         }
     }
 

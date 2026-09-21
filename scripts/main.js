@@ -11,7 +11,6 @@ window.main = (function(){
         madex.create(() => {_initCallback()});
      }
      function _initCallback(){
-        window.madex = madex;
         madex.pushChild(new children());
      }
 
