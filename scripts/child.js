@@ -1,22 +1,29 @@
-const child = function(){
-    let uid;
-    let childDiv;
-    function create(){
-        uid = main.mxUID(5);
-        childDiv = main.mxCreateElement("div",window.main.mainDiv,uid + "_tplChild");
-        main.mxCreateTextNode("[" + window.main.cntChild() + "] New child with uid " + uid, main.mxCreateElement("H2",childDiv));
-        return this;
+const child = function(pParentId){
+    let ctrl;
+    let ctrlid;
+    let parentId = pParentId;
+
+    function create(pContentCtrl){
+        ctrlid = madex.getUID(5);
+        ctrl = madex.createElement("div",pContentCtrl,ctrlid + "_tplChild");
+        madex.createTextNode("[" + madex.cntChild() + "] New child with id " + ctrlid, madex.createElement("H2",ctrl));
+
+        let ctrlHTML = '<hr>';
+        ctrlHTML += '<a href="javascript:madex.getChild(' + "'" + parentId + "'" + ').addChild();">Accoda child</a>'
+        ctrlHTML += '<a href="javascript:madex.getChild(' + "'" + parentId + "'" + ').delChild();">Rimuovi ultimo child</a>'
+        ctrl.innerHTML +=  ctrlHTML;
     }
     function destroy(){
-        childDiv.remove();
+        ctrl.remove();
     }
-    function getChildDiv() { return childDiv; }
-    function getUID(){ return uid; }
+    function getCtrl() { return ctrl; }
+    function getCtrlId(){ return ctrlid; }
+
     return {
         create,
         destroy,
-        getChildDiv,
-        getUID
+        getCtrl,
+        getCtrlId
     }
 }
 

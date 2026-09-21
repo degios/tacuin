@@ -12,13 +12,57 @@ export function createTextNode(pContent, pTarget){
     pTarget.appendChild(ne);
     return ne;
 };
-export function getUID(pLen){
+export function getUID(pLen = 5){
     let res = '';
     for (var i=0; i<pLen; i++) {
         let nAscii = parseInt(Math.random()*26+97);
         res = res + String.fromCharCode(nAscii);
     }
     return (res);
+}
+export function loadFile(pFile, pAsync = true, pCallback, pType){
+    let oDocument = window.document;
+    let fileEle = null;
+
+    switch ((pType ?? pFile.split('.').pop()).trim().toLowerCase()){
+        case 'js':
+        fileEle = oDocument.createElement("script");
+        fileEle.setAttribute("src", pFile);
+        fileEle.setAttribute("type", "text/javascript");
+        fileEle.setAttribute("async", pAsync);
+        oDocument.head.appendChild(fileEle);
+        break;
+        case 'css':
+        fileEle = oDocument.createElement("link");
+        fileEle.href = pFile;
+        fileEle.type = 'text/css';
+        fileEle.rel = 'stylesheet';
+        //oDocument.getElementsByTagName('head')[0].append(fileEle);
+        oDocument.head.appendChild(fileEle)
+        break;
+        case 'wav':
+        case 'mp3':
+        new Audio(pFile);
+        break;
+        case 'module':
+        fileEle = oDocument.createElement("script");
+        fileEle.setAttribute("src", pFile);
+        fileEle.setAttribute("type", "module");
+        fileEle.setAttribute("async", pAsync);
+        oDocument.head.appendChild(fileEle);
+        break;
+    }
+
+    if (fileEle !== null && fileEle != undefined){
+        // success event 
+        if (pCallback !== null && pCallback != undefined && typeof pCallback == 'function')
+        fileEle.addEventListener("load", () => { pCallback.call(); });
+
+        // error event
+        fileEle.addEventListener("error", (ev) => {
+        console.log("Error on loading file " + pFile.split('\\').pop().split('/').pop(), ev);
+        });
+    }
 }
 export function addDaysToDate(pDate,pDays){
     if(typeof pDate == 'number'){
