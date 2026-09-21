@@ -4,7 +4,7 @@
     "start_url": ".",
     "display": "standalone",
     "background_color": "#FFFFFF",
-    "theme_color": "#5F7D8A",
+    "theme_color": "#13A29A",
     "description": "Personal expense monitoring",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
