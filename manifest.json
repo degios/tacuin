@@ -1,6 +1,7 @@
 {
     "name": "Tacuin",
     "short_name": "Tacuin",
+    "id": "tacuin/v1",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#FFFFFF",
@@ -163,6 +164,20 @@
             "sizes": "1024x1024",
             "type": "image/png",
             "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "screenshot/screenshot-1920x1080.png",
+            "sizes": "1920x1080",
+            "form_factor": "wide",
+            "label": "Desktop view"
+        },
+        {
+            "src": "screenshot/screenshot-750x1334.png",
+            "sizes": "750x1334",
+            "form_factor": "narrow",
+            "label": "Mobile view"
         }
     ]
 }
