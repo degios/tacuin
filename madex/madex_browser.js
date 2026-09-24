@@ -11,7 +11,7 @@ const browser = (function(){
         _screenProperties();
     }
     function _browserProperties(){
-        let userAgentString =  navigator.userAgent;
+        let userAgentString =  navigator.userAgent; 
         if (userAgentString){
             // Detect Chrome
             let chromeAgent = userAgentString.indexOf("Chrome") > -1;

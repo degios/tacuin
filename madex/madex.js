@@ -1,4 +1,5 @@
 import * as utils from './madex_utils.js';
+import { network } from './madex_network.js';
 import { browser } from './madex_browser.js';
 
 const madex = (function(){
@@ -11,7 +12,9 @@ const madex = (function(){
     let childs = [];
     let childMap = new Map();
 
-    function _init(pCallback){
+    let loadCallback,networkCallback;
+
+    function _init(){
         if (!swLoaded) {
             swLoaded = true;
             utils.loadFile('styles/madex_material.css',true, 
@@ -19,7 +22,7 @@ const madex = (function(){
                 () => utils.loadFile('styles/madex_snackbar.css',true, 
                     () => utils.loadFile('madex/madex_snackbar.js',true, 
                     () => utils.loadFile('styles/madex.css', true,
-                        () => _load(pCallback))))));
+                        () => _load())))));
                                 /*
                         () => this._browserType()
                                 ._screenOrientationListener()
@@ -146,8 +149,11 @@ const madex = (function(){
         //this.snackBar("Notification - Permission was not granted.",'error','!','');
 
         window.madex = madex;
-        if (pCallback !== null && pCallback != undefined && typeof pCallback == 'function')
-            pCallback.call();
+        if (loadCallback !== null && loadCallback != undefined && typeof loadCallback == 'function')
+            loadCallback.call();
+
+        if (networkCallback !== null && networkCallback != undefined && typeof networkCallback == 'function')
+            network.create(networkCallback);
     }
 
     // Manage childs
@@ -170,12 +176,16 @@ const madex = (function(){
     function cntChild(){ return childs.length; }
     function getChild(pId){ return childMap.get(pId); }
 
-    function create(pCallback){
+    function create(pLoadCallback,pNetworkCallback){
         //---Instanciate MaDeX engine
         console.log('MaDeX: starting engine...');
         if (created) console.log("MaDeX: engine is already created!")
         else {
             created = true;
+
+            loadCallback = pLoadCallback;
+            networkCallback = pNetworkCallback;
+
             if (swLoaded)
                 console.log('MaDeX: engine is already running!');
             else if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
@@ -226,11 +236,11 @@ const madex = (function(){
                         });
 
                     //---DISATTIVATO: non funziona l'update e scatta sempre il timeout
-                    if (true) _init(pCallback);
+                    if (true) _init();
                     else setTimeout(() => {
                         if (!swLoaded) {
                             console.log('MaDeX: failed to load app from service worker. Falling back to plain <script> tag');
-                            _init(pCallback);
+                            _init();
                         }
                     }, 4000);
                 });
@@ -238,7 +248,7 @@ const madex = (function(){
             else {
                 console.log('MaDeX: service workers not supported');
                 // Service workers not supported. Just drop the <script> tag.
-                _init(pCallback);
+                _init();
             }
         }
     }
