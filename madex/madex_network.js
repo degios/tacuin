@@ -9,17 +9,17 @@ const network = (function(){
                         // handle online status
                         console.log('online');
                         if (callback !== null && callback != undefined && typeof callback == 'function')
-                            callback.call('on');
+                            callback.call(this,'on');
                     } else {
                         if (callback !== null && callback != undefined && typeof callback == 'function')
-                            callback.call('no');
+                            callback.call(this,'no');
                     }
                 });
         } else {
             // handle offline status
             console.log('offline');
             if (callback !== null && callback != undefined && typeof callback == 'function')
-                callback.call('off');
+                callback.call(this,'off');
         }
     }
     function _isReachable(url) {
@@ -38,13 +38,14 @@ const network = (function(){
             .catch(function(err) {
                 console.warn('[conn test failure]:', err);
                 if (callback !== null && callback != undefined && typeof callback == 'function')
-                    callback.call('err');
+                    callback.call(this,'err');
             });
     }
     function create(pCallback){
         callback = pCallback;
         window.addEventListener("online", _handleConnection);
         window.addEventListener("offline", _handleConnection);
+        _handleConnection();
     }
     return {
         create

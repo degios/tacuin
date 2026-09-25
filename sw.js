@@ -13,7 +13,7 @@
 self.importScripts('scripts/config.js');
 
 var CACHE_NAME = 'version_01';
-var URLS = swCacheFileList();
+var URLS = config.swCacheFileList();
 
 try{
 	// Evento install

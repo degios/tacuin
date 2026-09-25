@@ -1,36 +1,8 @@
 console.log('Main: load');
 
 import { madex } from '../madex/madex.js';
+//import { config } from './config.js';
 import { children } from './children.js';
-
-/*
-window.addEventListener("online", handleConnection);
-window.addEventListener("offline", handleConnection);
-function handleConnection() {
-    if (navigator.onLine) {
-        isReachable(window.location.origin).then(function(online) {
-        if (online) {
-            // handle online status
-            console.log('online');
-        } else {
-            console.log('no connectivity');
-          }
-        });
-    } else {
-        // handle offline status
-        console.log('offline');
-    }
-}
-function isReachable(url) {
-    return fetch(url, { method: 'HEAD', mode: 'no-cors' })
-        .then(function(resp) {
-            return resp && (resp.ok || resp.type === 'opaque');
-        })
-        .catch(function(err) {
-            console.warn('[conn test failure]:', err);
-        });
-}
-*/
 
 // Dynamic manifest.json
 let pathOrigin = window.location.origin;
@@ -244,7 +216,6 @@ window.main = (function(){
      }
      function _networkCallback(pState){
         let networkState = 'Application';
-        console.log(pState)
         switch(pState){
             case 'on':
                 networkState += ' on-line';
