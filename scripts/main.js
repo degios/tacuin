@@ -27,11 +27,13 @@ let objManifest = {
     "prefer_related_applications": false,
 	"scope": startURL,
     "share_target": {
-        "action": startURL + "share",
+        "action": startURL + "share/",
+        "method": "GET",
+        "enctype": "application/x-www-form-urlencoded",
         "params": {
-            "title": "title",
-            "text": "text",
-            "url": "url"
+            "title": "name",
+            "text": "description",
+            "url": "link"
         }
     },
     "icons": [
@@ -227,9 +229,9 @@ window.main = (function(){
         window.addEventListener('DOMContentLoaded', () => {
             const parsedUrl = new URL(window.location);
             // searchParams.get() will properly handle decoding the values.
-            console.log('Title shared: ' + parsedUrl.searchParams.get('title'));
-            console.log('Text shared: ' + parsedUrl.searchParams.get('text'));
-            console.log('URL shared: ' + parsedUrl.searchParams.get('url'));
+            console.log('Title shared: ' + parsedUrl.searchParams.get('name'));
+            console.log('Text shared: ' + parsedUrl.searchParams.get('description'));
+            console.log('URL shared: ' + parsedUrl.searchParams.get('link'));
         });        
      }
      function _networkCallback(pState){
