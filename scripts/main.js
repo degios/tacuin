@@ -29,6 +29,7 @@ let objManifest = {
     "share_target": {
         "action": startURL,
         "method": "GET",
+        "enctype": "application/x-www-form-urlencoded",
         "params": {
             "title": "title",
             "text": "text",
