@@ -27,7 +27,7 @@ let objManifest = {
     "prefer_related_applications": false,
 	"scope": startURL,
     "share_target": {
-        "action": "/shared-content-receiver/",
+        "action": startURL,
         "method": "GET",
         "params": {
             "title": "title",
