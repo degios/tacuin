@@ -26,6 +26,15 @@ let objManifest = {
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
 	"scope": startURL,
+    "share_target": {
+        "action": "/shared-content-receiver/",
+        "method": "GET",
+        "params": {
+            "title": "title",
+            "text": "text",
+            "url": "url"
+        }
+    },
     "icons": [
         {
             "src": startURL + "icons/icon-48x48.png",
@@ -215,6 +224,14 @@ window.main = (function(){
         ctrl.innerHTML = 'Application on-line';
 
         madex.pushChild(new children());
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const parsedUrl = new URL(window.location);
+            // searchParams.get() will properly handle decoding the values.
+            console.log('Title shared: ' + parsedUrl.searchParams.get('title'));
+            console.log('Text shared: ' + parsedUrl.searchParams.get('text'));
+            console.log('URL shared: ' + parsedUrl.searchParams.get('url'));
+        });        
      }
      function _networkCallback(pState){
         let networkState = 'Application';
