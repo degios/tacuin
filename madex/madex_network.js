@@ -3,7 +3,7 @@ const network = (function(){
 
     function _handleConnection() {
         if (navigator.onLine) {
-            _isReachable(window.location.origin)
+            _isReachable(_getServerURL())
                 .then(function(online) {
                     if (online) {
                         // handle online status
@@ -40,6 +40,15 @@ const network = (function(){
                 if (callback !== null && callback != undefined && typeof callback == 'function')
                     callback.call(this,'err');
             });
+    }
+    function _getServerURL(){
+        let pathOrigin = window.location.origin;
+        let pathName = window.location.pathname;
+        pathName = pathName.split('/');
+        pathName.pop();
+        pathName = pathName.join('/');
+        let startURL = pathOrigin + pathName + "/";
+        return startURL;
     }
     function create(pCallback){
         callback = pCallback;

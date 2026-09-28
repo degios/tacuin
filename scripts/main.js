@@ -12,6 +12,7 @@ pathName.pop();
 pathName = pathName.join('/');
 let startURL = pathOrigin + pathName + "/";
 console.log('StartURL: ' + startURL);
+
 let objManifest = {
     "name": "Tacuin",
     "short_name": "Tacuin",
