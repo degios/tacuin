@@ -11,7 +11,7 @@ pathName = pathName.split('/');
 pathName.pop();
 pathName = pathName.join('/');
 let startURL = pathOrigin + pathName + "/";
-console.log('StartURL: ' + startURL);
+//console.log('StartURL: ' + startURL);
 
 let objManifest = {
     "name": "Tacuin",
