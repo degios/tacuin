@@ -229,9 +229,13 @@ window.main = (function(){
         window.addEventListener('DOMContentLoaded', () => {
             const parsedUrl = new URL(window.location);
             // searchParams.get() will properly handle decoding the values.
-            console.log('Title shared: ' + parsedUrl.searchParams.get('name'));
-            console.log('Text shared: ' + parsedUrl.searchParams.get('description'));
-            console.log('URL shared: ' + parsedUrl.searchParams.get('link'));
+            let name = 'Title shared: ' + (parsedUrl.searchParams.get('name') ?? '');
+            let text = 'Text shared: ' + (parsedUrl.searchParams.get('description') ?? '');
+            let link = 'Link shared: ' + (parsedUrl.searchParams.get('link') ?? '');
+            console.log(name);
+            console.log(text);
+            console.log(link);
+            alert(name + ' ' + text + ' ' + link);
         });        
      }
      function _networkCallback(pState){
