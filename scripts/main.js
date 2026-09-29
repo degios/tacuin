@@ -40,9 +40,9 @@ window.main = (function(){
                 "method": "GET",
                 "enctype": "application/x-www-form-urlencoded",
                 "params": {
-                    "title": "name",
-                    "text": "description",
-                    "url": "link"
+                    "title": "title",
+                    "text": "text",
+                    "url": "url"
                 }
             },
             "icons": [
@@ -225,9 +225,10 @@ window.main = (function(){
         const parsedUrl = new URL(window.location);
         // searchParams.get() will properly handle decoding the values.
         let sharedTarget = {};
-        sharedTarget.title  = (parsedUrl.searchParams.get('name') ?? '');
-        sharedTarget.text = (parsedUrl.searchParams.get('description') ?? '');
-        sharedTarget.url = (parsedUrl.searchParams.get('link') ?? '');
+        sharedTarget.title  = (parsedUrl.searchParams.get('title') ?? '');
+        sharedTarget.text = (parsedUrl.searchParams.get('text') ?? '');
+        sharedTarget.url = (parsedUrl.searchParams.get('url') ?? '');
+        sharedTarget.url = (sharedTarget.text.trim() != '' && sharedTarget.url.trim() == '' ? sharedTarget.text : sharedTarget.url);
         if ((sharedTarget.title ?? '').trim() != '' && (sharedTarget.url ?? '').trim() != ''){
             let ctrl = madex.createElement('p',madex.getContentDiv(),"tplSharedTarget");
             //ctrl.style.position = "absolute";
