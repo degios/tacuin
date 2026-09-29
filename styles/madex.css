@@ -8,6 +8,10 @@ body {
   overscroll-behavior-y: none; /* Disables pull-to-refresh and bounce effects vertically */
 }
 
+.tplMain_ctrl {
+  position: absolute;
+}
+
 .tplTopBar_ctrl {
   box-sizing: border-box;
   z-index: 1000;

@@ -35,7 +35,7 @@ const madex = (function(){
         }
     }
     function _load(pCallback){
-        mainDiv = utils.createElement("div",window.document.body,"tplMain");
+        mainDiv = utils.createElement("div",window.document.body,"tplMain","tplMain_ctrl");
         //utils.createTextNode("Tacuin, a personal expense monitor project", utils.createElement("h2",mainDiv));
 
         topBarDiv = utils.createElement("div",mainDiv,"tplTopBar","tplTopBar_ctrl");
@@ -263,7 +263,8 @@ const madex = (function(){
         getChild,
         createElement : utils.createElement,
         createTextNode : utils.createTextNode,
-        getUID : utils.getUID
+        getUID : utils.getUID,
+        loadFile : utils.loadFile
     };
 })();
 
