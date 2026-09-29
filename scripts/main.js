@@ -27,7 +27,7 @@ let objManifest = {
     "prefer_related_applications": false,
 	"scope": startURL,
     "share_target": {
-        "action": startURL + "share/",
+        "action": startURL,
         "method": "GET",
         "enctype": "application/x-www-form-urlencoded",
         "params": {
