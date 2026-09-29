@@ -253,9 +253,10 @@ const madex = (function(){
         }
     }
 
-    function setContentDiv(pContentDiv){ contentDiv = pContentDiv; }
+    function getContentDiv(){ return contentDiv; }
     return {
         create,
+        getContentDiv,
         pushChild,
         popChild,
         cntChild,

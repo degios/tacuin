@@ -6,7 +6,7 @@ const child = function(pParentId){
     function create(pContentCtrl){
         ctrlid = madex.getUID(5);
         ctrl = madex.createElement("div",pContentCtrl,ctrlid + "_tplChild");
-        ctrl.style.position = "absolute";
+        //ctrl.style.position = "absolute";
 
         let ctrlHTML = '';
         ctrlHTML += '<a href="javascript:madex.getChild(' + "'" + parentId + "'" + ').addChild();">Accoda child</a>'

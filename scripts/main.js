@@ -27,7 +27,7 @@ let objManifest = {
     "prefer_related_applications": false,
 	"scope": startURL,
     "share_target": {
-        "action": startURL,
+        "action": startURL + "/index.html",
         "method": "GET",
         "enctype": "application/x-www-form-urlencoded",
         "params": {
@@ -220,23 +220,23 @@ window.main = (function(){
         madex.create(_loadCallback, _networkCallback);
      }
      function _loadCallback(){
-        let ctrl = madex.createElement('p',window.document.body,"tplNetwork");
-        ctrl.style.position = "absolute";
+        const parsedUrl = new URL(window.location);
+        // searchParams.get() will properly handle decoding the values.
+        let sharedTarget = {};
+        sharedTarget.title  = (parsedUrl.searchParams.get('name') ?? '');
+        sharedTarget.text = (parsedUrl.searchParams.get('description') ?? '');
+        sharedTarget.url = (parsedUrl.searchParams.get('link') ?? '');
+        if ((sharedTarget.title ?? '').trim() != '' && (sharedTarget.url ?? '').trim() != ''){
+            let ctrl = madex.createElement('p',madex.getContentDiv(),"tplSharedTarget");
+            //ctrl.style.position = "absolute";
+            ctrl.innerHTML = '<a href="' + sharedTarget.url + '" target="_blank">' + sharedTarget.title + '</a>';
+        }
+
+        let ctrl = madex.createElement('p',madex.getContentDiv(),"tplNetwork");
+        //ctrl.style.position = "absolute";
         ctrl.innerHTML = 'Application on-line';
 
         madex.pushChild(new children());
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const parsedUrl = new URL(window.location);
-            // searchParams.get() will properly handle decoding the values.
-            let name = 'Title shared: ' + (parsedUrl.searchParams.get('name') ?? '');
-            let text = 'Text shared: ' + (parsedUrl.searchParams.get('description') ?? '');
-            let link = 'Link shared: ' + (parsedUrl.searchParams.get('link') ?? '');
-            console.log(name);
-            console.log(text);
-            console.log(link);
-            alert(name + ' ' + text + ' ' + link);
-        });        
      }
      function _networkCallback(pState){
         let networkState = 'Application';
