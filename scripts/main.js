@@ -16,10 +16,15 @@ window.main = (function(){
         console.log('Load manifest...');
         // Dynamic manifest.json
         let pathOrigin = window.location.origin;
+        console.log('origin',pathOrigin);
         let pathName = window.location.pathname;
+        console.log('pathname',pathName);
         pathName = pathName.split('/');
+        console.log('split',pathName);
         pathName.pop();
+        console.log('pop',pathName);
         pathName = pathName.join('/');
+        console.log('join',pathName);
         let scopeURL = pathOrigin + pathName + "/";
         let startURL = scopeURL + "index.html";
         //console.log('StartURL: ' + startURL);
