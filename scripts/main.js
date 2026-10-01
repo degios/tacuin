@@ -9,31 +9,15 @@ window.main = (function(){
 
     function _init(){
         madex.loadFile("scripts/config.js",true,() => _loadManifest());
-        madex.loadFile("scripts/config.js");
         madex.create(_loadCallback, _networkCallback);
      }
      function _loadManifest(){
         console.log('Load manifest...');
-        // Dynamic manifest.json
-        let pathOrigin = window.location.origin;
-        console.log('origin',pathOrigin);
-        let pathName = window.location.pathname;
-        console.log('pathname',pathName);
-        pathName = pathName.split('/');
-        console.log('split',pathName);
-        pathName.pop();
-        console.log('pop',pathName);
-        pathName = pathName.join('/');
-        console.log('join',pathName);
-        let scopeURL = pathOrigin + pathName + "/";
-        let startURL = scopeURL + "index.html";
-        //console.log('StartURL: ' + startURL);
-
         let objManifest = {
             "name": "Tacuin",
             "short_name": "Tacuin",
             "id": "tacuin/v1",
-            "start_url": startURL,
+            "start_url": config.startURL,
             "display_override": ["window-controls-overlay", "minimal-ui"],
             "display": "standalone",
             "background_color": "#FFFFFF",
@@ -41,9 +25,9 @@ window.main = (function(){
             "description": "Personal expense monitoring",
             "orientation": "portrait-primary",
             "prefer_related_applications": false,
-            "scope": scopeURL,
+            "scope": config.scopeURL,
             "share_target": {
-                "action": startURL,
+                "action": config.startURL,
                 "method": "GET",
                 "enctype": "application/x-www-form-urlencoded",
                 "params": {
@@ -52,176 +36,8 @@ window.main = (function(){
                     "url": "url"
                 }
             },
-            "icons": [
-                {
-                    "src": scopeURL + "icons/icon-48x48.png",
-                    "sizes": "48x48",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-64x64.png",
-                    "sizes": "64x64",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-72x72.png",
-                    "sizes": "72x72",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-96x96.png",
-                    "sizes": "96x96",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-120x120.png",
-                    "sizes": "120x120",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-128x128.png",
-                    "sizes": "128x128",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-144x144.png",
-                    "sizes": "144x144",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-152x152.png",
-                    "sizes": "152x152",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-167x167.png",
-                    "sizes": "167x167",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-180x180.png",
-                    "sizes": "180x180",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-192x192.png",
-                    "sizes": "192x192",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-256x256.png",
-                    "sizes": "256x256",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-512x512.png",
-                    "sizes": "512x512",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-1024x1024.png",
-                    "sizes": "1024x1024",
-                    "type": "image/png"
-                },
-                {
-                    "src": scopeURL + "icons/icon-48x48-maskable.png",
-                    "sizes": "48x48",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-64x64-maskable.png",
-                    "sizes": "64x64",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-72x72-maskable.png",
-                    "sizes": "72x72",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-96x96-maskable.png",
-                    "sizes": "96x96",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-120x120-maskable.png",
-                    "sizes": "120x120",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-128x128-maskable.png",
-                    "sizes": "128x128",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-144x144-maskable.png",
-                    "sizes": "144x144",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-152x152-maskable.png",
-                    "sizes": "152x152",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-167x167-maskable.png",
-                    "sizes": "167x167",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-180x180-maskable.png",
-                    "sizes": "180x180",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-192x192-maskable.png",
-                    "sizes": "192x192",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-256x256-maskable.png",
-                    "sizes": "256x256",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-512x512-maskable.png",
-                    "sizes": "512x512",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                },
-                {
-                    "src": scopeURL + "icons/icon-1024x1024-maskable.png",
-                    "sizes": "1024x1024",
-                    "type": "image/png",
-                    "purpose": "maskable"
-                }
-            ],
-            "screenshots": [
-                {
-                    "src": scopeURL + "screenshot/screenshot-1920x1080.png",
-                    "sizes": "1920x1080",
-                    "form_factor": "wide",
-                    "label": "Desktop view"
-                },
-                {
-                    "src": scopeURL + "screenshot/screenshot-750x1334.png",
-                    "sizes": "750x1334",
-                    "form_factor": "narrow",
-                    "label": "Mobile view"
-                }
-            ]
+            "icons": config.getIconList(),
+            "screenshots": config.getScreenshotList(),
         }
         const stringManifest = JSON.stringify(objManifest);
         const blobManifest = new Blob([stringManifest], {type: 'application/json'});
