@@ -19,43 +19,6 @@ window.main = (function(){
 
         madex.create();
      }
-     function _loadManifest(){
-        console.log('Load manifest...');
-        let objManifest = {
-            "id": madex.params.manifest.id,
-
-            "name": madex.params.manifest.name,
-            "short_name": madex.params.manifest.short_name,
-            "description": madex.params.manifest.description,
-            
-            "start_url": config.startURL,
-            "scope": config.scopeURL,
-            "share_target": {
-                "action": config.startURL,
-                "method": "GET",
-                "enctype": "application/x-www-form-urlencoded",
-                "params": {
-                    "title": "title",
-                    "text": "text",
-                    "url": "url"
-                }
-            },
-            
-            "display_override": ["window-controls-overlay", "minimal-ui"],
-            "display": "standalone",
-            "background_color": "#FFFFFF",
-            "theme_color": "#13A29A",
-            "orientation": "portrait-primary",
-            "prefer_related_applications": false,
-
-            "icons": config.getIconList(),
-            "screenshots": config.getScreenshotList(),
-        }
-        const stringManifest = JSON.stringify(objManifest);
-        const blobManifest = new Blob([stringManifest], {type: 'application/json'});
-        const urlManifest = URL.createObjectURL(blobManifest);
-        window.document.getElementById("manifestPlaceHolder").setAttribute("href", urlManifest);
-     }
      function _loadCallback(){
         const parsedUrl = new URL(window.location);
         // searchParams.get() will properly handle decoding the values.
