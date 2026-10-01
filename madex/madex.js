@@ -258,7 +258,7 @@ const madex = (function(){
     function getChild(pId){ return childMap.get(pId); }
 
     function init(pCallback){
-        utils.loadFile("../scripts/config.js",true,pCallback);
+        utils.loadFile("scripts/config.js",true,pCallback);
     }
     function create(){
         //---Instanciate MaDeX engine
