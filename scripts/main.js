@@ -38,7 +38,7 @@ window.main = (function(){
             "prefer_related_applications": false,
             "scope": scopeURL,
             "share_target": {
-                "action": startURL + "index.html",
+                "action": startURL,
                 "method": "GET",
                 "enctype": "application/x-www-form-urlencoded",
                 "params": {
