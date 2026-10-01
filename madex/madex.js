@@ -36,6 +36,8 @@ const madex = (function(){
             "theme_color": "#5F7D8A",
             "orientation": "portrait-primary",
             "prefer_related_applications": false,
+
+            "shortcuts": [],
         }
     };
 
@@ -43,7 +45,7 @@ const madex = (function(){
         if (!swLoaded) {
             swLoaded = true;
             _header();
-            utils.loadFile(params.config,true,() => {
+            //utils.loadFile(params.config,true,() => {
                 _manifest();
                 utils.loadFile('styles/madex_material.css',true, 
                     () => utils.loadFile('madex/madex_material.min.js',true,
@@ -60,7 +62,7 @@ const madex = (function(){
                                     ._messageListener()
                                     ._load())))));
                                     */
-            });
+            //});
         }
     }
     function _header(){
@@ -105,6 +107,7 @@ const madex = (function(){
             "icons_localized": (config && typeof config.getIconListLocalized == 'function' ? config.getIconListLocalized() : {}),
             "screenshots": (config && typeof config.getScreenshotList == 'function' ? config.getScreenshotList() : []),
             "screenshots_localized": (config && typeof config.getScreenshotListLocalized == 'function' ? config.getScreenshotListLocalized() : {}),
+            "shortcuts": params.manifest.shortcuts,
         }
 
         const stringManifest = JSON.stringify(objManifest);
@@ -254,6 +257,9 @@ const madex = (function(){
     function cntChild(){ return childs.length; }
     function getChild(pId){ return childMap.get(pId); }
 
+    function init(pCallback){
+        utils.loadFile("../scripts/config.js",true,pCallback);
+    }
     function create(){
         //---Instanciate MaDeX engine
         console.log('MaDeX: starting engine...');
@@ -329,6 +335,7 @@ const madex = (function(){
 
     function getContentDiv(){ return contentDiv; }
     return {
+        init,
         params,
         create,
         getContentDiv,

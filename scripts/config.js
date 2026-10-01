@@ -161,6 +161,7 @@ const config = (function(){
                 .union(new Set(iconFiles))
                 .union(new Set(screenshotFiles)));
     }
+
     function getIconList(){
         let itemList = [];
         let item;
@@ -176,6 +177,7 @@ const config = (function(){
         return itemList;
     }
     function getIconListLocalized(){ return {}; }
+
     function getScreenshotList(){
         let itemList = [];
         let item;
@@ -190,6 +192,7 @@ const config = (function(){
         return itemList;
     }
     function getScreenshotListLocalized(){ return {}; }
+    
     return { 
         scopeURL,
         startURL,

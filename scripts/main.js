@@ -7,15 +7,44 @@ window.main = (function(){
     let mainDiv;
     let childs = [];
 
+    function _initCallback(){
+        _init();
+    }
     function _init(){
         madex.params.title = "Personal expense monitor";
         madex.params.loadCallback = _loadCallback;
         madex.params.networkCallback = _networkCallback;
         madex.params.manifest.id = "tacuin/v1";
         madex.params.manifest.name = "Tacuin";
+        madex.params.manifest.name_localized = {};
         madex.params.manifest.short_name = "Personal expense monitoring";
+        madex.params.manifest.short_name_localized = {};
         madex.params.manifest.description = "A personal expense monitoring";
+        madex.params.manifest.description_localized = {};
         madex.params.manifest.theme_color = "#13A29A";
+
+        madex.params.manifest.shortcuts = [
+            {
+                "name": "Apri l'accordatore",
+                "name_localized": {},
+                "short_name": "Accordatore",
+                "short_name_localized": {},
+                "description": "Vai all'accordatore",
+                "description_localized": {},
+                "url": config.startURL + "?page=tuner",
+                "icons": [],
+            },
+            {
+                "name": "Apri il metronomo",
+                "name_localized": {},
+                "short_name": "Metronomo",
+                "short_name_localized": {},
+                "description": "Vai al metronomo",
+                "description_localized": {},
+                "url": config.startURL + "?page=metronome",
+                "icons": [],
+            }
+        ];
 
         madex.create();
      }
@@ -58,7 +87,7 @@ window.main = (function(){
         window.document.getElementById("tplNetwork").innerHTML = networkState;
      }
 
-    _init();
+    madex.init(_initCallback);
     return {
         madex
     }
