@@ -175,6 +175,7 @@ const config = (function(){
         });
         return itemList;
     }
+    function getIconListLocalized(){ return {}; }
     function getScreenshotList(){
         let itemList = [];
         let item;
@@ -188,6 +189,7 @@ const config = (function(){
         });
         return itemList;
     }
+    function getScreenshotListLocalized(){ return {}; }
     return { 
         scopeURL,
         startURL,
@@ -195,6 +197,8 @@ const config = (function(){
         screenshotMap,
         getCacheFileList,
         getIconList,
-        getScreenshotList
+        getIconListLocalized,
+        getScreenshotList,
+        getScreenshotListLocalized,
     };
 })();

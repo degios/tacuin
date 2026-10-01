@@ -12,29 +12,107 @@ const madex = (function(){
     let childs = [];
     let childMap = new Map();
 
-    let loadCallback,networkCallback;
+    let params = {
+        "title": "Demonstration",
+        "description": "A demonstration application",
+
+        "loadCallback": null,
+        "networkCallback": null,
+
+        "config": "../scripts/config.js",
+        "manifest": {
+            "id": "demo/v1",
+
+            "name": "Demo",
+            "name_localized": {},
+            "short_name": "Demo",
+            "short_name_localized": {},
+            "description": "Demonstration",
+            "description_localized": {},
+
+            "display_override": ["window-controls-overlay", "minimal-ui"],
+            "display": "standalone",
+            "background_color": "#FFFFFF",
+            "theme_color": "#5F7D8A",
+            "orientation": "portrait-primary",
+            "prefer_related_applications": false,
+        }
+    };
 
     function _init(){
         if (!swLoaded) {
             swLoaded = true;
-            utils.loadFile('styles/madex_material.css',true, 
-                () => utils.loadFile('madex/madex_material.min.js',true,
-                () => utils.loadFile('styles/madex_snackbar.css',true, 
-                    () => utils.loadFile('madex/madex_snackbar.js',true, 
-                    () => utils.loadFile('styles/madex.css', true,
-                        () => _load())))));
-                                /*
-                        () => this._browserType()
-                                ._screenOrientationListener()
-                                ._loadSpeech()
-                                ._loadSound()
-                                ._shortcutListener()
-                                ._messageListener()
-                                ._load())))));
-                                */
+            _header();
+            utils.loadFile(params.config,true,() => {
+                _manifest();
+                utils.loadFile('styles/madex_material.css',true, 
+                    () => utils.loadFile('madex/madex_material.min.js',true,
+                    () => utils.loadFile('styles/madex_snackbar.css',true, 
+                        () => utils.loadFile('madex/madex_snackbar.js',true, 
+                        () => utils.loadFile('styles/madex.css', true,
+                            () => _load())))));
+                                    /*
+                            () => this._browserType()
+                                    ._screenOrientationListener()
+                                    ._loadSpeech()
+                                    ._loadSound()
+                                    ._shortcutListener()
+                                    ._messageListener()
+                                    ._load())))));
+                                    */
+            });
         }
     }
-    function _load(pCallback){
+    function _header(){
+        if (params.title && typeof params.title == "string" && params.title.trim() != "")
+            utils.createElement("title",window.document.head,"titlePlaceHolder").innerHTML = params.title.trim();
+    }
+    function _manifest(){
+        let elementManifest = utils.createElement("link",window.document.head,"manifestPlaceHolder");
+        elementManifest.rel = "manifest";
+
+        let objManifest = {
+            "id": madex.params.manifest.id,
+
+            "name": madex.params.manifest.name,
+            "name_localized": madex.params.manifest.name_localized,
+            "short_name": madex.params.manifest.short_name,
+            "short_name_localized": madex.params.manifest.short_name_localized,
+            "description": madex.params.manifest.description,
+            "description_localized": madex.params.manifest.description_localized,
+            
+            "start_url": (config ? (config.startURL ?? '') : ''),
+            "scope": (config ? (config.scopeURL ?? '') : ''),
+            "share_target": {
+                "action": (config ? (config.startURL ?? '') : ''),
+                "method": "GET",
+                "enctype": "application/x-www-form-urlencoded",
+                "params": {
+                    "title": "title",
+                    "text": "text",
+                    "url": "url"
+                }
+            },
+            
+            "display_override": params.manifest.display_override,
+            "display": params.manifest.display,
+            "background_color": params.manifest.background_color,
+            "theme_color": params.manifest.theme_color,
+            "orientation": params.manifest.orie,
+            "prefer_related_applications": params.manifest.prefer_related_applications,
+
+            "icons": (config && typeof config.getIconList == 'function' ? config.getIconList() : []),
+            "icons_localized": (config && typeof config.getIconListLocalized == 'function' ? config.getIconListLocalized() : {}),
+            "screenshots": (config && typeof config.getScreenshotList == 'function' ? config.getScreenshotList() : []),
+            "screenshots_localized": (config && typeof config.getScreenshotListLocalized == 'function' ? config.getScreenshotListLocalized() : {}),
+        }
+
+        const stringManifest = JSON.stringify(objManifest);
+        const blobManifest = new Blob([stringManifest], {type: 'application/json'});
+        const urlManifest = URL.createObjectURL(blobManifest);
+        window.document.getElementById("manifestPlaceHolder").setAttribute("href", urlManifest);
+    }
+    function _load(){
         mainDiv = utils.createElement("div",window.document.body,"tplMain","tplMain_ctrl");
         //utils.createTextNode("Tacuin, a personal expense monitor project", utils.createElement("h2",mainDiv));
 
@@ -149,11 +227,11 @@ const madex = (function(){
         //this.snackBar("Notification - Permission was not granted.",'error','!','');
 
         window.madex = madex;
-        if (loadCallback !== null && loadCallback != undefined && typeof loadCallback == 'function')
-            loadCallback.call();
+        if (params && params && params.loadCallback && typeof params.loadCallback == 'function')
+            params.loadCallback.call();
 
-        if (networkCallback !== null && networkCallback != undefined && typeof networkCallback == 'function')
-            network.create(networkCallback);
+        if (params && params && params.networkCallback && typeof params.networkCallback == 'function')
+            network.create(params.networkCallback);
     }
 
     // Manage childs
@@ -176,16 +254,12 @@ const madex = (function(){
     function cntChild(){ return childs.length; }
     function getChild(pId){ return childMap.get(pId); }
 
-    function create(pLoadCallback,pNetworkCallback){
+    function create(){
         //---Instanciate MaDeX engine
         console.log('MaDeX: starting engine...');
         if (created) console.log("MaDeX: engine is already created!")
         else {
             created = true;
-
-            loadCallback = pLoadCallback;
-            networkCallback = pNetworkCallback;
-
             if (swLoaded)
                 console.log('MaDeX: engine is already running!');
             else if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
@@ -255,6 +329,7 @@ const madex = (function(){
 
     function getContentDiv(){ return contentDiv; }
     return {
+        params,
         create,
         getContentDiv,
         pushChild,

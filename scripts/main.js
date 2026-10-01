@@ -8,23 +8,27 @@ window.main = (function(){
     let childs = [];
 
     function _init(){
-        madex.loadFile("scripts/config.js",true,() => _loadManifest());
-        madex.create(_loadCallback, _networkCallback);
+        madex.params.title = "Personal expense monitor";
+        madex.params.loadCallback = _loadCallback;
+        madex.params.networkCallback = _networkCallback;
+        madex.params.manifest.id = "tacuin/v1";
+        madex.params.manifest.name = "Tacuin";
+        madex.params.manifest.short_name = "Personal expense monitoring";
+        madex.params.manifest.description = "A personal expense monitoring";
+        madex.params.manifest.theme_color = "#13A29A";
+
+        madex.create();
      }
      function _loadManifest(){
         console.log('Load manifest...');
         let objManifest = {
-            "name": "Tacuin",
-            "short_name": "Tacuin",
-            "id": "tacuin/v1",
+            "id": madex.params.manifest.id,
+
+            "name": madex.params.manifest.name,
+            "short_name": madex.params.manifest.short_name,
+            "description": madex.params.manifest.description,
+            
             "start_url": config.startURL,
-            "display_override": ["window-controls-overlay", "minimal-ui"],
-            "display": "standalone",
-            "background_color": "#FFFFFF",
-            "theme_color": "#13A29A",
-            "description": "Personal expense monitoring",
-            "orientation": "portrait-primary",
-            "prefer_related_applications": false,
             "scope": config.scopeURL,
             "share_target": {
                 "action": config.startURL,
@@ -36,6 +40,14 @@ window.main = (function(){
                     "url": "url"
                 }
             },
+            
+            "display_override": ["window-controls-overlay", "minimal-ui"],
+            "display": "standalone",
+            "background_color": "#FFFFFF",
+            "theme_color": "#13A29A",
+            "orientation": "portrait-primary",
+            "prefer_related_applications": false,
+
             "icons": config.getIconList(),
             "screenshots": config.getScreenshotList(),
         }
