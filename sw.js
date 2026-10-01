@@ -1,15 +1,3 @@
-/*
- * CHALLANGE:  
- * Cache `index.html` file using service worker.
- *
- * This bit of code is included in <script> tag of index.html
- * if (navigator.serviceWorker) {
- *   navigator.serviceWorker.register('serviceworker.js', {scope: '/'})
- * }
- *
- */
-
-
 self.importScripts('scripts/config.js');
 
 var CACHE_NAME = 'version_01';

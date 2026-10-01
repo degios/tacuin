@@ -1,4 +1,5 @@
 let geoCallback = null;
+let loadedFilesMap = new Map();
 
 export function createElement(pElement, pTarget, pId, pClass){
     let ne = document.createElement(pElement);
@@ -21,47 +22,52 @@ export function getUID(pLen = 5){
     return (res);
 }
 export function loadFile(pFile, pAsync = true, pCallback, pType){
-    let oDocument = window.document;
-    let fileEle = null;
+    if (!loadedFilesMap.has(pFile)){
+        let oDocument = window.document;
+        let fileEle = null;
 
-    switch ((pType ?? pFile.split('.').pop()).trim().toLowerCase()){
-        case 'js':
-        fileEle = oDocument.createElement("script");
-        fileEle.setAttribute("src", pFile);
-        fileEle.setAttribute("type", "text/javascript");
-        fileEle.setAttribute("async", pAsync);
-        oDocument.head.appendChild(fileEle);
-        break;
-        case 'css':
-        fileEle = oDocument.createElement("link");
-        fileEle.href = pFile;
-        fileEle.type = 'text/css';
-        fileEle.rel = 'stylesheet';
-        //oDocument.getElementsByTagName('head')[0].append(fileEle);
-        oDocument.head.appendChild(fileEle)
-        break;
-        case 'wav':
-        case 'mp3':
-        new Audio(pFile);
-        break;
-        case 'module':
-        fileEle = oDocument.createElement("script");
-        fileEle.setAttribute("src", pFile);
-        fileEle.setAttribute("type", "module");
-        fileEle.setAttribute("async", pAsync);
-        oDocument.head.appendChild(fileEle);
-        break;
-    }
+        switch ((pType ?? pFile.split('.').pop()).trim().toLowerCase()){
+            case 'js':
+            fileEle = oDocument.createElement("script");
+            fileEle.setAttribute("src", pFile);
+            fileEle.setAttribute("type", "text/javascript");
+            fileEle.setAttribute("async", pAsync);
+            oDocument.head.appendChild(fileEle);
+            break;
+            case 'css':
+            fileEle = oDocument.createElement("link");
+            fileEle.href = pFile;
+            fileEle.type = 'text/css';
+            fileEle.rel = 'stylesheet';
+            //oDocument.getElementsByTagName('head')[0].append(fileEle);
+            oDocument.head.appendChild(fileEle)
+            break;
+            case 'wav':
+            case 'mp3':
+            new Audio(pFile);
+            break;
+            case 'module':
+            fileEle = oDocument.createElement("script");
+            fileEle.setAttribute("src", pFile);
+            fileEle.setAttribute("type", "module");
+            fileEle.setAttribute("async", pAsync);
+            oDocument.head.appendChild(fileEle);
+            break;
+        }
 
-    if (fileEle !== null && fileEle != undefined){
-        // success event 
-        if (pCallback !== null && pCallback != undefined && typeof pCallback == 'function')
-        fileEle.addEventListener("load", () => { pCallback.call(); });
+        if (fileEle !== null && fileEle != undefined){
+            console.log('MaDex.utils: load file %s', pFile);
+            loadedFilesMap.set(pFile,fileEle);
 
-        // error event
-        fileEle.addEventListener("error", (ev) => {
-        console.log("Error on loading file " + pFile.split('\\').pop().split('/').pop(), ev);
-        });
+            // success event 
+            if (pCallback !== null && pCallback != undefined && typeof pCallback == 'function')
+                fileEle.addEventListener("load", () => { pCallback.call(); });
+
+            // error event
+            fileEle.addEventListener("error", (ev) => {
+                console.log("Error on loading file " + pFile.split('\\').pop().split('/').pop(), ev);
+            });
+        }
     }
 }
 export function addDaysToDate(pDate,pDays){
