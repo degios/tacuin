@@ -63,7 +63,8 @@ window.main = (function(){
         if ((sharedTarget.title ?? '').trim() != '' && (sharedTarget.url ?? '').trim() != ''){
             let ctrl = madex.createElement('p',madex.getContentDiv(),"tplSharedTarget");
             //ctrl.style.position = "absolute";
-            ctrl.innerHTML = '<a href="' + sharedTarget.url + '" target="_blank">' + sharedTarget.title + '</a>';
+            //ctrl.innerHTML = '<a href="' + sharedTarget.url + '" target="_blank">' + sharedTarget.title + '</a>';
+            ctrl.innerHTML = '<p>' + sharedTarget.title + '</p><video id="youtubePlaceHolder" controls crossorigine="anonymous"><source src="' + sharedTarget.url + '" type="video/mp4"/></video><br>'
         }
 
         let ctrl = madex.createElement('p',madex.getContentDiv(),"tplNetwork");
