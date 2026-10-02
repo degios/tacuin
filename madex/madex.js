@@ -122,9 +122,6 @@ const madex = (function(){
         }
     }
     function _load(){
-        let element = utils.createElement("p",window.document.body);
-        return;
-
         mainDiv = utils.createElement("div",window.document.body,"tplMain","tplMain_ctrl");
         //utils.createTextNode("Tacuin, a personal expense monitor project", utils.createElement("h2",mainDiv));
 
