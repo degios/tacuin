@@ -49,24 +49,22 @@ const madex = (function(){
         if (!swLoaded) {
             swLoaded = true;
             _header();
-            //utils.loadFile(params.config,true,() => {
-                _manifest();
-                //utils.loadFile('styles/madex_material.css',true, 
-                    () => utils.loadFile('madex/madex_material.min.js',true,
-                    () => utils.loadFile('styles/madex_snackbar.css',true, 
-                        () => utils.loadFile('madex/madex_snackbar.js',true, 
-                        () => utils.loadFile('styles/madex.css', true,
-                            () => _load()))))//);
-                                    /*
-                            () => this._browserType()
-                                    ._screenOrientationListener()
-                                    ._loadSpeech()
-                                    ._loadSound()
-                                    ._shortcutListener()
-                                    ._messageListener()
-                                    ._load())))));
-                                    */
-            //});
+            _manifest();
+            utils.loadFile('styles/madex_material.css',true, 
+                () => utils.loadFile('madex/madex_material.min.js',true,
+                () => utils.loadFile('styles/madex_snackbar.css',true, 
+                    () => utils.loadFile('madex/madex_snackbar.js',true, 
+                    () => utils.loadFile('styles/madex.css', true,
+                        () => _load())))));
+                                /*
+                        () => this._browserType()
+                                ._screenOrientationListener()
+                                ._loadSpeech()
+                                ._loadSound()
+                                ._shortcutListener()
+                                ._messageListener()
+                                ._load())))));
+                                */
         }
     }
     function _header(){
