@@ -28,31 +28,31 @@ export function loadFile(pFile, pAsync = true, pCallback, pType){
 
         switch ((pType ?? pFile.split('.').pop()).trim().toLowerCase()){
             case 'js':
-            fileEle = oDocument.createElement("script");
-            fileEle.setAttribute("src", pFile);
-            fileEle.setAttribute("type", "text/javascript");
-            fileEle.setAttribute("async", pAsync);
-            oDocument.head.appendChild(fileEle);
-            break;
+                fileEle = oDocument.createElement("script");
+                fileEle.setAttribute("src", pFile);
+                fileEle.setAttribute("type", "text/javascript");
+                fileEle.setAttribute("async", pAsync);
+                oDocument.head.appendChild(fileEle);
+                break;
             case 'css':
-            fileEle = oDocument.createElement("link");
-            fileEle.href = pFile;
-            fileEle.type = 'text/css';
-            fileEle.rel = 'stylesheet';
-            //oDocument.getElementsByTagName('head')[0].append(fileEle);
-            oDocument.head.appendChild(fileEle)
-            break;
+                fileEle = oDocument.createElement("link");
+                fileEle.href = pFile;
+                fileEle.type = 'text/css';
+                fileEle.rel = 'stylesheet';
+                //oDocument.getElementsByTagName('head')[0].append(fileEle);
+                oDocument.head.appendChild(fileEle)
+                break;
             case 'wav':
             case 'mp3':
-            new Audio(pFile);
-            break;
+                new Audio(pFile);
+                break;
             case 'module':
-            fileEle = oDocument.createElement("script");
-            fileEle.setAttribute("src", pFile);
-            fileEle.setAttribute("type", "module");
-            fileEle.setAttribute("async", pAsync);
-            oDocument.head.appendChild(fileEle);
-            break;
+                fileEle = oDocument.createElement("script");
+                fileEle.setAttribute("src", pFile);
+                fileEle.setAttribute("type", "module");
+                fileEle.setAttribute("async", pAsync);
+                oDocument.head.appendChild(fileEle);
+                break;
         }
 
         if (fileEle !== null && fileEle != undefined){

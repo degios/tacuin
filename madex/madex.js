@@ -4,7 +4,6 @@ import { browser } from './madex_browser.js';
 
 const madex = (function(){
     let created = false;
-    let swVersion = '20260909T000000';
     let swLoaded = false;
 
     let isConfigured = false;
@@ -19,7 +18,12 @@ const madex = (function(){
         "loadCallback": null,
         "networkCallback": null,
 
-        "config": "../scripts/config.js",
+        "config": "",
+        "service_worker": {
+            "src": "",
+            "version": "",
+        },
+
         "manifest": {
             "id": "demo/v1",
 
@@ -30,7 +34,7 @@ const madex = (function(){
             "description": "Demonstration",
             "description_localized": {},
 
-            "display_override": ["window-controls-overlay", "minimal-ui"],
+            "display_override": ["standalone"],
             "display": "standalone",
             "background_color": "#FFFFFF",
             "theme_color": "#5F7D8A",
@@ -47,12 +51,12 @@ const madex = (function(){
             _header();
             //utils.loadFile(params.config,true,() => {
                 _manifest();
-                utils.loadFile('styles/madex_material.css',true, 
+                //utils.loadFile('styles/madex_material.css',true, 
                     () => utils.loadFile('madex/madex_material.min.js',true,
                     () => utils.loadFile('styles/madex_snackbar.css',true, 
                         () => utils.loadFile('madex/madex_snackbar.js',true, 
                         () => utils.loadFile('styles/madex.css', true,
-                            () => _load())))));
+                            () => _load()))))//);
                                     /*
                             () => this._browserType()
                                     ._screenOrientationListener()
@@ -70,52 +74,57 @@ const madex = (function(){
             utils.createElement("title",window.document.head,"titlePlaceHolder").innerHTML = params.title.trim();
     }
     function _manifest(){
-        let elementManifest = utils.createElement("link",window.document.head,"manifestPlaceHolder");
-        elementManifest.rel = "manifest";
+        if (params.config && params.config.trim() != '' && params.manifest){
+            let elementManifest = utils.createElement("link",window.document.head,"manifestPlaceHolder");
+            elementManifest.rel = "manifest";
 
-        let objManifest = {
-            "id": madex.params.manifest.id,
+            let objManifest = {
+                "id": madex.params.manifest.id,
 
-            "name": madex.params.manifest.name,
-            "name_localized": madex.params.manifest.name_localized,
-            "short_name": madex.params.manifest.short_name,
-            "short_name_localized": madex.params.manifest.short_name_localized,
-            "description": madex.params.manifest.description,
-            "description_localized": madex.params.manifest.description_localized,
-            
-            "start_url": (config ? (config.startURL ?? '') : ''),
-            "scope": (config ? (config.scopeURL ?? '') : ''),
-            "share_target": {
-                "action": (config ? (config.startURL ?? '') : ''),
-                "method": "GET",
-                "enctype": "application/x-www-form-urlencoded",
-                "params": {
-                    "title": "title",
-                    "text": "text",
-                    "url": "url"
-                }
-            },
-            
-            "display_override": params.manifest.display_override,
-            "display": params.manifest.display,
-            "background_color": params.manifest.background_color,
-            "theme_color": params.manifest.theme_color,
-            "orientation": params.manifest.orie,
-            "prefer_related_applications": params.manifest.prefer_related_applications,
+                "name": madex.params.manifest.name,
+                "name_localized": madex.params.manifest.name_localized,
+                "short_name": madex.params.manifest.short_name,
+                "short_name_localized": madex.params.manifest.short_name_localized,
+                "description": madex.params.manifest.description,
+                "description_localized": madex.params.manifest.description_localized,
+                
+                "start_url": (config ? (config.startURL ?? '') : ''),
+                "scope": (config ? (config.scopeURL ?? '') : ''),
+                "share_target": {
+                    "action": (config ? (config.startURL ?? '') : ''),
+                    "method": "GET",
+                    "enctype": "application/x-www-form-urlencoded",
+                    "params": {
+                        "title": "title",
+                        "text": "text",
+                        "url": "url"
+                    }
+                },
+                
+                "display_override": params.manifest.display_override,
+                "display": params.manifest.display,
+                "background_color": params.manifest.background_color,
+                "theme_color": params.manifest.theme_color,
+                "orientation": params.manifest.orie,
+                "prefer_related_applications": params.manifest.prefer_related_applications,
 
-            "icons": (config && typeof config.getIconList == 'function' ? config.getIconList() : []),
-            "icons_localized": (config && typeof config.getIconListLocalized == 'function' ? config.getIconListLocalized() : {}),
-            "screenshots": (config && typeof config.getScreenshotList == 'function' ? config.getScreenshotList() : []),
-            "screenshots_localized": (config && typeof config.getScreenshotListLocalized == 'function' ? config.getScreenshotListLocalized() : {}),
-            "shortcuts": params.manifest.shortcuts,
+                "icons": (config && typeof config.getIconList == 'function' ? config.getIconList() : []),
+                "icons_localized": (config && typeof config.getIconListLocalized == 'function' ? config.getIconListLocalized() : {}),
+                "screenshots": (config && typeof config.getScreenshotList == 'function' ? config.getScreenshotList() : []),
+                "screenshots_localized": (config && typeof config.getScreenshotListLocalized == 'function' ? config.getScreenshotListLocalized() : {}),
+                "shortcuts": params.manifest.shortcuts,
+            }
+
+            const stringManifest = JSON.stringify(objManifest);
+            const blobManifest = new Blob([stringManifest], {type: 'application/json'});
+            const urlManifest = URL.createObjectURL(blobManifest);
+            window.document.getElementById("manifestPlaceHolder").setAttribute("href", urlManifest);
         }
-
-        const stringManifest = JSON.stringify(objManifest);
-        const blobManifest = new Blob([stringManifest], {type: 'application/json'});
-        const urlManifest = URL.createObjectURL(blobManifest);
-        window.document.getElementById("manifestPlaceHolder").setAttribute("href", urlManifest);
     }
     function _load(){
+        let element = utils.createElement("p",window.document.body);
+        return;
+
         mainDiv = utils.createElement("div",window.document.body,"tplMain","tplMain_ctrl");
         //utils.createTextNode("Tacuin, a personal expense monitor project", utils.createElement("h2",mainDiv));
 
@@ -257,8 +266,15 @@ const madex = (function(){
     function cntChild(){ return childs.length; }
     function getChild(pId){ return childMap.get(pId); }
 
-    function init(pCallback){
-        utils.loadFile("scripts/config.js",true,pCallback);
+    function init(pConfig, pCallback){
+        if (pConfig && typeof pConfig == 'string' && pConfig.trim() != '')
+            utils.loadFile(pConfig.trim(),true,() => _initCallback(pConfig, pCallback));
+        else if (pCallback && typeof pCallback == 'function')
+            pCallback.call();
+    }
+    function  _initCallback(pConfig, pCallback){
+        params.config = pConfig;
+        pCallback.call();
     }
     function create(){
         //---Instanciate MaDeX engine
@@ -268,7 +284,8 @@ const madex = (function(){
             created = true;
             if (swLoaded)
                 console.log('MaDeX: engine is already running!');
-            else if (window.location.protocol != 'file:' && 'serviceWorker' in navigator) {
+            else if (window.location.protocol != 'file:' && 'serviceWorker' in navigator && 
+                     params.service_worker && params.service_worker.src && params.service_worker.src.trim() != '') {
                 console.log('MaDeX: load service worker...');
                 // Service workers are supported. Use them.
                 window.addEventListener('load', function () {
@@ -276,7 +293,9 @@ const madex = (function(){
                     // Wait for registration to finish before dropping the <script> tag.
                     // Otherwise, the browser will load the script multiple times,
                     // potentially different versions.
-                    var serviceWorkerUrl = 'sw.js?v=' + swVersion;
+                    var serviceWorkerUrl = params.service_worker.src.trim();
+                    if (params.service_worker.version && params.service_worker.version.trim() != '')
+                        serviceWorkerUrl += '?v=' + params.service_worker.version.trim();
                     navigator.serviceWorker.register(serviceWorkerUrl)
                         .then((reg) => {
                             console.log('MaDeX: SW registered!', reg);
