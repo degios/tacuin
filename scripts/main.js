@@ -34,7 +34,7 @@ window.main = (function(){
                     "short_name_localized": {},
                     "description": "Vai all'accordatore",
                     "description_localized": {},
-                    "url": config.startURL + "?page=tuner",
+                    "url": config.startURL + "?scope=tuner",
                     "icons": [],
                 },
                 {
@@ -44,9 +44,29 @@ window.main = (function(){
                     "short_name_localized": {},
                     "description": "Vai al metronomo",
                     "description_localized": {},
-                    "url": config.startURL + "?page=metronome",
+                    "url": config.startURL + "?scope=metronome",
                     "icons": [],
-                }
+                },
+                {
+                    "name": "Apri il video player",
+                    "name_localized": {},
+                    "short_name": "Video player",
+                    "short_name_localized": {},
+                    "description": "Vai al video player",
+                    "description_localized": {},
+                    "url": config.startURL + "?scope=videoplayer",
+                    "icons": [],
+                },
+                {
+                    "name": "Apri l'audio player",
+                    "name_localized": {},
+                    "short_name": "Audio player",
+                    "short_name_localized": {},
+                    "description": "Vai all'audio player",
+                    "description_localized": {},
+                    "url": config.startURL + "?scope=audioplayer",
+                    "icons": [],
+                },
             ];
         }
 
@@ -60,6 +80,14 @@ window.main = (function(){
         sharedTarget.text = (parsedUrl.searchParams.get('text') ?? '');
         sharedTarget.url = (parsedUrl.searchParams.get('url') ?? '');
         sharedTarget.url = (sharedTarget.text.trim() != '' && sharedTarget.url.trim() == '' ? sharedTarget.text : sharedTarget.url);
+
+        let scope  = (parsedUrl.searchParams.get('scope') ?? '');
+        if (scope.trim() != '' && scope == 'videoplayer'){
+            sharedTarget.title  = 'Video player';
+            sharedTarget.text = sharedTarget.title
+            sharedTarget.url = sharedTarget.title
+        }
+
         if ((sharedTarget.title ?? '').trim() != '' && (sharedTarget.url ?? '').trim() != ''){
             let ctrl = madex.createElement('p',madex.getContentDiv(),"tplSharedTarget");
             //ctrl.style.position = "absolute";
