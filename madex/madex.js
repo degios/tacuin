@@ -68,11 +68,19 @@ const madex = (function(){
         }
     }
     function _header(){
+        let element
         if (params.title && typeof params.title == "string" && params.title.trim() != "")
             utils.createElement("title",window.document.head,"titlePlaceHolder").innerHTML = params.title.trim();
+        if (config && config.faviconMap)
+            faviconMap.forEach((pVal,pKey) => {
+                element = utils.createElement("link",window.document.head);
+                element.href = pKey
+                element.sizes = pVal.get("sizes")
+                element.rel = pVal.get("rel")
+            });
     }
     function _manifest(){
-        if (params.config && params.config.trim() != '' && params.manifest){
+        if (config && params.config && params.config.trim() != '' && params.manifest){
             let elementManifest = utils.createElement("link",window.document.head,"manifestPlaceHolder");
             elementManifest.rel = "manifest";
 

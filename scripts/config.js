@@ -2,6 +2,22 @@ const config = (function(){
     const scopeURL = _getScopeURL();
     const startURL = _getStartURL();
 
+    const faviconMap = new Map()
+        .set(scopeURL + "icons/icon-16x16-transparent.png",new Map()
+                                        .set("rel","icon")
+                                        .set("sizes","16x16"))
+        .set(scopeURL + "icons/icon-32x32-transparent.png",new Map()
+                                        .set("rel","icon")
+                                        .set("sizes","32x32"))
+        .set(scopeURL + "icons/icon-180x180-transparent.png",new Map()
+                                        .set("rel","apple-touch-icon")
+                                        .set("sizes","180x180"))
+        .set(scopeURL + "icons/icon-192x192-transparent.png",new Map()
+                                        .set("rel","icon")
+                                        .set("sizes","192x192"))
+        .set(scopeURL + "icons/icon-512x512-transparent.png",new Map()
+                                        .set("rel","icon")
+                                        .set("sizes","512x512"))
     const iconMap = new Map()
         .set(scopeURL + "icons/icon-48x48.png",new Map()
                                         .set("sizes","48x48")
@@ -196,6 +212,7 @@ const config = (function(){
     return { 
         scopeURL,
         startURL,
+        faviconMap,
         iconMap,
         screenshotMap,
         getCacheFileList,
