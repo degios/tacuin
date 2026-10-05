@@ -1,4 +1,4 @@
-const detectBot = (function(){
+const detect = (function(){
     const detectors = {
         webDriver: navigator.webdriver, // Checks if the browser is controlled by automation
         headlessBrowser: navigator.userAgent.includes('Headless'), // Detects headless browsers
@@ -56,4 +56,4 @@ const detectBot = (function(){
     return { detections, verdict };
 })();
 
-export { detectBot };
+export { detect };
