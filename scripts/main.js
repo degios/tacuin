@@ -74,89 +74,63 @@ window.main = (function(){
      }
      function _loadCallback(){
         const parsedUrl = new URL(window.location);
-        // searchParams.get() will properly handle decoding the values.
-        let sharedTarget = {};
-        sharedTarget.title  = (parsedUrl.searchParams.get('title') ?? '');
-        sharedTarget.text = (parsedUrl.searchParams.get('text') ?? '');
-        sharedTarget.url = (parsedUrl.searchParams.get('url') ?? '');
-        sharedTarget.url = (sharedTarget.text.trim() != '' && sharedTarget.url.trim() == '' ? sharedTarget.text : sharedTarget.url);
+        let ctrl;
 
-        let scope  = (parsedUrl.searchParams.get('scope') ?? '');
-        if (scope.trim() != '' && scope == 'videoplayer'){
-            sharedTarget.title  = 'Video player';
-            sharedTarget.text = sharedTarget.title
-            sharedTarget.url = sharedTarget.title
-        }
+        switch((parsedUrl.searchParams.get('scope') ?? '').trim()){
+            case 'videoplayer':
+                ctrl = madex.createElement('p',madex.getContentDiv());
+                ctrl.innerHTML = '<p>Video player</p>';
+                //ctrl.innerHTML += '<iframe id="my-youtube" width="560" height="315" src="https://www.youtube.com/embed/hst2N9sxY0Q?si=67DMEf-dDfAR6BGi&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+                ctrl.innerHTML += '<input type="file" id="videoInput" accept="video/*"><br><br>'
+                ctrl.innerHTML += '<video id="videoPlayer" width="560" height="315" controls></video><br>'
+                ctrl.innerHTML += '<label for="rate">Playback rate <span id="rate-value">1.0</span></label><br>'
+                ctrl.innerHTML += '<input type="range" id="rate" name="rate" min="0" max="4" value="1" step=".2" /><br>'
 
-        if ((sharedTarget.title ?? '').trim() != '' && (sharedTarget.url ?? '').trim() != ''){
-            let ctrl = madex.createElement('p',madex.getContentDiv(),"tplSharedTarget");
-            //ctrl.style.position = "absolute";
-            //ctrl.innerHTML = '<a href="' + sharedTarget.url + '" target="_blank">' + sharedTarget.title + '</a>';
-            ctrl.innerHTML = '<p>' + sharedTarget.title + '</p>';
-            //ctrl.innerHTML += '<iframe id="my-youtube" width="560" height="315" src="https://www.youtube.com/embed/hst2N9sxY0Q?si=67DMEf-dDfAR6BGi&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
-            ctrl.innerHTML += '<input type="file" id="videoInput" accept="video/*"><br><br>'
-            ctrl.innerHTML += '<video id="videoPlayer" width="560" height="315" controls></video><br>'
-            ctrl.innerHTML += '<label for="rate">Playback rate <span id="rate-value">1.0</span></label><br>'
-            ctrl.innerHTML += '<input type="range" id="rate" name="rate" min="0" max="4" value="1" step=".2" /><br>'
-/*
-            ctrl.innerHTML += '<label for="freq">Filter freq. <span id="freq-value">1.0</span>hz</label><br>'
-            ctrl.innerHTML += '<input type="range" id="freq" name="freq" max="20000" value="1000" step="100" /><br>'
-*/
+                // Load local file
+                const input = document.getElementById('videoInput');
+                const video = document.getElementById('videoPlayer');
+                let objectUrl = null;
+                input.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
 
-            // Load local file
-            const input = document.getElementById('videoInput');
-            const video = document.getElementById('videoPlayer');
-            let objectUrl = null;
-            input.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (!file) return;
+                    // Revoke the old object URL to free up memory
+                    if (objectUrl) {
+                        URL.revokeObjectURL(objectUrl);
+                    }
 
-                // Revoke the old object URL to free up memory
-                if (objectUrl) {
-                    URL.revokeObjectURL(objectUrl);
+                    // Create a new local blob URL for the selected file
+                    objectUrl = URL.createObjectURL(file);
+                    video.src = objectUrl;
+                });
+
+                // Change playbackRate
+                const rateSlider = document.getElementById("rate");
+                const rateValue = document.getElementById("rate-value");
+                const videoPlayer = document.getElementById("videoPlayer");
+
+                rateSlider.addEventListener("input", () => {
+                    videoPlayer.playbackRate = rateSlider.value;
+                    rateValue.textContent = parseFloat(rateSlider.value);
+                });
+                break;
+            default:
+                // searchParams.get() will properly handle decoding the values.
+                let sharedTarget = {};
+                sharedTarget.title  = (parsedUrl.searchParams.get('title') ?? '');
+                sharedTarget.text = (parsedUrl.searchParams.get('text') ?? '');
+                sharedTarget.url = (parsedUrl.searchParams.get('url') ?? '');
+                sharedTarget.url = (sharedTarget.text.trim() != '' && sharedTarget.url.trim() == '' ? sharedTarget.text : sharedTarget.url);
+
+                if ((sharedTarget.title ?? '').trim() != '' && (sharedTarget.url ?? '').trim() != ''){
+                    let ctrl = madex.createElement('div',madex.getContentDiv(),"tplSharedTarget");
+                    //ctrl.style.position = "absolute";
+                    ctrl.innerHTML = '<a href="' + sharedTarget.url + '" target="_blank">' + sharedTarget.title + '</a>';
                 }
-
-                // Create a new local blob URL for the selected file
-                objectUrl = URL.createObjectURL(file);
-                video.src = objectUrl;
-            });
-
-            // Change playbackRate
-            const rateSlider = document.getElementById("rate");
-            const rateValue = document.getElementById("rate-value");
-            const videoPlayer = document.getElementById("videoPlayer");
-
-            rateSlider.addEventListener("input", () => {
-                videoPlayer.playbackRate = rateSlider.value;
-                rateValue.textContent = parseFloat(rateSlider.value);
-            });
-            
-            // Apply frequency filter
-/*
-            const freqSlider = document.getElementById("freq");
-            const freqValue = document.getElementById("freq-value");
-
-            const context = new AudioContext();
-            const audioSource = context.createMediaElementSource(
-                document.getElementById("videoPlayer"),
-            );
-            const filter = context.createBiquadFilter();
-            audioSource.connect(filter);
-            filter.connect(context.destination);
-
-            // Configure filter
-            filter.type = "lowshelf";
-            filter.frequency.value = 1000;
-            filter.gain.value = 20;
-
-            freqSlider.addEventListener("input", () => {
-                filter.frequency.value = freqSlider.value;
-                freqValue.textContent = parseFloat(freqSlider.value);
-            });
-*/
+                break;
         }
 
-        let ctrl = madex.createElement('p',madex.getContentDiv(),"tplNetwork");
+        ctrl = madex.createElement('p',madex.getContentDiv(),"tplNetwork");
         //ctrl.style.position = "absolute";
         ctrl.innerHTML = 'Application on-line';
 
