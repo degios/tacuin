@@ -13,6 +13,13 @@ export function createTextNode(pContent, pTarget){
     pTarget.appendChild(ne);
     return ne;
 };
+export function createMeta(pTarget, pName, pContent){
+    let ne = createElement("meta");
+    if (pName) ne.name = pName;
+    if (pContent) ne.content = pContent;
+    if(pTarget) pTarget.appendChild(ne);
+    return ne;
+}
 export function getUID(pLen = 5){
     let res = '';
     for (var i=0; i<pLen; i++) {

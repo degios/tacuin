@@ -13,6 +13,7 @@ window.main = (function(){
     function _init(){
         if (madex.params.config && madex.params.config.trim() != ''){
             madex.params.title = "Personal expense monitor";
+            madex.params.description = "An expense monitor project";
             madex.params.loadCallback = _loadCallback;
             madex.params.networkCallback = _networkCallback;
             madex.params.service_worker.src = "sw.js";

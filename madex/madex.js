@@ -12,8 +12,12 @@ const madex = (function(){
     let childMap = new Map();
 
     let params = {
+        "meta": {
+            "description": "A demonstration application",
+            "mobile-web-app-capable": "yes",
+            "viewport": "width=device-width",
+        },
         "title": "Demonstration",
-        "description": "A demonstration application",
 
         "loadCallback": null,
         "networkCallback": null,
@@ -69,15 +73,25 @@ const madex = (function(){
     }
     function _header(){
         let element
-        if (params.title && typeof params.title == "string" && params.title.trim() != "")
-            utils.createElement("title",window.document.head,"titlePlaceHolder").innerHTML = params.title.trim();
+        if (params.meta.description)
+            Object.keys(params.meta).forEach(function(pKey){
+                utils.createMeta(window.document.head,pKey,params.meta[pKey].trim())
+            })
+        if (params.title && typeof params.title == "string" && params.title.trim() != ""){
+            utils.createMeta(window.document.head,"apple-mobile-web-app-title",params.title.trim())
+            utils.createElement("title",window.document.head,"titlePlaceHolder").innerHTML = params.title.trim()
+        }
+        if (params.manifest && typeof params.manifest.theme_color == "string" && params.manifest.theme_color.trim() != ""){
+            utils.createMeta(window.document.head,"apple-mobile-web-app-status-bar-style",params.manifest.theme_color.trim())
+            utils.createMeta(window.document.head,"theme-color",params.manifest.theme_color.trim())
+        }
         if (config && config.faviconMap)
             config.faviconMap.forEach((pVal,pKey) => {
                 element = utils.createElement("link",window.document.head);
                 element.href = pKey
                 element.sizes = pVal.get("sizes")
                 element.rel = pVal.get("rel")
-            });
+            })
     }
     function _manifest(){
         if (config && params.config && params.config.trim() != '' && params.manifest){
