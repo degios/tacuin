@@ -10,6 +10,8 @@ const madex = (function(){
     let mainDiv,loadDiv,topBarDiv,tabBarDiv,contentDiv,fltBtnDiv,hmbDrwDiv,botBarDiv;
     let childs = [];
     let childMap = new Map();
+    
+    let timeoutId;
 
     let params = {
         "meta": {
@@ -21,12 +23,15 @@ const madex = (function(){
 
         "loadCallback": null,
         "networkCallback": null,
+        "loaderCallback": null,
 
         "config": "",
         "service_worker": {
             "src": "",
             "version": "",
         },
+        "root": undefined,
+        "loader_timeout": 60000,
 
         "manifest": {
             "id": "demo/v1",
@@ -54,12 +59,14 @@ const madex = (function(){
             swLoaded = true;
             _header();
             _manifest();
-            utils.loadFile('styles/madex_material.css',true, 
-                () => utils.loadFile('madex/madex_material.min.js',true,
+            _theme();
+            //utils.loadFile('styles/madex_material.css',true, () => 
+            utils.loadFile('madex/madex_material.min.js',true,
                 () => utils.loadFile('styles/madex_snackbar.css',true, 
                     () => utils.loadFile('madex/madex_snackbar.js',true, 
                     () => utils.loadFile('styles/madex.css', true,
-                        () => _load())))));
+                        () => _load()))))
+            //);
                                 /*
                         () => this._browserType()
                                 ._screenOrientationListener()
@@ -141,12 +148,14 @@ const madex = (function(){
             window.document.getElementById("manifestPlaceHolder").setAttribute("href", urlManifest);
         }
     }
+    function _theme(){
+        if (params.root){
+            params.root.style.setProperty("--mdc-theme-primary", madex.params.manifest.theme_color);
+            params.root.style.setProperty("--mdc-theme-secondary", madex.params.manifest.theme_color);
+            params.root.style.setProperty("--mdc-theme-error", madex.params.manifest.theme_color);
+        }
+    }
     function _load(){
-        mainDiv = utils.createElement("div",window.document.body,"mdxMain","mdxMain");
-        //utils.createTextNode("Tacuin, a personal expense monitor project", utils.createElement("h2",mainDiv));
-        loadDiv = utils.createElement("div",mainDiv,"mdxLoader","mdxLoader");
-        utils.createElement("span",loadDiv,"mdxLoading","mdxLoading");
-
         topBarDiv = utils.createElement("div",mainDiv,"mdxTopBar","mdxTopBar");
         let topBarHTML = '';
         topBarHTML += '<header class="mdc-top-app-bar" id="tbar">';
@@ -313,7 +322,6 @@ const madex = (function(){
                     break
             }
 
-
         pCallback.call();
     }
     function create(){
@@ -394,7 +402,31 @@ const madex = (function(){
 
     function getContentDiv(){ return contentDiv; }
 
-    function loader(pDisplay) { loadDiv.style.display = (pDisplay ? "block" : "none") }
+    function loader(pDisplay) {
+        if (timeoutId){
+            console.log('MaDeX: clear timeout %s', timeoutId)
+            clearTimeout(timeoutId);
+            timeoutId = null;
+        }
+        if (loadDiv){
+            loadDiv.style.display = (pDisplay ? "block" : "none")
+            if (pDisplay)
+                timeoutId = setTimeout(() => {
+                    console.log('MaDeX: close loader cause timeout of %s ms',params.loader_timeout)
+                    loader(false)
+                    if (params && params && params.waitCallback && typeof params.waitCallback == 'function')
+                        params.waitCallback.call()
+                },params.loader_timeout)
+        }
+    }
+
+    // Need to include the CSS as soon as possible
+    utils.loadFile('styles/madex_material.css',true,() => { 
+        params.root = window.document.querySelector(":root") 
+        mainDiv = utils.createElement("div",window.document.body,"mdxMain","mdxMain");
+        loadDiv = utils.createElement("div",mainDiv,"mdxLoader","mdxLoader");
+        utils.createElement("span",loadDiv,"mdxLoading","mdxLoading");
+    });
 
     return {
         init,

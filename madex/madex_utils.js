@@ -1,6 +1,14 @@
 let geoCallback = null;
 let loadedFilesMap = new Map();
 
+export function variable(pValue){
+    this.val = pValue;
+    this.Value = function(pVal){
+        if(typeof pVal == 'boolean')
+                this.val = pVal;
+        return this.val;
+    };
+}
 export function createElement(pElement, pTarget, pId, pClass){
     let ne = document.createElement(pElement);
     if (pId) ne.id = pId;
@@ -145,6 +153,17 @@ export function removeHTMLTags(pHTMLString){
 export function capitalize(pString){
     return (pString !== null && pString != undefined ? pString.trim().charAt(0).toUpperCase() + pString.trim().toLowerCase().slice(1) : '');
 }
+export function bvl(pString,pDefault){
+  return (pString.trim() == '' ? pDefault : pString).trim();
+}
+export function cdata(pString){
+	const markBegin = '<![CDATA[';
+	const markEnd = ']]>';
+	
+	pString = (pString.substr(1,markBegin.length) == markBegin ? pString : markBegin + pString + markEnd);
+	
+	return pString;
+}
 export function formatSizeUnits(pBytes){
     if      (pBytes >= 1073741824) { pBytes = (pBytes / 1073741824).toFixed(2) + " GB"; }
     else if (pBytes >= 1048576)    { pBytes = (pBytes / 1048576).toFixed(2) + " MB"; }
@@ -188,4 +207,23 @@ async function getCurrentPosition(pPosition){
             if (geoCallback !== null && geoCallback != undefined && typeof geoCallback == 'function')
                 geoCallback(jsonGeo);
         });
+}
+export function calcFontSize(pFontSize,pStep = 0){
+  let nReturn = (pFontSize ?? 0);
+	nReturn += 0.125; // Gestisco 0.875 come 0 (pFontSize = 0.750
+                 
+  nReturn = nReturn + (0.125 * (pStep ?? 0));
+  nReturn = (nReturn < 0.750 ? 0.750 : (nReturn > 1.750 ? 1.750 : nReturn));
+  return nReturn;
+}
+export function setTopTitle(pTitle){
+  let oReturn = this;
+  if (pTitle == undefined)
+    oReturn = (window.top.document != undefined && window.top.document.title != undefined ? (window.top.document.title ?? '') : '').trim();
+  else if (window.top.document != undefined && window.top.document.title != undefined){
+    pTitle = (pTitle ?? '').trim();
+    pTitle = (pTitle.trim() == '' ? 'Demonstration' : pTitle);
+    window.top.document.title = pTitle;
+  }
+  return oReturn;
 }

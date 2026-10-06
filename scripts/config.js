@@ -1,6 +1,6 @@
 const config = (function(){
-    const scopeURL = _getScopeURL();
-    const startURL = _getStartURL();
+    const scopeURL = _getScopeURL()
+    const startURL = _getStartURL()
 
     const params = {
         "meta": {
@@ -21,7 +21,7 @@ const config = (function(){
             "short_name_localized": {},
             "description": "A personal expense monitoring",
             "description_localized": {},
-            "theme_color": "#13A29A",
+            "theme_color": "#FF0000",
 
             "shortcuts": [
                 {
@@ -220,19 +220,21 @@ const config = (function(){
         scopeURL + 'styles/madex_material.css',
         scopeURL + 'styles/madex_snackbar.css'
     ]
-    let iconFiles = []; iconMap.forEach((pVal, pKey) => { iconFiles.push(pKey); });
-    let screenshotFiles = []; screenshotMap.forEach((pVal, pKey) => { screenshotFiles.push(pKey); });
+    let iconFiles = []
+        iconMap.forEach((pVal, pKey) => { iconFiles.push(pKey) })
+    let screenshotFiles = []
+        screenshotMap.forEach((pVal, pKey) => { screenshotFiles.push(pKey) })
 
     function _getScopeURL(){
-        let pathOrigin = (self ?? window).location.origin;
-        let pathName = (self ?? window).location.pathname;
-        pathName = pathName.split('/');
-        pathName.pop();
-        pathName = pathName.join('/');
-        return (pathOrigin + pathName + "/");
+        let pathOrigin = (self ?? window).location.origin
+        let pathName = (self ?? window).location.pathname
+        pathName = pathName.split('/')
+        pathName.pop()
+        pathName = pathName.join('/')
+        return (pathOrigin + pathName + "/")
     }
     function _getStartURL(){
-        return (scopeURL + "index.html");
+        return (scopeURL + "index.html")
     }
 
     function getCacheFileList(){
@@ -241,39 +243,39 @@ const config = (function(){
                 .union(new Set(jsFiles))
                 .union(new Set(cssFiles))
                 .union(new Set(iconFiles))
-                .union(new Set(screenshotFiles)));
+                .union(new Set(screenshotFiles)))
     }
 
     function getIconList(){
-        let itemList = [];
-        let item;
+        let itemList = []
+        let item
         iconMap.forEach((pVal, pKey) => {
-            item = {};
-            item.src = pKey;
-            item.sizes = pVal.get("sizes") ?? '';
-            item.type = pVal.get("type") ?? '';
+            item = {}
+            item.src = pKey
+            item.sizes = pVal.get("sizes") ?? ''
+            item.type = pVal.get("type") ?? ''
             if (pVal.has("purpose"))
-                item.purpose = pVal.get("purpose");
-            itemList.push(item);
-        });
-        return itemList;
+                item.purpose = pVal.get("purpose")
+            itemList.push(item)
+        })
+        return itemList
     }
-    function getIconListLocalized(){ return {}; }
+    function getIconListLocalized(){ return {} }
 
     function getScreenshotList(){
-        let itemList = [];
-        let item;
+        let itemList = []
+        let item
         screenshotMap.forEach((pVal, pKey) => {
-            item = {};
-            item.src = pKey;
-            item.sizes = pVal.get("sizes") ?? '';
-            item.form_factor = pVal.get("form_factor") ?? '';
-            item.label = pVal.get("label") ?? '';
-            itemList.push(item);
-        });
-        return itemList;
+            item = {}
+            item.src = pKey
+            item.sizes = pVal.get("sizes") ?? ''
+            item.form_factor = pVal.get("form_factor") ?? ''
+            item.label = pVal.get("label") ?? ''
+            itemList.push(item)
+        })
+        return itemList
     }
-    function getScreenshotListLocalized(){ return {}; }
+    function getScreenshotListLocalized(){ return {} }
     
     return { 
         scopeURL,
@@ -287,5 +289,5 @@ const config = (function(){
         getIconListLocalized,
         getScreenshotList,
         getScreenshotListLocalized,
-    };
-})();
+    }
+})()
