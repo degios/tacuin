@@ -2,6 +2,72 @@ const config = (function(){
     const scopeURL = _getScopeURL();
     const startURL = _getStartURL();
 
+    const params = {
+        "meta": {
+            "description": "A demonstration application",
+            "mobile-web-app-capable": "yes",
+            "viewport": "width=device-width",
+        },
+        "title": "Personal expense monitor",
+        "service_worker": {
+            "src": "sw.js",
+            "version": "20260909T000000", // 20260909T000000
+        },
+        "manifest": {
+            "id": "tacuin/v1",
+            "name": "Tacuin",
+            "name_localized": {},
+            "short_name": "Tacuin",
+            "short_name_localized": {},
+            "description": "A personal expense monitoring",
+            "description_localized": {},
+            "theme_color": "#13A29A",
+
+            "shortcuts": [
+                {
+                    "name": "Apri l'accordatore",
+                    "name_localized": {},
+                    "short_name": "Accordatore",
+                    "short_name_localized": {},
+                    "description": "Vai all'accordatore",
+                    "description_localized": {},
+                    "url": startURL + "?scope=tuner",
+                    "icons": [],
+                },
+                {
+                    "name": "Apri il metronomo",
+                    "name_localized": {},
+                    "short_name": "Metronomo",
+                    "short_name_localized": {},
+                    "description": "Vai al metronomo",
+                    "description_localized": {},
+                    "url": startURL + "?scope=metronome",
+                    "icons": [],
+                },
+                {
+                    "name": "Apri il video player",
+                    "name_localized": {},
+                    "short_name": "Video player",
+                    "short_name_localized": {},
+                    "description": "Vai al video player",
+                    "description_localized": {},
+                    "url": startURL + "?scope=videoplayer",
+                    "icons": [],
+                },
+                {
+                    "name": "Apri l'audio player",
+                    "name_localized": {},
+                    "short_name": "Audio player",
+                    "short_name_localized": {},
+                    "description": "Vai all'audio player",
+                    "description_localized": {},
+                    "url": startURL + "?scope=audioplayer",
+                    "icons": [],
+                },
+            ],
+        },
+    }
+
     const faviconMap = new Map()
         .set(scopeURL + "icons/icon-16x16-transparent.png",new Map()
                                         .set("rel","icon")
@@ -212,6 +278,7 @@ const config = (function(){
     return { 
         scopeURL,
         startURL,
+        params,
         faviconMap,
         iconMap,
         screenshotMap,

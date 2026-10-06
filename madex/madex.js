@@ -293,6 +293,27 @@ const madex = (function(){
     }
     function  _initCallback(pConfig, pCallback){
         params.config = pConfig;
+
+        for (const paramName in config.params)
+            switch(paramName){
+                case "manifest":
+                    for (const manifestName in config.params.manifest)
+                        params.manifest[manifestName] = config.params.manifest[manifestName]
+                    break
+                case "meta":
+                    for (const metaName in config.params.meta)
+                        params.meta[metaName] = config.params.meta[metaName]
+                    break
+                case "service_worker":
+                    for (const serviceName in config.params.service_worker)
+                        params.service_worker[serviceName] = config.params.service_worker[serviceName]
+                    break
+                default:
+                    params[paramName] = config.params[paramName]
+                    break
+            }
+
+
         pCallback.call();
     }
     function create(){
@@ -372,6 +393,9 @@ const madex = (function(){
     }
 
     function getContentDiv(){ return contentDiv; }
+
+    function loader(pDisplay) { loadDiv.style.display = (pDisplay ? "block" : "none") }
+
     return {
         init,
         params,
@@ -384,7 +408,8 @@ const madex = (function(){
         createElement : utils.createElement,
         createTextNode : utils.createTextNode,
         getUID : utils.getUID,
-        loadFile : utils.loadFile
+        loadFile : utils.loadFile,
+        loader
     };
 })();
 

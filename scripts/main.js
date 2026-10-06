@@ -12,70 +12,16 @@ window.main = (function(){
     }
     function _init(){
         if (madex.params.config && madex.params.config.trim() != ''){
-            madex.params.title = "Personal expense monitor";
-            madex.params.description = "An expense monitor project";
             madex.params.loadCallback = _loadCallback;
             madex.params.networkCallback = _networkCallback;
-            madex.params.service_worker.src = "sw.js";
-            madex.params.service_worker.version = "20260909T000000"; // 20260909T000000
-            madex.params.manifest.id = "tacuin/v1";
-            madex.params.manifest.name = "Tacuin";
-            madex.params.manifest.name_localized = {};
-            madex.params.manifest.short_name = "Tacuin";
-            madex.params.manifest.short_name_localized = {};
-            madex.params.manifest.description = "A personal expense monitoring";
-            madex.params.manifest.description_localized = {};
-            madex.params.manifest.theme_color = "#13A29A";
-
-            madex.params.manifest.shortcuts = [
-                {
-                    "name": "Apri l'accordatore",
-                    "name_localized": {},
-                    "short_name": "Accordatore",
-                    "short_name_localized": {},
-                    "description": "Vai all'accordatore",
-                    "description_localized": {},
-                    "url": config.startURL + "?scope=tuner",
-                    "icons": [],
-                },
-                {
-                    "name": "Apri il metronomo",
-                    "name_localized": {},
-                    "short_name": "Metronomo",
-                    "short_name_localized": {},
-                    "description": "Vai al metronomo",
-                    "description_localized": {},
-                    "url": config.startURL + "?scope=metronome",
-                    "icons": [],
-                },
-                {
-                    "name": "Apri il video player",
-                    "name_localized": {},
-                    "short_name": "Video player",
-                    "short_name_localized": {},
-                    "description": "Vai al video player",
-                    "description_localized": {},
-                    "url": config.startURL + "?scope=videoplayer",
-                    "icons": [],
-                },
-                {
-                    "name": "Apri l'audio player",
-                    "name_localized": {},
-                    "short_name": "Audio player",
-                    "short_name_localized": {},
-                    "description": "Vai all'audio player",
-                    "description_localized": {},
-                    "url": config.startURL + "?scope=audioplayer",
-                    "icons": [],
-                },
-            ];
+            madex.create()
         }
-
-        madex.create();
      }
      function _loadCallback(){
         const parsedUrl = new URL(window.location);
         let ctrl;
+
+        madex.loader(true)
 
         switch((parsedUrl.searchParams.get('scope') ?? '').trim()){
             case 'videoplayer':
