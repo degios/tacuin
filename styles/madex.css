@@ -7,7 +7,10 @@ body {
   min-height: 100%;
   overscroll-behavior-y: none; /* Disables pull-to-refresh and bounce effects vertically */
   background-color: var(--mdc-theme-background, #FFFFFF);
-  color: var(--mdc-theme-content-color, rgba(0, 0, 0, 0.87));
+  color: var(--mdc-theme-color, rgba(0, 0, 0, 0.87));
+}
+a {
+  color: var(--mdc-theme-link-color, #0000EE);
 }
 
 .mdxLoader {
@@ -159,6 +162,8 @@ body {
   --mdc-switch-selected-pressed-state-layer-color: #ddd;
   /* AD NEW STYLES */
   --mdc-theme-background: #FFFFFF;
+  --mdc-theme-color: rgba(0, 0, 0, 0.87);
+  --mdc-theme-link-color: #0000EE;
   --mdc-theme-top-app-bar-background: #13A29A;
   --mdc-theme-top-app-bar-color: white;
   --mdc-theme-top-app-bar-border-bottom: 0px;
@@ -189,7 +194,6 @@ body {
   --mdc-theme-text-field-icon-color: rgba(0, 0, 0, 0.54);
   --mdc-theme-text-field-focused-border-color: #13A29A;
   --mdc-theme-scrollbar-color: lightgrey white;
-  --mdc-theme-content-color: rgba(0, 0, 0, 0.87);
   
   --mdc-today-bg-color: rgba(255, 220, 40, .15);
   --mdc-event-bg-color: #13A29A;

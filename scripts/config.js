@@ -68,7 +68,8 @@ const config = (function(){
         },
 
         "theme": {
-            "background-color": "#FF0000",
+            /*"background": "#FF0000",*/
+            /*"color": "#FFFFFF"*/
         }
     }
 

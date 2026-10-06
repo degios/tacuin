@@ -17,7 +17,7 @@ window.main = (function(){
             madex.params.networkCallback = _networkCallback;
             madex.params.loaderCallback = _loaderCallback;
 
-            //madex.params.dark_mode = true
+            madex.params.dark_mode = true
 
             madex.create()
         }

@@ -62,8 +62,9 @@ const madex = (function(){
         },
 
         "theme": {
-            "background-color": "#FFFFFF",
+            "background": "#FFFFFF",
             "color": "rgba(0, 0, 0, 0.87)",
+            "link_color": "#0000EE",
         },
     };
 
@@ -168,14 +169,18 @@ const madex = (function(){
             if (params.dark_mode){
                 params.manifest.theme_color = "#121212"
                 params.manifest.background_color = "#121212"
-                params.theme.foreground_color = "#FFFFFF"
+                
+                params.theme.background = "#121212"
+                params.theme.color = "#FFFFFF"
+                params.theme.link_color = "#02A8F3"
             }
 
             params.root.style.setProperty("--mdc-theme-primary", madex.params.manifest.theme_color);
             params.root.style.setProperty("--mdc-theme-secondary", madex.params.manifest.theme_color);
             params.root.style.setProperty("--mdc-theme-error", madex.params.manifest.theme_color);
-            params.root.style.setProperty("--mdc-theme-background", madex.params.manifest.background_color);
-            params.root.style.setProperty("--mdc-theme-content-color", madex.params.theme.foreground_color);
+            params.root.style.setProperty("--mdc-theme-background", madex.params.theme.background);
+            params.root.style.setProperty("--mdc-theme-color", madex.params.theme.color);
+            params.root.style.setProperty("--mdc-theme-link-color", madex.params.theme.link_color);
         }
     }
     function _load(){
