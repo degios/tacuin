@@ -7,7 +7,7 @@ const madex = (function(){
     let swLoaded = false;
 
     let isConfigured = false;
-    let mainDiv,topBarDiv,tabBarDiv,contentDiv,fltBtnDiv,hmbDrwDiv,botBarDiv;
+    let mainDiv,loadDiv,topBarDiv,tabBarDiv,contentDiv,fltBtnDiv,hmbDrwDiv,botBarDiv;
     let childs = [];
     let childMap = new Map();
 
@@ -142,10 +142,12 @@ const madex = (function(){
         }
     }
     function _load(){
-        mainDiv = utils.createElement("div",window.document.body,"tplMain","tplMain_ctrl");
+        mainDiv = utils.createElement("div",window.document.body,"mdxMain","mdxMain");
         //utils.createTextNode("Tacuin, a personal expense monitor project", utils.createElement("h2",mainDiv));
+        loadDiv = utils.createElement("div",mainDiv,"mdxLoader","mdxLoader");
+        utils.createElement("span",loadDiv,"mdxLoading","mdxLoading");
 
-        topBarDiv = utils.createElement("div",mainDiv,"tplTopBar","tplTopBar_ctrl");
+        topBarDiv = utils.createElement("div",mainDiv,"mdxTopBar","mdxTopBar");
         let topBarHTML = '';
         topBarHTML += '<header class="mdc-top-app-bar" id="tbar">';
         topBarHTML += '  <div class="mdc-top-app-bar__row" id="tbarRow">';
@@ -159,7 +161,7 @@ const madex = (function(){
         topBarHTML += '</header>';
         topBarDiv.innerHTML = topBarHTML;
 
-        tabBarDiv = utils.createElement("div",mainDiv,"tplTabBar","tplTabBar_ctrl");
+        tabBarDiv = utils.createElement("div",mainDiv,"mdxTabBar","mdxTabBar");
         let tabBarHTML = '';
         tabBarHTML += '<div class="mdc-tab-bar" role="tablist">';
         tabBarHTML += '  <div class="mdc-tab-scroller">';
@@ -184,13 +186,13 @@ const madex = (function(){
         tabBarHTML += '</div>';
         tabBarDiv.innerHTML = tabBarHTML;
 
-        contentDiv = utils.createElement('div',mainDiv,"tplContent","tplContent_ctrl");
+        contentDiv = utils.createElement('div',mainDiv,"mdxContent","mdxContent");
         let contentHTML = '';
         //contentHTML += '<h2>Titolo</h2>';
         //contentHTML += '<h3>Sottotitolo</h3>';
         contentDiv.innerHTML = contentHTML;
 
-        botBarDiv = utils.createElement('div',mainDiv,"tplBottomBar","tplBottomBar_ctrl");
+        botBarDiv = utils.createElement('div',mainDiv,"mdxBottomBar","mdxBottomBar");
         let botBarHTML = '';
         botBarHTML += '';
         botBarHTML += '<header class="mdc-bottom-app-bar" id="bbar">';
@@ -205,7 +207,7 @@ const madex = (function(){
         botBarHTML += '</header>';
         botBarDiv.innerHTML = botBarHTML;
 
-        fltBtnDiv = utils.createElement('div',mainDiv,"fltBtn","fltBtn_ctrl");
+        fltBtnDiv = utils.createElement('div',mainDiv,"mdxFltBtn","mdxFltBtn");
         let fltBtnHTML = '';
         /*
         fltBtnHTML += '<!-- CENTER -->';
@@ -216,7 +218,7 @@ const madex = (function(){
         */
         fltBtnDiv.innerHTML = fltBtnHTML;
 
-        hmbDrwDiv = utils.createElement('div',mainDiv,"hmbDrw","hmbDrw_ctrl");
+        hmbDrwDiv = utils.createElement('div',mainDiv,"mdxHmbDrw","mdxHmbDrw");
         let hmbDrwHTML = '';
         hmbDrwHTML += '<aside id="hmdDrawer" class="mdc-drawer mdc-drawer--modal">';
         hmbDrwHTML += '  <div class="mdc-drawer__header">';

@@ -8,11 +8,46 @@ body {
   overscroll-behavior-y: none; /* Disables pull-to-refresh and bounce effects vertically */
 }
 
-.tplMain_ctrl {
+.mdxLoader {
+    display: block;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: white;
+    opacity: .8;
+}
+.mdxLoading {
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #13A29A;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: spin 1500ms linear infinite; /* Safari */
+    animation: spin 1500ms linear infinite;
+    animation-fill-mode: forwards;
+
+    content: '';
+    position: absolute;
+    left: calc( 50% - 32px);
+    top: calc( 50% - 32px);
+}
+@-webkit-keyframes spin { /* Safari */
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.mdxMain {
   position: absolute;
 }
 
-.tplTopBar_ctrl {
+.mdxTopBar {
   box-sizing: border-box;
   z-index: 1000;
   display: none; /* block */
@@ -26,7 +61,7 @@ body {
   min-height: 50px;
 }
 
-.tplTabBar_ctrl {
+.mdxTabBar {
     box-sizing: border-box;
     z-index: 1000;
     display: none; /* block */
@@ -41,7 +76,7 @@ body {
     min-height: 48px;
 }
 
-.tplContent_ctrl {
+.mdxContent {
   box-sizing: border-box;
   z-index: 1000;
   display: none; /* block */
@@ -54,7 +89,7 @@ body {
   height: auto;
 }
 
-.tplBottomBar_ctrl {
+.mdxBottomBar {
   box-sizing: border-box;
   z-index: 1000;
   position: absolute;
@@ -67,7 +102,7 @@ body {
   min-height: 48px;
 }
 
-.fltBtn_ctrl {
+.mdxFltBtn {
   box-sizing: border-box;
   z-index: 1010;
   position: absolute;
