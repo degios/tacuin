@@ -169,7 +169,7 @@ const madex = (function(){
             if (params.dark_mode){
                 params.manifest.theme_color = "#121212"
                 params.manifest.background_color = "#121212"
-                
+
                 params.theme.background = "#121212"
                 params.theme.color = "#FFFFFF"
                 params.theme.link_color = "#02A8F3"

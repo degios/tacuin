@@ -26,7 +26,13 @@ window.main = (function(){
         const parsedUrl = new URL(window.location)
         let ctrl
 
-        switch((parsedUrl.searchParams.get('scope') ?? '').trim()){
+        ctrl = madex.createElement('p',madex.getContentDiv(),"tplNetwork")
+        //ctrl.style.position = "absolute"
+        ctrl.innerHTML = 'Application on-line'
+        
+        if (!parsedUrl.searchParams.get('scope'))
+            madex.pushChild(new children())
+        else switch((parsedUrl.searchParams.get('scope') ?? '').trim()){
             case 'videoplayer':
                 ctrl = madex.createElement('p',madex.getContentDiv())
                 ctrl.innerHTML = '<p>Video player</p>'
@@ -63,6 +69,9 @@ window.main = (function(){
                     rateValue.textContent = parseFloat(rateSlider.value)
                 })
                 break
+            case 'tuner':
+                madex.loadFile("madex/madex_tuner.js",true,() => _tunerCallback())
+                break
             default:
                 // searchParams.get() will properly handle decoding the values.
                 let sharedTarget = {}
@@ -78,12 +87,6 @@ window.main = (function(){
                 }
                 break
         }
-
-        ctrl = madex.createElement('p',madex.getContentDiv(),"tplNetwork")
-        //ctrl.style.position = "absolute"
-        ctrl.innerHTML = 'Application on-line'
-
-        madex.pushChild(new children())
         madex.loader(false)
      }
      function _networkCallback(pState){
@@ -105,6 +108,11 @@ window.main = (function(){
         window.document.getElementById("tplNetwork").innerHTML = networkState
      }
      function _loaderCallback(){ console.log('Main: loaderCallback') }
+     function _tunerCallback(){ 
+        console.log('Main: tunerCallback') 
+        tuner.create()
+        //tuner.start()
+    }
 
     madex.init("scripts/config.js",_initCallback)
 })()
