@@ -8,6 +8,7 @@ const madex = (function(){
 
     let isConfigured = false;
     let mainDiv,loadDiv,topBarDiv,tabBarDiv,contentDiv,fltBtnDiv,hmbDrwDiv,botBarDiv;
+
     let childs = [];
     let childMap = new Map();
     
@@ -20,6 +21,13 @@ const madex = (function(){
             "viewport": "width=device-width",
         },
         "title": "Demonstration",
+
+        //Check theme for mobile
+        //https://dev.to/shaedrizwan/set-your-web-app-to-dark-light-mode-based-on-user-system-settings-5fa6
+        //console.log(window.matchMedia("(prefers-color-scheme:dark)").matches);
+        //darkMode = (window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches);
+        // Windows 11 è coerente con il tema mentre Windows 10 ha comunque le notifiche su sfondo nero: non posso gestire perciò il cambio corretto colore (es. icona di notifica)
+        "dark_mode": (window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches),
 
         "loadCallback": null,
         "networkCallback": null,
@@ -45,21 +53,26 @@ const madex = (function(){
 
             "display_override": ["standalone"],
             "display": "standalone",
-            "background_color": "#FFFFFF",
-            "theme_color": "#5F7D8A",
+            /*"background_color": null,*/
+            "theme_color": "#13A29A",
             "orientation": "portrait-primary",
             "prefer_related_applications": false,
 
             "shortcuts": [],
-        }
+        },
+
+        "theme": {
+            "background-color": "#FFFFFF",
+            "color": "rgba(0, 0, 0, 0.87)",
+        },
     };
 
     function _init(){
         if (!swLoaded) {
             swLoaded = true;
+            _theme();
             _header();
             _manifest();
-            _theme();
             //utils.loadFile('styles/madex_material.css',true, () => 
             utils.loadFile('madex/madex_material.min.js',true,
                 () => utils.loadFile('styles/madex_snackbar.css',true, 
@@ -149,10 +162,20 @@ const madex = (function(){
         }
     }
     function _theme(){
+        params.manifest.background_color = (params.manifest.background_color ?? params.theme.background)
+
         if (params.root){
+            if (params.dark_mode){
+                params.manifest.theme_color = "#121212"
+                params.manifest.background_color = "#121212"
+                params.theme.foreground_color = "#FFFFFF"
+            }
+
             params.root.style.setProperty("--mdc-theme-primary", madex.params.manifest.theme_color);
             params.root.style.setProperty("--mdc-theme-secondary", madex.params.manifest.theme_color);
             params.root.style.setProperty("--mdc-theme-error", madex.params.manifest.theme_color);
+            params.root.style.setProperty("--mdc-theme-background", madex.params.manifest.background_color);
+            params.root.style.setProperty("--mdc-theme-content-color", madex.params.theme.foreground_color);
         }
     }
     function _load(){
@@ -316,6 +339,10 @@ const madex = (function(){
                 case "service_worker":
                     for (const serviceName in config.params.service_worker)
                         params.service_worker[serviceName] = config.params.service_worker[serviceName]
+                    break
+                case "theme":
+                    for (const themeName in config.params.theme)
+                        params.theme[themeName] = config.params.theme[themeName]
                     break
                 default:
                     params[paramName] = config.params[paramName]

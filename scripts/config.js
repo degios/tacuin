@@ -21,7 +21,7 @@ const config = (function(){
             "short_name_localized": {},
             "description": "A personal expense monitoring",
             "description_localized": {},
-            "theme_color": "#FF0000",
+            "theme_color": "#13A29A",
 
             "shortcuts": [
                 {
@@ -66,6 +66,10 @@ const config = (function(){
                 },
             ],
         },
+
+        "theme": {
+            "background-color": "#FF0000",
+        }
     }
 
     const faviconMap = new Map()
