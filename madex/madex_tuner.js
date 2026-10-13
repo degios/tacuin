@@ -85,11 +85,45 @@ const tuner = (function(){
                 navigator.webkitGetUserMedia ||
                 navigator.mozGetUserMedia;
             */
-            navigator.mediaDevices
-                .getUserMedia({ audio: true })
-                .then((stream) => {
-                    streamRef.current = stream;
+            const tempCtx = new (window.AudioContext || window.webkitAudioContext)()
+            const sampleRate = tempCtx.sampleRate
+            await tempCtx.close()
 
+            if (!audioContextRef.current){
+                const tempCtx = new (window.AudioContext || window.webkitAudioContext)()
+                const sampleRate = tempCtx.sampleRate
+                //tempCtx.close()
+
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)({
+                    latencyHint: 'interactive',
+                    sampleRate,
+                })
+                audioContextRef.current = audioContext
+                console.log(audioContext)
+            }
+
+            if (audioContextRef.current.state === 'suspended'){
+                console.log('MaDeX-tuner: resume')
+                audioContextRef.current.resume()
+            }
+
+            navigator.mediaDevices
+                .getUserMedia({ 
+                    //audio: true,
+                    audio: {
+                        echoCancellation: false,
+                        noiseSuppression: false,
+                        autoGainControl: false,
+                        latency: 0,
+                    },
+                })
+                .then((stream) => {
+                    streamRef.current = stream
+
+                    const source = audioContextRef.current.createMediaStreamSource(stream)
+                    source.connect(audioContextRef.current.destination)
+                    console.log("MaDeX-tuner: latenza stimata (s):", audioContextRef.current.baseLatency + audioContextRef.current.outputLatency)
+/*
                     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
                     audioContextRef.current = audioContext;
                     const analyser = audioContext.createAnalyser();
@@ -124,6 +158,7 @@ const tuner = (function(){
                         animFrameRef.current = requestAnimationFrame(detect);
                     };
                     detect();
+*/
                 })
         } catch (err) {
             console.error("MaDeX-tuner: microphone access denied:", err);
