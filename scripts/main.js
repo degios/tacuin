@@ -111,7 +111,7 @@ window.main = (function(){
      function _tunerCallback(){ 
         console.log('Main: tunerCallback') 
         tuner.create()
-        tuner.start()
+        //tuner.start()
     }
 
     madex.init("scripts/config.js",_initCallback)

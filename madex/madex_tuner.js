@@ -85,21 +85,19 @@ const tuner = (function(){
                 navigator.webkitGetUserMedia ||
                 navigator.mozGetUserMedia;
             */
-            const tempCtx = new (window.AudioContext || window.webkitAudioContext)()
-            const sampleRate = tempCtx.sampleRate
-            await tempCtx.close()
-
             if (!audioContextRef.current){
+                // Questa parte sembra non incidere
                 const tempCtx = new (window.AudioContext || window.webkitAudioContext)()
                 const sampleRate = tempCtx.sampleRate
-                //tempCtx.close()
+                await tempCtx.close()
 
+                // Questa parte sembra non incidere
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)({
                     latencyHint: 'interactive',
                     sampleRate,
                 })
                 audioContextRef.current = audioContext
-                console.log(audioContext)
+                //console.log(audioContext)
             }
 
             if (audioContextRef.current.state === 'suspended'){
@@ -110,7 +108,7 @@ const tuner = (function(){
             navigator.mediaDevices
                 .getUserMedia({ 
                     //audio: true,
-                    audio: {
+                    audio: { // Importante se si utilizza connect con destination: audio originale come su zoom, potrebbe essere un'opzione
                         echoCancellation: false,
                         noiseSuppression: false,
                         autoGainControl: false,
@@ -120,24 +118,19 @@ const tuner = (function(){
                 .then((stream) => {
                     streamRef.current = stream
 
-                    const source = audioContextRef.current.createMediaStreamSource(stream)
-                    source.connect(audioContextRef.current.destination)
-                    console.log("MaDeX-tuner: latenza stimata (s):", audioContextRef.current.baseLatency + audioContextRef.current.outputLatency)
-/*
-                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    audioContextRef.current = audioContext;
-                    const analyser = audioContext.createAnalyser();
+                    const analyser = audioContextRef.current.createAnalyser();
                     analyser.fftSize = 4096;
                     analyserRef.current = analyser;
 
-                    const source = audioContext.createMediaStreamSource(stream);
+                    const source = audioContextRef.current.createMediaStreamSource(stream)
+                    //source.connect(audioContextRef.current.destination)
+                    //console.log("MaDeX-tuner: latenza stimata (s):", audioContextRef.current.baseLatency + audioContextRef.current.outputLatency)
                     source.connect(analyser);
-                    //analyser.connect(audioContext.destination) // Connetti microfono con cuffie per sentire l'audio catturato
+
 
                     isListening = true;
 
                     const detect = () => {
-                        console.log('detect')
                         const buf = new Float32Array(analyser.fftSize);
                         analyser.getFloatTimeDomainData(buf);
 
@@ -146,7 +139,7 @@ const tuner = (function(){
                         rms = Math.sqrt(rms / buf.length);
                         volume = (Math.min(rms * 5, 1));
 
-                        const freq = _autoCorrelate(buf, audioContext.sampleRate);
+                        const freq = _autoCorrelate(buf, audioContextRef.current.sampleRate);
                         if (freq > 0) {
                             const noteInfo = _getClosestNote(freq);
                             if (noteInfo) {
@@ -158,7 +151,6 @@ const tuner = (function(){
                         animFrameRef.current = requestAnimationFrame(detect);
                     };
                     detect();
-*/
                 })
         } catch (err) {
             console.error("MaDeX-tuner: microphone access denied:", err);
