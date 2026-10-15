@@ -8,6 +8,7 @@ body {
   overscroll-behavior-y: none; /* Disables pull-to-refresh and bounce effects vertically */
   background-color: var(--mdc-theme-background, #FFFFFF);
   color: var(--mdc-theme-color, rgba(0, 0, 0, 0.87));
+  font-family: var(--mdc-typography-font-family, sans-serif);
 }
 a {
   color: var(--mdc-theme-link-color, #0000EE);
