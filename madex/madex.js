@@ -14,11 +14,14 @@ const madex = (function(){
     
     let timeoutId;
 
+    // viewport
+    // The width=device-width part sets the width of the page to follow the screen-width of the device (which will vary depending on the device).
+    // The initial-scale=1.0 part sets the initial zoom level when the page is first loaded by the browser.
     let params = {
         "meta": {
             "description": "A demonstration application",
             "mobile-web-app-capable": "yes",
-            "viewport": "width=device-width",
+            "viewport": "width=device-width, initial-scale=1.0", // Important
         },
         "title": "Demonstration",
 
