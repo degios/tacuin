@@ -3,6 +3,8 @@ html {
   overscroll-behavior-y: none; /* Disables pull-to-refresh and bounce effects vertically */
 }
 body {
+  display: flex;
+  height: 100%;
   margin:0px;
   min-height: 100%;
   overscroll-behavior-y: none; /* Disables pull-to-refresh and bounce effects vertically */
@@ -50,7 +52,8 @@ a {
 }
 
 .mdxMain {
-  position: absolute;
+  /*position: absolute;*/
+  flex-grow: 1;
 }
 
 .mdxTopBar {
