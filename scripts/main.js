@@ -160,8 +160,8 @@ window.main = (function(){
             tuner.create(_tunerCallback)
 
             let ctrl = madex.createElement('div',madex.getContentDiv())
-            ctrl.innerHTML = '<button onClick="javascript:tuner.start();" style="width: 200px;">Start</button>'
-            ctrl.innerHTML += '<button onClick="javascript:tuner.stop();" style="width: 200px;">Stop</button>'
+            ctrl.innerHTML = '<button onClick="javascript:tuner.start();" style="width: 150px;">Start</button>'
+            ctrl.innerHTML += '<button onClick="javascript:tuner.stop();" style="width: 150px;">Stop</button>'
             ctrl.innerHTML += '<h2 id="tunerNote"></h2>'
             ctrl.innerHTML += '<h3 id="tunerCents"></h3>'
             madex.getContentDiv().style.display="block"
