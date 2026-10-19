@@ -1,6 +1,7 @@
 const tuner = (function(){
     const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
     let NOTE_FREQUENCIES = {}
+    let tunerCallback
 
     let isListening = false;
     let volume = 0;
@@ -68,13 +69,14 @@ const tuner = (function(){
         };
     }
 
-    function create(){
+    function create(pCallback){
         for (let octave = 0; octave <= 8; octave++) {
             NOTES.forEach((note, i) => {
                 const noteNum = octave * 12 + i - 9;
                 NOTE_FREQUENCIES[`${note}${octave}`] = 440 * Math.pow(2, (noteNum - 49) / 12);
             });
         }
+        if (pCallback && typeof pCallback == 'function') tunerCallback = pCallback;
     }
     async function start(){
         try {
@@ -145,6 +147,7 @@ const tuner = (function(){
                             if (noteInfo) {
                                 detectNote = noteInfo;
                                 console.log(detectNote)
+                                if (tunerCallback) tunerCallback.call(this,detectNote)
                             }
                         }
 

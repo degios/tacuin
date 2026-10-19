@@ -24,7 +24,7 @@ window.main = (function(){
      }
      function _loadCallback(){
         const parsedUrl = new URL(window.location)
-        let ctrl
+        let ctrl,input,video,audio,objectUrl,rateSlider,rateValue,player
 
         ctrl = madex.createElement('p',madex.getContentDiv(),"tplNetwork")
         //ctrl.style.position = "absolute"
@@ -38,14 +38,14 @@ window.main = (function(){
                 ctrl.innerHTML = '<p>Video player</p>'
                 //ctrl.innerHTML += '<iframe id="my-youtube" width="560" height="315" src="https://www.youtube.com/embed/hst2N9sxY0Q?si=67DMEf-dDfAR6BGi&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
                 ctrl.innerHTML += '<input type="file" id="videoInput" accept="video/*"><br><br>'
-                ctrl.innerHTML += '<video id="videoPlayer" width="560" height="315" controls></video><br>'
+                ctrl.innerHTML += '<video id="videoPlayer" width="560" height="315" style="width: 99%;" controls></video><br>'
                 ctrl.innerHTML += '<label for="rate">Playback rate <span id="rate-value">1.0</span></label><br>'
-                ctrl.innerHTML += '<input type="range" id="rate" name="rate" min="0" max="4" value="1" step=".2" /><br>'
+                ctrl.innerHTML += '<input type="range" id="rate" name="rate" min="0" max="4" value="1" step=".2" style="width: 99%;"/><br>'
 
                 // Load local file
-                const input = document.getElementById('videoInput')
-                const video = document.getElementById('videoPlayer')
-                let objectUrl = null
+                input = document.getElementById('videoInput')
+                video = document.getElementById('videoPlayer')
+                objectUrl = null
                 input.addEventListener('change', function(event) {
                     const file = event.target.files[0]
                     if (!file) return
@@ -60,14 +60,54 @@ window.main = (function(){
                 })
 
                 // Change playbackRate
-                const rateSlider = document.getElementById("rate")
-                const rateValue = document.getElementById("rate-value")
-                const videoPlayer = document.getElementById("videoPlayer")
+                rateSlider = document.getElementById("rate")
+                rateValue = document.getElementById("rate-value")
+                player = document.getElementById("videoPlayer")
 
                 rateSlider.addEventListener("input", () => {
-                    videoPlayer.playbackRate = rateSlider.value
+                    player.playbackRate = rateSlider.value
                     rateValue.textContent = parseFloat(rateSlider.value)
                 })
+
+                madex.getContentDiv().style.display="block"
+                break
+            case 'audioplayer':
+                ctrl = madex.createElement('p',madex.getContentDiv())
+                ctrl.innerHTML = '<p>Video player</p>'
+                //ctrl.innerHTML += '<iframe id="my-youtube" width="560" height="315" src="https://www.youtube.com/embed/hst2N9sxY0Q?si=67DMEf-dDfAR6BGi&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+                ctrl.innerHTML += '<input type="file" id="audioInput" accept="video/*"><br><br>'
+                ctrl.innerHTML += '<audio id="audioPlayer" width="560" height="315" style="width: 99%;" controls></audio><br>'
+                ctrl.innerHTML += '<label for="rate">Playback rate <span id="rate-value">1.0</span></label><br>'
+                ctrl.innerHTML += '<input type="range" id="rate" name="rate" min="0" max="4" value="1" step=".1" style="width: 99%;"/><br>'
+
+                // Load local file
+                input = document.getElementById('audioInput')
+                audio = document.getElementById('audioPlayer')
+                objectUrl = null
+                input.addEventListener('change', function(event) {
+                    const file = event.target.files[0]
+                    if (!file) return
+
+                    // Revoke the old object URL to free up memory
+                    if (objectUrl)
+                        URL.revokeObjectURL(objectUrl)
+
+                    // Create a new local blob URL for the selected file
+                    objectUrl = URL.createObjectURL(file)
+                    audio.src = objectUrl
+                })
+
+                // Change playbackRate
+                rateSlider = document.getElementById("rate")
+                rateValue = document.getElementById("rate-value")
+                player = document.getElementById("audioPlayer")
+
+                rateSlider.addEventListener("input", () => {
+                    player.playbackRate = rateSlider.value
+                    rateValue.textContent = parseFloat(rateSlider.value)
+                })
+
+                madex.getContentDiv().style.display="block"
                 break
             case 'tuner':
                 madex.loadFile("madex/madex_tuner.js",true,() => _tunerCallback())
@@ -85,6 +125,8 @@ window.main = (function(){
                     //ctrl.style.position = "absolute"
                     ctrl.innerHTML = '<a href="' + sharedTarget.url + '" target="_blank">' + sharedTarget.title + '</a>'
                 }
+
+                madex.getContentDiv().style.display="block"
                 break
         }
         madex.loader(false)
@@ -108,10 +150,23 @@ window.main = (function(){
         window.document.getElementById("tplNetwork").innerHTML = networkState
      }
      function _loaderCallback(){ console.log('Main: loaderCallback') }
-     function _tunerCallback(){ 
+     function _tunerCallback(pDetectNote){ 
         console.log('Main: tunerCallback') 
-        tuner.create()
-        //tuner.start()
+        if (pDetectNote){
+            document.getElementById("tunerNote").innerText = (pDetectNote.cents >= 0 ? '' : '>>> ') +  pDetectNote.note + pDetectNote.octave + (pDetectNote.cents >= 0 ? ' <<<' : '')
+            document.getElementById("tunerCents").innerText = pDetectNote.cents
+        }
+        else{
+            tuner.create(_tunerCallback)
+
+            let ctrl = madex.createElement('div',madex.getContentDiv())
+            ctrl.innerHTML = '<button onClick="javascript:tuner.start();" style="width: 200px;">Start</button>'
+            ctrl.innerHTML += '<button onClick="javascript:tuner.stop();" style="width: 200px;">Stop</button>'
+            ctrl.innerHTML += '<h2 id="tunerNote"></h2>'
+            ctrl.innerHTML += '<h3 id="tunerCents"></h3>'
+            madex.getContentDiv().style.display="block"
+            //tuner.start()
+        }
     }
 
     madex.init("scripts/config.js",_initCallback)
