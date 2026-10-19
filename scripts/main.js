@@ -73,7 +73,7 @@ window.main = (function(){
                 break
             case 'audioplayer':
                 ctrl = madex.createElement('p',madex.getContentDiv())
-                ctrl.innerHTML = '<p>Video player</p>'
+                ctrl.innerHTML = '<p>Audio player</p>'
                 //ctrl.innerHTML += '<iframe id="my-youtube" width="560" height="315" src="https://www.youtube.com/embed/hst2N9sxY0Q?si=67DMEf-dDfAR6BGi&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
                 ctrl.innerHTML += '<input type="file" id="audioInput" accept="video/*"><br><br>'
                 ctrl.innerHTML += '<audio id="audioPlayer" width="560" height="315" style="width: 99%;" controls></audio><br>'
@@ -160,6 +160,7 @@ window.main = (function(){
             tuner.create(_tunerCallback)
 
             let ctrl = madex.createElement('div',madex.getContentDiv())
+            ctrl.innerHTML = '<p>Tuner</p>'
             ctrl.innerHTML = '<button onClick="javascript:tuner.start();" style="width: 150px;">Start</button>'
             ctrl.innerHTML += '<button onClick="javascript:tuner.stop();" style="width: 150px;">Stop</button>'
             ctrl.innerHTML += '<h2 id="tunerNote"></h2>'
