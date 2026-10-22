@@ -41,10 +41,11 @@ const main = (function(){
         let ctrl,input,video,audio,objectUrl,rateSlider,rateValue,player
 
         // Per bloccare in portrait
+/*
         ctrl = madex.createElement('button',madex.getContentDiv(),"btnFullScreen")
         ctrl.innerText = "Lock portrait"
         ctrl.onclick = () => { lockPortrait() }
-
+*/
 /*
         var param = {
             type: "touchstart",
