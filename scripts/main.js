@@ -3,7 +3,12 @@ console.log('Main: load')
 import { madex } from '../madex/madex.js'
 import { children } from './children.js'
 
-window.main = (function(){
+
+// Image generator
+// https://www.pwabuilder.com/imageGenerator
+// https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/How_to/Define_app_icons
+
+const main = (function(){
     let mainDiv
     let childs = []
 
@@ -22,9 +27,103 @@ window.main = (function(){
             madex.create()
         }
      }
+     function lockPortrait(){
+        document.documentElement.requestFullscreen()
+            .then(() => {
+                screen.orientation.lock("portrait");
+                //screen.orientation.unlock();
+            })
+            .catch((err) => {
+                console.log('Attivazione full-screen non riustita!')
+            })
+     }
      function _loadCallback(){
-        const parsedUrl = new URL(window.location)
         let ctrl,input,video,audio,objectUrl,rateSlider,rateValue,player
+
+        // Per bloccare in portrait
+        ctrl = madex.createElement('button',madex.getContentDiv(),"btnFullScreen")
+        ctrl.innerText = "Lock portrait"
+        ctrl.onclick = () => { lockPortrait() }
+
+/*
+        var param = {
+            type: "touchstart",
+            canBubble: true,
+            cancelable: true,
+            view: window,
+            detail: 0,
+            screenX: 0,
+            screenY: 0,
+            clientX: 0,
+            clientY: 0,
+            ctrlKey: false,
+            altKey: false,
+            shiftKey: false,
+            metaKey: false,
+            touches: 0,
+            targetTouches: 0,
+            changedTouches: 0,
+            scale: 0,
+            rotation: 0,
+            touchItem: 0
+        }
+        var event = document.createEvent("TouchEvent");
+        console.log(event)
+        event.initTouchEvent(
+        param.touchItem,
+        param.touchItem,
+        param.touchItem,
+        param.type,
+        param.view,
+        param.screenX,
+        param.screenY,
+        param.clientX,
+        param.clientY,
+        param.ctrlKey,
+        param.altKey,
+        param.shiftKey,
+        param.metaKey
+        )
+        ctrl.dispatchEvent(event)
+*/
+//ctrl = document.getElementById("btnFullScreen")
+/*
+const mioTouch = new Touch({
+  identifier: Date.now(),
+  target: ctrl,
+  clientX: ctrl.offsetLeft + (ctrl.offsetWidth / 2),
+  clientY: ctrl.offsetTop + (ctrl.offsetHeight / 2),
+  radiusX: 2.5,
+  radiusY: 2.5,
+  rotationAngle: 10,
+  force: 0.5,
+});
+console.log(mioTouch,ctrl.offsetLeft + (ctrl.offsetWidth / 2))
+const eventoTocco = new TouchEvent('touchstart', {
+  cancelable: true,
+  bubbles: true,
+  touches: [mioTouch],
+  targetTouches: [mioTouch],
+  changedTouches: [mioTouch],
+  shiftKey: false // puoi mappare anche tasti modificatori se necessario
+});
+ctrl.dispatchEvent(eventoTocco)
+*/
+
+        /*
+        //Failed to execute 'requestFullscreen' on 'Element': API can only be initiated by a user gesture.
+        //Serve creare un elemento fittizio su cui cliccare
+        document.documentElement.requestFullscreen()
+            .then(() => {
+                screen.orientation.lock("portrait");
+                //screen.orientation.unlock();
+            })
+            .catch((err) => {
+                console.log('Attivazione full-screen non riustita!')
+            })
+        */
+
+        const parsedUrl = new URL(window.location)
 
         ctrl = madex.createElement('p',madex.getContentDiv(),"tplNetwork")
         //ctrl.style.position = "absolute"
@@ -149,7 +248,9 @@ window.main = (function(){
         }
         window.document.getElementById("tplNetwork").innerHTML = networkState
      }
-     function _loaderCallback(){ console.log('Main: loaderCallback') }
+     function _loaderCallback(){ 
+        console.log('Main: loaderCallback') 
+     }
      function _tunerCallback(pDetectNote){ 
         console.log('Main: tunerCallback') 
         if (pDetectNote){

@@ -149,7 +149,7 @@ const madex = (function(){
                 "display": params.manifest.display,
                 "background_color": params.manifest.background_color,
                 "theme_color": params.manifest.theme_color,
-                "orientation": params.manifest.orie,
+                "orientation": params.manifest.orientation,
                 "prefer_related_applications": params.manifest.prefer_related_applications,
 
                 "icons": (config && typeof config.getIconList == 'function' ? config.getIconList() : []),
